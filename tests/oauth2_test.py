@@ -16,7 +16,7 @@ class OAuth2Test(unittest.TestCase):
         assert_that(self.browser.request.headers, is_({
             'Accept': 'application/json',
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'userId:pass'
+            'Authorization': 'Basic dXNlcklkOnBhc3M='
         }))
         assert_that(self.browser.request.body, is_({
             'grant_type': 'client_credentials',
