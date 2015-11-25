@@ -1,11 +1,12 @@
 import unirest
 
-def browse(request):
-    try:
-        u = getattr(unirest, request.method)(request.url, headers=request.headers, params=request.body)
-        return Response(u.raw_body, u.body, u.code)
-    except Exception as e:
-        return Response(e, {}, 500)
+class Browser:
+    def browse(self, request):
+        try:
+            u = getattr(unirest, request.method)(request.url, headers=request.headers, params=request.body)
+            return Response(u.raw_body, u.body, u.code)
+        except Exception as e:
+            return Response(e, {}, 500)
 
 class Request:
     def __init__(self):
