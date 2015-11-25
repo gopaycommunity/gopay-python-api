@@ -1,0 +1,9 @@
+# virtualenv
+/bin/
+/lib/
+/include/
+.Python
+pip-selfcheck.json
+# ide
+/.idea/
+/python-sdk.iml
