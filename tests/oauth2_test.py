@@ -1,19 +1,21 @@
 import unittest
 from hamcrest import *
 from gopay.oauth2 import OAuth2
+from test_doubles import GoPayMock
 
 class OAuth2Test(unittest.TestCase):
 
     def setUp(self):
-        self.browser = GoPaySpy({
+        self.browser = GoPayMock({
             'clientId': 'userId',
             'clientSecret': 'pass',
             'scope': 'irrelevant scope'
         })
 
     def test_should_call_api_with_basic_authorization(self):
+        self.browser.given_response()
         self.authorize()
-        assert_that(self.browser.request, is_((
+        self.browser.should_be_called_with(
             'oauth2/token',
             'application/x-www-form-urlencoded',
             'Basic dXNlcklkOnBhc3M=',
@@ -21,7 +23,7 @@ class OAuth2Test(unittest.TestCase):
                 'grant_type': 'client_credentials',
                 'scope': 'irrelevant scope'
             }
-        )))
+        )
 
     def test_should_return_expired_token_when_api_failed(self):
         self.browser.given_response(False)
@@ -40,24 +42,4 @@ class OAuth2Test(unittest.TestCase):
         return oauth.authorize()
 
 
-class GoPaySpy:
-    def __init__(self, config):
-        self.request = []
-        self.config = config
-        self.response = MockResponse()
 
-    def given_response(self, has_succeed, json = None):
-        self.response.result = has_succeed
-        self.response.json = json
-
-    def call(self, *args):
-        self.request = args
-        return self.response
-
-class MockResponse:
-    def __init__(self):
-        self.result = False
-        self.json = None
-
-    def has_succeed(self):
-        return self.result

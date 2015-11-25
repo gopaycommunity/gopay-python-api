@@ -3,11 +3,12 @@ from hamcrest import *
 from unittest_data_provider import data_provider
 from gopay.payments import Payments
 from gopay.oauth2 import AccessToken
+from test_doubles import GoPayMock
 
 class PaymentsTest(unittest.TestCase):
 
     def setUp(self):
-        self.browser = BrowserSpy()
+        self.browser = GoPayMock()
         self.auth = AuthStub()
         self.payments = Payments(self.browser, self.auth)
 
@@ -25,12 +26,12 @@ class PaymentsTest(unittest.TestCase):
     def test_should_build_request(self, call_api, url, type, expected_body):
         self.auth.when_auth_succeed()
         call_api(self.payments)
-        assert_that(self.browser.request, is_((
+        self.browser.should_be_called_with(
             'payments/payment' + url,
             type,
             'Bearer irrelevant token',
             expected_body
-        )))
+        )
 
     def test_should_call_api_when_auth_succeed(self):
         self.auth.when_auth_succeed()
@@ -41,17 +42,6 @@ class PaymentsTest(unittest.TestCase):
         self.auth.when_auth_failed()
         response = self.payments.create_payment({})
         assert_that(response, is_(self.auth.token.response))
-
-
-class BrowserSpy:
-    def __init__(self):
-        self.request = None
-        self.response = 'irrelevant browser response'
-
-    def call(self, *args):
-        self.request = args
-        return self.response
-
 
 class AuthStub:
     def __init__(self):
