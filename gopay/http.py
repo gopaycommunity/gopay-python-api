@@ -1,12 +1,18 @@
 import unirest
 
-def browse(url):
+def browse(request):
     try:
-        method = 'get'
-        u = getattr(unirest, method)(url)
+        u = getattr(unirest, request.method)(request.url, headers=request.headers, params=request.body)
         return Response(u.raw_body, u.body, u.code)
     except Exception as e:
         return Response(e, {}, 500)
+
+class Request:
+    def __init__(self):
+        self.method = 'get'
+        self.url = ''
+        self.headers = {}
+        self.body = {}
 
 class Response:
     def __init__(self, raw_body, json, status_code):

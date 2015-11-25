@@ -1,7 +1,7 @@
 import unittest
 from hamcrest import *
 from unittest_data_provider import data_provider
-from gopay.http import browse
+from gopay.http import browse, Request
 
 class HttpTest(unittest.TestCase):
     urls = lambda: (
@@ -11,7 +11,9 @@ class HttpTest(unittest.TestCase):
 
     @data_provider(urls)
     def test_should_return_response(self, url, has_succeed, expected_response, assert_json):
-        response = browse(url)
+        request = Request()
+        request.url = url
+        response = browse(request)
         assert_that(response.has_succeed(), is_(has_succeed))
         assert_that(str(response), contains_string(expected_response))
         assert_that(response.json, assert_json({}))
