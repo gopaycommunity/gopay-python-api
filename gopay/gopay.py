@@ -9,9 +9,13 @@ class GoPay:
     def config(self, key):
         return self.config[key]
 
+    def url(self, path):
+        host = 'https://gate.gopay.cz/' if self.config['isProductionMode'] else 'https://gw.sandbox.gopay.com/'
+        return host + path
+
     def call(self, url, content_type, authorization, data):
         request = Request()
-        request.url = 'https://gw.sandbox.gopay.com/api/' + url
+        request.url = self.url('api/' + url)
         request.headers = {
             'Accept': 'application/json',
             'Content-Type':  content_type,
