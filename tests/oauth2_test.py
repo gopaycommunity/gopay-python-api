@@ -1,27 +1,27 @@
 import unittest
 from hamcrest import *
-from gopay.oauth2 import OAuth2, AccessToken
-from gopay.gopay import GoPay
+from gopay.oauth2 import OAuth2
 
 class OAuth2Test(unittest.TestCase):
 
     def setUp(self):
-        self.browser = BrowserSpy()
-
-    def test_should_call_api_and_return_access_token(self):
-        token = self.authorize()
-        assert_that(token, is_(instance_of(AccessToken)))
-        assert_that(self.browser.request.url, is_('https://gw.sandbox.gopay.com/api/oauth2/token'))
-        assert_that(self.browser.request.method, is_('post'))
-        assert_that(self.browser.request.headers, is_({
-            'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic dXNlcklkOnBhc3M='
-        }))
-        assert_that(self.browser.request.body, is_({
-            'grant_type': 'client_credentials',
+        self.browser = GoPaySpy({
+            'clientId': 'userId',
+            'clientSecret': 'pass',
             'scope': 'irrelevant scope'
-        }))
+        })
+
+    def test_should_call_api_with_basic_authorization(self):
+        self.authorize()
+        assert_that(self.browser.request, is_((
+            'oauth2/token',
+            'application/x-www-form-urlencoded',
+            'Basic dXNlcklkOnBhc3M=',
+            {
+                'grant_type': 'client_credentials',
+                'scope': 'irrelevant scope'
+            }
+        )))
 
     def test_should_return_expired_token_when_api_failed(self):
         self.browser.given_response(False)
@@ -36,30 +36,22 @@ class OAuth2Test(unittest.TestCase):
         assert_that(token.token, is_('irrelevant token'))
 
     def authorize(self):
-        oauth = OAuth2(
-            GoPay(
-                {
-                    'clientId': 'userId',
-                    'clientSecret': 'pass',
-                    'scope': 'irrelevant scope'
-                },
-                self.browser
-            )
-        )
+        oauth = OAuth2(self.browser)
         return oauth.authorize()
 
 
-class BrowserSpy:
-    def __init__(self):
-        self.request = None
+class GoPaySpy:
+    def __init__(self, config):
+        self.request = []
+        self.config = config
         self.response = MockResponse()
 
     def given_response(self, has_succeed, json = None):
         self.response.result = has_succeed
         self.response.json = json
 
-    def browse(self, request):
-        self.request = request
+    def call(self, *args):
+        self.request = args
         return self.response
 
 class MockResponse:

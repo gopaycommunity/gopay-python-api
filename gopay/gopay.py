@@ -6,9 +6,6 @@ class GoPay:
         self.browser = browser
         self.config = config
 
-    def config(self, key):
-        return self.config[key]
-
     def url(self, path):
         host = 'https://gate.gopay.cz/' if self.config['isProductionMode'] else 'https://gw.sandbox.gopay.com/'
         return host + path
