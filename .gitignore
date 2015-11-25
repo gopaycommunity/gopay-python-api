@@ -1,3 +1,4 @@
+*.pyc
 # virtualenv
 /bin/
 /lib/
