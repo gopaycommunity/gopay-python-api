@@ -1,6 +1,7 @@
 import unittest
 from hamcrest import *
 from gopay.oauth2 import OAuth2, AccessToken
+from gopay.gopay import GoPay
 
 class OAuth2Test(unittest.TestCase):
 
@@ -36,12 +37,14 @@ class OAuth2Test(unittest.TestCase):
 
     def authorize(self):
         oauth = OAuth2(
-            {
-                'clientId': 'userId',
-                'clientSecret': 'pass',
-                'scope': 'irrelevant scope'
-            },
-            self.browser
+            GoPay(
+                {
+                    'clientId': 'userId',
+                    'clientSecret': 'pass',
+                    'scope': 'irrelevant scope'
+                },
+                self.browser
+            )
         )
         return oauth.authorize()
 

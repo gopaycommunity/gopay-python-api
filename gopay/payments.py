@@ -1,9 +1,7 @@
 
-from http import Request
-
 class Payments:
-    def __init__(self, browser, oauth):
-        self.browser = browser
+    def __init__(self, gopay, oauth):
+        self.gopay = gopay
         self.oauth = oauth
 
     def create_payment(self, payment):
@@ -36,18 +34,6 @@ class Payments:
     def _authorized_call(self, url, content_type, data):
         token = self.oauth.authorize()
         if (token.token):
-            request = Request()
-            request.url = 'https://gw.sandbox.gopay.com/api/payments/payment' + url
-            request.headers = {
-                'Accept': 'application/json',
-                'Content-Type':  content_type,
-                'Authorization': 'Bearer ' + token.token
-            }
-            if (data is None):
-                request.method = 'get'
-            else:
-                request.method = 'post'
-                request.body = data
-            return self.browser.browse(request)
+            return self.gopay.call('payments/payment' + url, content_type, 'Bearer ' + token.token, data)
         else:
             return token.response

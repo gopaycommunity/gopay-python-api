@@ -3,13 +3,14 @@ from hamcrest import *
 from unittest_data_provider import data_provider
 from gopay.payments import Payments
 from gopay.oauth2 import AccessToken
+from gopay.gopay import GoPay
 
 class PaymentsTest(unittest.TestCase):
 
     def setUp(self):
         self.browser = BrowserSpy()
         self.auth = AuthStub()
-        self.payments = Payments(self.browser, self.auth)
+        self.payments = Payments(GoPay({}, self.browser), self.auth)
 
     endpoints = lambda: (
         (lambda p: p.create_payment({'payment': ''}), '', 'post', is_not),
