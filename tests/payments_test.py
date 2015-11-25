@@ -2,16 +2,14 @@ import unittest
 from hamcrest import *
 from unittest_data_provider import data_provider
 from gopay.payments import Payments
+from gopay.oauth2 import AccessToken
 
 class PaymentsTest(unittest.TestCase):
 
     def setUp(self):
         self.browser = BrowserSpy()
-        self.payments = Payments(self.browser)
-
-    def test_should_call_api_and_return_response(self):
-        response = self.payments.create_payment({})
-        assert_that(response, is_(self.browser.response))
+        self.auth = AuthStub()
+        self.payments = Payments(self.browser, self.auth)
 
     endpoints = lambda: (
         (lambda p: p.create_payment({'payment': ''}), '', 'post', is_not),
@@ -25,18 +23,44 @@ class PaymentsTest(unittest.TestCase):
 
     @data_provider(endpoints)
     def test_should_build_request(self, call_api, url, method, has_empty_body):
+        self.auth.when_auth_succeed()
         call_api(self.payments)
         assert_that(self.browser.request.url, is_('https://gw.sandbox.gopay.com/api/payments/payment' + url))
         assert_that(self.browser.request.method, is_(method))
         assert_that(self.browser.request.headers, is_not({}))
         assert_that(self.browser.request.body, has_empty_body({}))
 
+    def test_should_call_api_when_auth_succeed(self):
+        self.auth.when_auth_succeed()
+        response = self.payments.create_payment({})
+        assert_that(response, is_(self.browser.response))
+
+    def test_should_return_token_response_when_auth_failed(self):
+        self.auth.when_auth_failed()
+        response = self.payments.create_payment({})
+        assert_that(response, is_(self.auth.token.response))
+
 
 class BrowserSpy:
     def __init__(self):
         self.request = None
-        self.response = 'irrelevant response'
+        self.response = 'irrelevant browser response'
 
     def browse(self, request):
         self.request = request
         return self.response
+
+
+class AuthStub:
+    def __init__(self):
+        self.token = AccessToken()
+        self.token.response = 'irrelevant token response'
+
+    def when_auth_succeed(self):
+        self.token.token = 'irrelevant token'
+
+    def when_auth_failed(self):
+        self.token.token = None
+
+    def authorize(self):
+        return self.token
