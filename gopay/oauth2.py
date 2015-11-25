@@ -19,9 +19,16 @@ class OAuth2:
             'grant_type': 'client_credentials',
             'scope': self.config['scope']
         }
-        response = self.browser.browse(request)
-        return AccessToken()
+        token = AccessToken()
+        token.response = self.browser.browse(request)
+        if (token.response.has_succeed()):
+            token.token = token.response.json['access_token']
+        return token
 
 class AccessToken:
-    def __init__(self, token=''):
-        self.token = token
+    def __init__(self):
+        self.token = None
+        self.response = None
+
+    def is_expired(self):
+        return self.token is None
