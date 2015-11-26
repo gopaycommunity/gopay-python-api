@@ -27,3 +27,8 @@ class GoPay:
             request.method = 'post'
             request.body = data
         return self.browser.browse(request)
+
+def add_defaults(data, defaults):
+    full = defaults.copy()
+    full.update(data)
+    return full

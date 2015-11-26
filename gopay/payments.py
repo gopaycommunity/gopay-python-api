@@ -1,6 +1,5 @@
 
-from api import JSON,FORM
-from gopay import add_defaults
+from api import JSON,FORM,add_defaults
 
 class Payments:
     def __init__(self, gopay, oauth):
