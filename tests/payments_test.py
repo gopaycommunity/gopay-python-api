@@ -16,8 +16,8 @@ class PaymentsTest(unittest.TestCase):
         self.payments = Payments(self.browser, self.auth)
 
     endpoints = lambda: (
-        (lambda p: p.create_payment({'payment': '', 'language': '', 'target': ''}), '', JSON, {'payment': '', 'language': '', 'target': ''}),
-        (lambda p: p.create_payment({'payment': ''}), '', JSON, {'payment': '', 'target': {'type': 'ACCOUNT', 'goid': 'id'}, 'language': 'default'}),
+        (lambda p: p.create_payment({'payment': '', 'lang': '', 'target': ''}), '', JSON, {'payment': '', 'lang': '', 'target': ''}),
+        (lambda p: p.create_payment({'payment': ''}), '', JSON, {'payment': '', 'target': {'type': 'ACCOUNT', 'goid': 'id'}, 'lang': 'default'}),
         (lambda p: p.get_status(3), '/3', FORM, None),
         (lambda p: p.refund_payment(3, 100), '/3/refund', FORM, {'amount': 100}),
         (lambda p: p.create_recurrence(3, {'payment': ''}), '/3/create-recurrence', JSON, {'payment': ''}),

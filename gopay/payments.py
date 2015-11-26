@@ -12,7 +12,7 @@ class Payments:
                 'type': 'ACCOUNT',
                 'goid': self.gopay.config['goid']
             },
-            'language': self.gopay.config['language']
+            'lang': self.gopay.config['language']
         })
         return self._api('', JSON, payment)
 

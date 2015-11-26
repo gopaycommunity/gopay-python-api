@@ -7,6 +7,7 @@ from payments import Payments
 def payments(config, services = {}):
     config = add_defaults(config, {
         'scope': 'payment-all',
+        'language': 'EN',
         'timeout': 30
     })
     services = add_defaults(services, {
