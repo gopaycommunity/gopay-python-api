@@ -1,12 +1,14 @@
+# -*- coding: utf-8 -*-
 import unittest
 from unittest_data_provider import data_provider
 from tests.remote import given_client, should_return_error
+from gopay import Language
 
 class WhenApiFailedTest(unittest.TestCase):
 
     languages = lambda: (
-        ('CS', 'Chybné přihlašovací údaje. Pokuste se provést přihlášení znovu.'),
-        ('EN', 'Wrong credentials. Try sign in again.'),
+        (Language.SLOVAK, u'Chybné přihlašovací údaje. Pokuste se provést přihlášení znovu.'),
+        (Language.GERMAN, 'Wrong credentials. Try sign in again.'),
     )
 
     @data_provider(languages)
@@ -16,10 +18,10 @@ class WhenApiFailedTest(unittest.TestCase):
             'clientSecret': 'invalid secret'
         })
         status = gopay.get_status('irrelevant id is never used because token is not retrieved')
-        should_return_error(status, 500, {
+        should_return_error(status, 403, {
             'scope': 'G',
             'field': None,
-            'error_code': 403,
+            'error_code': 202,
             'error_name': 'AUTH_WRONG_CREDENTIALS',
             'message': expected_error,
             'description': None

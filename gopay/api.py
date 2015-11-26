@@ -1,5 +1,6 @@
 
 from http import Request
+from gopay.enums import Language
 import json
 
 JSON = 'application/json'
@@ -19,7 +20,7 @@ class GoPay:
         request.url = self.url('api/' + url)
         request.headers = {
             'Accept': 'application/json',
-            'Accept-Language': 'cs-CZ' if self.config['language'] in ['CS', 'SK'] else 'en-US',
+            'Accept-Language': 'cs-CZ' if self.config['language'] in [Language.CZECH, Language.SLOVAK] else 'en-US',
             'Content-Type':  content_type,
             'Authorization': authorization
         }

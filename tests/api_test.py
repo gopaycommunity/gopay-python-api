@@ -2,6 +2,7 @@ import unittest
 from hamcrest import *
 from unittest_data_provider import data_provider
 from gopay.api import GoPay,JSON,FORM,add_defaults
+from gopay.enums import Language
 
 class GoPayTest(unittest.TestCase):
 
@@ -36,11 +37,11 @@ class GoPayTest(unittest.TestCase):
         assert_that(self.browser.request.body, is_(expected_body))
 
     languages = lambda: (
-        ('CS', 'cs-CZ'),
-        ('SK', 'cs-CZ'),
-        ('EN', 'en-US'),
-        ('DE', 'en-US'),
-        ('RU', 'en-US'),
+        (Language.CZECH, 'cs-CZ'),
+        (Language.SLOVAK, 'cs-CZ'),
+        (Language.ENGLISH, 'en-US'),
+        (Language.GERMAN, 'en-US'),
+        (Language.RUSSIAN, 'en-US'),
         ('unknown', 'en-US'),
         ('', 'en-US'),
     )
@@ -53,7 +54,7 @@ class GoPayTest(unittest.TestCase):
     def call(self, config, content_type='irrelevant content-type', data={'irrelevant': 'value'}):
         config = add_defaults(config, {
             'isProductionMode': False,
-            'language': 'EN'
+            'language': Language.ENGLISH
         })
         gopay = GoPay(config, self.browser)
         gopay.call('URL', content_type, 'irrelevant authorization', data)

@@ -2,6 +2,7 @@ import unittest
 import time
 from tests.remote import given_client, should_return
 from hamcrest import contains_string, is_
+from gopay.enums import Currency
 
 class WhenApiSucceedTest(unittest.TestCase):
 
@@ -10,7 +11,7 @@ class WhenApiSucceedTest(unittest.TestCase):
 
         payment = gopay.create_payment({
             'amount': 1,
-            'currency': 'CZK',
+            'currency': Currency.CZECH_CROWNS,
             'order_number': 'order-test - ' + time.strftime("%Y-%m-%d %H:%M:%S"),
             'order_description': 'python test',
             'callback': {
