@@ -8,7 +8,7 @@ class GoPayMock:
         self.response = 'irrelevant browser response'
 
     def given_response(self, has_succeed=False, json = None):
-        self.response = MockResponse()
+        self.response = ResponseStub()
         self.response.result = has_succeed
         self.response.json = json
 
@@ -20,7 +20,7 @@ class GoPayMock:
         assert_that(self.request, is_(args))
 
 
-class MockResponse:
+class ResponseStub:
     def __init__(self):
         self.result = False
         self.json = None
