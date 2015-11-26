@@ -1,5 +1,6 @@
 
 from http import Request
+import json
 
 JSON = 'application/json'
 FORM = 'application/x-www-form-urlencoded'
@@ -25,7 +26,7 @@ class GoPay:
             request.method = 'get'
         else:
             request.method = 'post'
-            request.body = data
+            request.body = json.dumps(data) if content_type == JSON else data
         return self.browser.browse(request)
 
 def add_defaults(data, defaults):

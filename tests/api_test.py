@@ -1,7 +1,7 @@
 import unittest
 from hamcrest import *
 from unittest_data_provider import data_provider
-from gopay.api import GoPay
+from gopay.api import GoPay,JSON,FORM
 
 class GoPayTest(unittest.TestCase):
 
@@ -15,8 +15,7 @@ class GoPayTest(unittest.TestCase):
 
     @data_provider(methods)
     def test_should_build_request(self, config, expected_url, expected_method, data):
-        gopay = GoPay(config, self.browser)
-        gopay.call('URL', 'irrelevant content-type', 'irrelevant authorization', data)
+        self.call(config, 'irrelevant content-type', data)
         assert_that(self.browser.request.url, is_(expected_url + '/api/URL'))
         assert_that(self.browser.request.method, is_(expected_method))
         assert_that(self.browser.request.headers, is_({
@@ -24,6 +23,22 @@ class GoPayTest(unittest.TestCase):
             'Content-Type': 'irrelevant content-type',
             'Authorization': 'irrelevant authorization'
         }))
+
+
+    types = lambda: (
+        (FORM, {'irrelevant': 'value'}),
+        (JSON, '{"irrelevant": "value"}'),
+    )
+
+    @data_provider(types)
+    def  test_should_encode_data(self, content_type, expected_body):
+        self.call({'isProductionMode': False}, content_type, {'irrelevant': 'value'})
+        assert_that(self.browser.request.body, is_(expected_body))
+
+    def call(self, config, content_type, data):
+        gopay = GoPay(config, self.browser)
+        gopay.call('URL', content_type, 'irrelevant authorization', data)
+
 
 class BrowserSpy:
     def __init__(self):
