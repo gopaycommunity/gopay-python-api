@@ -31,3 +31,6 @@ class Response:
         return self.status_code == 200
     def __str__(self):
         return self.raw_body
+
+def null_logger(*args):
+    pass
