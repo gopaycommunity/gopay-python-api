@@ -7,6 +7,13 @@ class Payments:
         self.oauth = oauth
 
     def create_payment(self, payment):
+        payment = add_defaults(payment, {
+            'target': {
+                'type': 'ACCOUNT',
+                'goid': self.gopay.config['goid']
+            },
+            'language': self.gopay.config['language']
+        })
         return self._api('', JSON, payment)
 
     def get_status(self, id):
@@ -33,3 +40,9 @@ class Payments:
             return self.gopay.call('payments/payment' + url, content_type, 'Bearer ' + token.token, data)
         else:
             return token.response
+
+
+def add_defaults(data, defaults):
+    full = defaults.copy()
+    full.update(data)
+    return full
