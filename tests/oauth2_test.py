@@ -32,10 +32,11 @@ class OAuth2Test(unittest.TestCase):
         assert_that(token.is_expired(), is_(True))
 
     def test_should_return_extract_token_from_response(self):
-        self.browser.given_response(True, {'access_token': 'irrelevant token'})
+        self.browser.given_response(True, {'access_token': 'irrelevant token', 'expires_in': 1800})
         token = self.authorize()
         assert_that(token.is_expired(), is_(False))
         assert_that(token.token, is_('irrelevant token'))
+        assert_that(token.expiration_date, is_not(None))
 
     def authorize(self):
         oauth = OAuth2(self.browser)
