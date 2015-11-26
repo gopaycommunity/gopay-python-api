@@ -27,12 +27,12 @@ class PaymentsTest(unittest.TestCase):
     )
 
     @data_provider(endpoints)
-    def test_should_build_request(self, call_api, url, type, expected_body):
+    def test_should_build_request(self, call_api, url, content_type, expected_body):
         self.auth.when_auth_succeed()
         call_api(self.payments)
         self.browser.should_be_called_with(
             'payments/payment' + url,
-            type,
+            content_type,
             'Bearer irrelevant token',
             expected_body
         )

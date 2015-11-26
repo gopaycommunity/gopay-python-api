@@ -3,7 +3,7 @@ from gopay import payments,add_defaults
 from hamcrest import *
 from test.test_support import EnvironmentVarGuard
 
-def given_client(config={}):
+def given_client(config=None):
     env = EnvironmentVarGuard()
     return payments(
         add_defaults(config, {

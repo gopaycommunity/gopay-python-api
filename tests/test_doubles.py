@@ -2,9 +2,9 @@
 from hamcrest import assert_that, is_
 
 class GoPayMock:
-    def __init__(self, config={}):
+    def __init__(self, config=None):
         self.request = ()
-        self.config = config
+        self.config = config if config is not None else {}
         self.response = 'irrelevant browser response'
 
     def given_response(self, has_succeed=False, json = None):

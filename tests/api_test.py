@@ -16,7 +16,7 @@ class GoPayTest(unittest.TestCase):
 
     @data_provider(methods)
     def test_should_build_request(self, config, expected_url, expected_method, data):
-        self.call(config, 'irrelevant content-type', data)
+        self.call(config, content_type='irrelevant content-type', data=data)
         assert_that(self.browser.request.url, is_(expected_url + '/api/URL'))
         assert_that(self.browser.request.method, is_(expected_method))
         assert_that(self.browser.request.headers, is_({
@@ -33,7 +33,7 @@ class GoPayTest(unittest.TestCase):
 
     @data_provider(types)
     def  test_should_encode_data(self, content_type, expected_body):
-        self.call({}, content_type)
+        self.call({}, content_type=content_type, data={'irrelevant': 'value'})
         assert_that(self.browser.request.body, is_(expected_body))
 
     languages = lambda: (
@@ -51,13 +51,13 @@ class GoPayTest(unittest.TestCase):
         self.call({'language': lang})
         assert_that(self.browser.request.headers['Accept-Language'], is_(expected_lang))
 
-    def call(self, config, content_type='irrelevant content-type', data={'irrelevant': 'value'}):
+    def call(self, config, **kwargs):
         config = add_defaults(config, {
             'isProductionMode': False,
             'language': Language.ENGLISH
         })
         gopay = GoPay(config, self.browser)
-        gopay.call('URL', content_type, 'irrelevant authorization', data)
+        gopay.call('URL', kwargs.get('content_type'), 'irrelevant authorization', kwargs.get('data'))
 
 
 class BrowserSpy:

@@ -24,7 +24,7 @@ class GoPay:
             'Content-Type':  content_type,
             'Authorization': authorization
         }
-        if (data is None):
+        if data is None:
             request.method = 'get'
         else:
             request.method = 'post'
@@ -33,5 +33,6 @@ class GoPay:
 
 def add_defaults(data, defaults):
     full = defaults.copy()
-    full.update(data)
+    if data is not None:
+        full.update(data)
     return full
