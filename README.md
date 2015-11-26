@@ -54,8 +54,8 @@ Required field | Data type | Documentation |
 
 Optional field | Data type | Default value | Documentation |
 -------------- | --------- | ------------- | ------------- |
-`scope` | string | [`gopay.enums.TokenScope.ALL`](src/Enums.py) | https://doc.gopay.com/en/?shell#scope |
-`language` | string | [`gopay.enums.Language.ENGLISH`](src/Enums.py) | language used in `create_payment` if `lang` is not specified + used for [localization of errors](https://doc.gopay.com/en/?shell#return-errors)
+`scope` | string | [`gopay.enums.TokenScope.ALL`](/src/enums.py) | https://doc.gopay.com/en/?shell#scope |
+`language` | string | [`gopay.enums.Language.ENGLISH`](/src/enums.py) | language used in `create_payment` if `lang` is not specified + used for [localization of errors](https://doc.gopay.com/en/?shell#return-errors)
 `timeout` | int | 30 | Browser timeout in seconds |
 
 
@@ -76,7 +76,7 @@ API | SDK method |
 ### SDK response? Has my call succeed?
 
 SDK returns wrapped API response. Every method returns
-[`gopay.http.response` object](src/http.py). Structure of `json/__str__`
+[`gopay.http.response` object](/src/http.py). Structure of `json/__str__`
 should be same as in [documentation](https://doc.gopay.com/en).
 SDK throws no exception. Please create an issue if you catch one.
 
@@ -155,7 +155,7 @@ Type | Description |
 ### Cache access token
 
 Access token expires after 30 minutes so it's expensive to use new token for every request.
-Unfortunately it's default behavior of [`gopay.oauth2.InMemoryTokenCache`](src/oauth2.py).
+Unfortunately it's default behavior of [`gopay.oauth2.InMemoryTokenCache`](/src/oauth2.py).
 But you can implement your cache and store tokens in Memcache, Redis, files, ... It's up to you.
 
 Your cache must implement template methods `get_token` and `set_token`.
@@ -189,7 +189,7 @@ class MyCache:
 
 You can log every request and response from communication with API. Check available loggers below.
 Or you can implement your own logger, just implement function that takes two arguments:
-[`gopay.http.request`](src/http.py) and [`gopay.http.response`](src/http.py).
+[`gopay.http.request`](/src/http.py) and [`gopay.http.response`](/src/http.py).
 
 ```python
 # register logger in optional service configuration
