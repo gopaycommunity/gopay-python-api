@@ -19,6 +19,7 @@ class GoPay:
         request.url = self.url('api/' + url)
         request.headers = {
             'Accept': 'application/json',
+            'Accept-Language': 'cs-CZ' if self.config['language'] in ['CS', 'SK'] else 'en-US',
             'Content-Type':  content_type,
             'Authorization': authorization
         }

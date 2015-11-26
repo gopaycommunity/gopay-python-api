@@ -1,7 +1,7 @@
 import unittest
 from hamcrest import *
 from unittest_data_provider import data_provider
-from gopay.api import GoPay,JSON,FORM
+from gopay.api import GoPay,JSON,FORM,add_defaults
 
 class GoPayTest(unittest.TestCase):
 
@@ -20,10 +20,10 @@ class GoPayTest(unittest.TestCase):
         assert_that(self.browser.request.method, is_(expected_method))
         assert_that(self.browser.request.headers, is_({
             'Accept': 'application/json',
+            'Accept-Language': 'en-US',
             'Content-Type': 'irrelevant content-type',
             'Authorization': 'irrelevant authorization'
         }))
-
 
     types = lambda: (
         (FORM, {'irrelevant': 'value'}),
@@ -32,10 +32,29 @@ class GoPayTest(unittest.TestCase):
 
     @data_provider(types)
     def  test_should_encode_data(self, content_type, expected_body):
-        self.call({'isProductionMode': False}, content_type, {'irrelevant': 'value'})
+        self.call({}, content_type)
         assert_that(self.browser.request.body, is_(expected_body))
 
-    def call(self, config, content_type, data):
+    languages = lambda: (
+        ('CS', 'cs-CZ'),
+        ('SK', 'cs-CZ'),
+        ('EN', 'en-US'),
+        ('DE', 'en-US'),
+        ('RU', 'en-US'),
+        ('unknown', 'en-US'),
+        ('', 'en-US'),
+    )
+
+    @data_provider(languages)
+    def  test_should_localize_error_messages(self, lang, expected_lang):
+        self.call({'language': lang})
+        assert_that(self.browser.request.headers['Accept-Language'], is_(expected_lang))
+
+    def call(self, config, content_type='irrelevant content-type', data={'irrelevant': 'value'}):
+        config = add_defaults(config, {
+            'isProductionMode': False,
+            'language': 'EN'
+        })
         gopay = GoPay(config, self.browser)
         gopay.call('URL', content_type, 'irrelevant authorization', data)
 

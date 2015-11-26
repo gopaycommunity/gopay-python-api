@@ -1,17 +1,17 @@
 
-from gopay import payments
+from gopay import payments,add_defaults
 from hamcrest import *
 from test.test_support import EnvironmentVarGuard
 
-def given_client():
+def given_client(config={}):
     env = EnvironmentVarGuard()
     return payments(
-        {
+        add_defaults(config, {
             'goid': env.get('goid'),
             'clientId': env.get('clientId'),
             'clientSecret': env.get('clientSecret'),
             'isProductionMode': False
-        },
+        }),
         {
             'logger': debug_logger
         }
