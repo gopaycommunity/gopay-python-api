@@ -54,8 +54,8 @@ Required field | Data type | Documentation |
 
 Optional field | Data type | Default value | Documentation |
 -------------- | --------- | ------------- | ------------- |
-`scope` | string | [`gopay.enums.TokenScope.ALL`](/src/enums.py) | https://doc.gopay.com/en/?shell#scope |
-`language` | string | [`gopay.enums.Language.ENGLISH`](/src/enums.py) | language used in `create_payment` if `lang` is not specified + used for [localization of errors](https://doc.gopay.com/en/?shell#return-errors)
+`scope` | string | [`gopay.enums.TokenScope.ALL`](/gopay/enums.py) | https://doc.gopay.com/en/?shell#scope |
+`language` | string | [`gopay.enums.Language.ENGLISH`](/gopay/enums.py) | language used in `create_payment` if `lang` is not specified + used for [localization of errors](https://doc.gopay.com/en/?shell#return-errors)
 `timeout` | int | 30 | Browser timeout in seconds |
 
 
@@ -76,7 +76,7 @@ API | SDK method |
 ### SDK response? Has my call succeed?
 
 SDK returns wrapped API response. Every method returns
-[`gopay.http.response` object](/src/http.py). Structure of `json/__str__`
+[`gopay.http.response` object](/gopay/http.py). Structure of `json/__str__`
 should be same as in [documentation](https://doc.gopay.com/en).
 SDK throws no exception. Please create an issue if you catch one.
 
@@ -147,15 +147,15 @@ Check using enums in  [create-payment example](/examples/create_payment.py)
 
 Type | Description |
 ---- | ----------- |
-[Language](/src/enums.py) | Payment language, localization of error messages |
-[Token scope](/src/enums.py) | Authorization scope for [OAuth2](https://doc.gopay.com/en/#oauth) |
-[Payment enums](/src/enums.py) | Enums for creating payment |
-[Response enums](/src/enums.py) | Result of creating payment, executing payment operations |
+[Language](/gopay/enums.py) | Payment language, localization of error messages |
+[Token scope](/gopay/enums.py) | Authorization scope for [OAuth2](https://doc.gopay.com/en/#oauth) |
+[Payment enums](/gopay/enums.py) | Enums for creating payment |
+[Response enums](/gopay/enums.py) | Result of creating payment, executing payment operations |
 
 ### Cache access token
 
 Access token expires after 30 minutes so it's expensive to use new token for every request.
-Unfortunately it's default behavior of [`gopay.oauth2.InMemoryTokenCache`](/src/oauth2.py).
+Unfortunately it's default behavior of [`gopay.oauth2.InMemoryTokenCache`](/gopay/oauth2.py).
 But you can implement your cache and store tokens in Memcache, Redis, files, ... It's up to you.
 
 Your cache must implement template methods `get_token` and `set_token`.
@@ -189,7 +189,7 @@ class MyCache:
 
 You can log every request and response from communication with API. Check available loggers below.
 Or you can implement your own logger, just implement function that takes two arguments:
-[`gopay.http.request`](/src/http.py) and [`gopay.http.response`](/src/http.py).
+[`gopay.http.request`](/gopay/http.py) and [`gopay.http.response`](/gopay/http.py).
 
 ```python
 # register logger in optional service configuration
@@ -205,7 +205,7 @@ def my_logger(request, response):
 
 Available logger | Description |
 ---------------- | ----------- |
-[gopay.http.null_logger](/src/http.py) | Default logger which does nothing |
+[gopay.http.null_logger](/gopay/http.py) | Default logger which does nothing |
 [tests.remote.debug_logger](/tests/remote/__init__.py) | Prints request and response in [remote tests](tests/remote/) |
 
 ## Contributing
