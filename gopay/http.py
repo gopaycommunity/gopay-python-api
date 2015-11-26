@@ -1,8 +1,12 @@
 import unirest
 
 class Browser:
+    def __init__(self, timeout):
+        self.timeout = timeout
+
     def browse(self, request):
         try:
+            unirest.timeout(self.timeout)
             u = getattr(unirest, request.method)(request.url, headers=request.headers, params=request.body)
             return Response(u.raw_body, u.body, u.code)
         except Exception as e:

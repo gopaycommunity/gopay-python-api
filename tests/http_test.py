@@ -13,7 +13,7 @@ class HttpTest(unittest.TestCase):
     def test_should_return_response(self, url, has_succeed, expected_response, assert_json):
         request = Request()
         request.url = url
-        response = Browser().browse(request)
+        response = Browser(1).browse(request)
         assert_that(response.has_succeed(), is_(has_succeed))
         assert_that(str(response), contains_string(expected_response))
         assert_that(response.json, assert_json({}))

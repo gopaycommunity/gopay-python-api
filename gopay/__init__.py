@@ -6,9 +6,10 @@ from payments import Payments
 
 def payments(config):
     config = add_defaults(config, {
-        'scope': 'payment-all'
+        'scope': 'payment-all',
+        'timeout': 30
     })
-    browser = Browser()
+    browser = Browser(config['timeout'])
     gopay = GoPay(config, browser)
     auth = OAuth2(gopay)
     return Payments(gopay, auth)
