@@ -16,6 +16,9 @@ class GoPayMock:
         self.request = args
         return self.response
 
+    def url(self, url):
+        return url
+
     def should_be_called_with(self, *args):
         assert_that(self.request, is_(args))
 

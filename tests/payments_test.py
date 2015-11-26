@@ -47,6 +47,9 @@ class PaymentsTest(unittest.TestCase):
         response = self.payments.create_payment({})
         assert_that(response, is_(self.auth.token.response))
 
+    def test_should_return_embedjs(self):
+        assert_that(self.payments.url_to_embedjs(), is_('gp-gw/js/embed.js'))
+
 class AuthStub:
     def __init__(self):
         self.token = AccessToken()

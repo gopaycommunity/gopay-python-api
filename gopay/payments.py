@@ -34,6 +34,9 @@ class Payments:
     def void_authorization(self, id):
         return self._api('/' + str(id) + '/void-authorization', FORM, {})
 
+    def url_to_embedjs(self):
+        return self.gopay.url('gp-gw/js/embed.js')
+
     def _api(self, url, content_type, data):
         token = self.oauth.authorize()
         if (token.token):
