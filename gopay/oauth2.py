@@ -1,7 +1,7 @@
-
 from base64 import b64encode
 from api import FORM
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
+
 
 class OAuth2:
     def __init__(self, gopay):
@@ -38,7 +38,8 @@ class AccessToken:
         self.expiration_date = None
 
     def is_expired(self):
-        return self.token is None or not isinstance(self.expiration_date, datetime) or self.expiration_date < datetime.now()
+        return self.token is None or not isinstance(self.expiration_date,
+                                                    datetime) or self.expiration_date < datetime.now()
 
 
 class CachedAuth:
@@ -53,6 +54,7 @@ class CachedAuth:
             token = self.oauth.authorize()
             self.cache.set_token(client, token)
         return token
+
 
 class InMemoryTokenCache:
     def __init__(self):

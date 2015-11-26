@@ -1,5 +1,5 @@
+from api import JSON, FORM, add_defaults
 
-from api import JSON,FORM,add_defaults
 
 class Payments:
     def __init__(self, gopay, oauth):
@@ -16,23 +16,23 @@ class Payments:
         })
         return self._api('', JSON, payment)
 
-    def get_status(self, idPayment):
-        return self._api('/' + str(idPayment), FORM, None)
+    def get_status(self, id_payment):
+        return self._api('/' + str(id_payment), FORM, None)
 
-    def refund_payment(self, idPayment, amount):
-        return self._api('/' + str(idPayment) + '/refund', FORM, {'amount': amount})
+    def refund_payment(self, id_payment, amount):
+        return self._api('/' + str(id_payment) + '/refund', FORM, {'amount': amount})
 
-    def create_recurrence(self, idPayment, payment):
-        return self._api('/' + str(idPayment) + '/create-recurrence', JSON, payment)
+    def create_recurrence(self, id_payment, payment):
+        return self._api('/' + str(id_payment) + '/create-recurrence', JSON, payment)
 
-    def void_recurrence(self, idPayment):
-        return self._api('/' + str(idPayment) + '/void-recurrence', FORM, {})
+    def void_recurrence(self, id_payment):
+        return self._api('/' + str(id_payment) + '/void-recurrence', FORM, {})
 
-    def capture_authorization(self, idPayment):
-        return self._api('/' + str(idPayment) + '/capture', FORM, {})
+    def capture_authorization(self, id_payment):
+        return self._api('/' + str(id_payment) + '/capture', FORM, {})
 
-    def void_authorization(self, idPayment):
-        return self._api('/' + str(idPayment) + '/void-authorization', FORM, {})
+    def void_authorization(self, id_payment):
+        return self._api('/' + str(id_payment) + '/void-authorization', FORM, {})
 
     def url_to_embedjs(self):
         return self.gopay.url('gp-gw/js/embed.js')

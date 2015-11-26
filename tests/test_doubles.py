@@ -1,5 +1,5 @@
-
 from hamcrest import assert_that, is_
+
 
 class GoPayMock:
     def __init__(self, config=None):
@@ -7,7 +7,7 @@ class GoPayMock:
         self.config = config if config is not None else {}
         self.response = 'irrelevant browser response'
 
-    def given_response(self, has_succeed=False, json = None):
+    def given_response(self, has_succeed=False, json=None):
         self.response = ResponseStub()
         self.response.result = has_succeed
         self.response.json = json

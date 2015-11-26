@@ -4,15 +4,15 @@ from unittest_data_provider import data_provider
 from tests.remote import given_client, should_return_error
 from gopay import Language
 
-class WhenApiFailedTest(unittest.TestCase):
 
+class WhenApiFailedTest(unittest.TestCase):
     languages = lambda: (
         (Language.SLOVAK, u'Chybné přihlašovací údaje. Pokuste se provést přihlášení znovu.'),
         (Language.GERMAN, 'Wrong credentials. Try sign in again.'),
     )
 
     @data_provider(languages)
-    def  test_should_localize_error_messages(self, lang, expected_error):
+    def test_should_localize_error_messages(self, lang, expected_error):
         gopay = given_client({
             'language': lang,
             'clientSecret': 'invalid secret'

@@ -2,10 +2,10 @@ import unittest
 from hamcrest import *
 from gopay.oauth2 import *
 from test_doubles import GoPayMock
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
+
 
 class OAuth2Test(unittest.TestCase):
-
     def setUp(self):
         self.browser = GoPayMock({
             'clientId': 'userId',
@@ -93,6 +93,7 @@ class CachedOAuthTest(unittest.TestCase):
         oauth = OAuthStub('client', self.reauthorized_token)
         auth = CachedAuth(oauth, self.cache)
         assert_that(auth.authorize(), is_(expected_token))
+
 
 class OAuthStub:
     def __init__(self, client, token):

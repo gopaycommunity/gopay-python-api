@@ -4,8 +4,8 @@ from tests.remote import given_client, should_return
 from hamcrest import contains_string, is_
 from gopay.enums import Currency
 
-class WhenApiSucceedTest(unittest.TestCase):
 
+class WhenApiSucceedTest(unittest.TestCase):
     def test_create_payment_and_get_status(self):
         gopay = given_client()
 

@@ -1,10 +1,10 @@
-
 from http import Request
 from gopay.enums import Language
 import json
 
 JSON = 'application/json'
 FORM = 'application/x-www-form-urlencoded'
+
 
 class GoPay:
     def __init__(self, config, browser):
@@ -21,7 +21,7 @@ class GoPay:
         request.headers = {
             'Accept': 'application/json',
             'Accept-Language': 'cs-CZ' if self.config['language'] in [Language.CZECH, Language.SLOVAK] else 'en-US',
-            'Content-Type':  content_type,
+            'Content-Type': content_type,
             'Authorization': authorization
         }
         if data is None:
@@ -30,6 +30,7 @@ class GoPay:
             request.method = 'post'
             request.body = json.dumps(data) if content_type == JSON else data
         return self.browser.browse(request)
+
 
 def add_defaults(data, defaults):
     full = defaults.copy()

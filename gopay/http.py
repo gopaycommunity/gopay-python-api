@@ -1,5 +1,6 @@
 import unirest
 
+
 class Browser:
     def __init__(self, logger, timeout):
         self.logger = logger
@@ -15,6 +16,7 @@ class Browser:
         self.logger(request, response)
         return response
 
+
 class Request:
     def __init__(self):
         self.method = 'get'
@@ -22,15 +24,19 @@ class Request:
         self.headers = {}
         self.body = {}
 
+
 class Response:
     def __init__(self, raw_body, json, status_code):
         self.raw_body = str(raw_body)
         self.json = json
         self.status_code = status_code
+
     def has_succeed(self):
         return self.status_code == 200
+
     def __str__(self):
         return self.raw_body
+
 
 def null_logger(*args):
     pass

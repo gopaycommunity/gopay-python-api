@@ -3,6 +3,7 @@ from hamcrest import *
 from unittest_data_provider import data_provider
 from gopay.http import Browser, Request
 
+
 class HttpTest(unittest.TestCase):
     urls = lambda: (
         ('http://www.rozpisyzapasu.cz/api/', True, "links", is_not),
