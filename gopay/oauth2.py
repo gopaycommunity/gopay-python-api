@@ -1,6 +1,6 @@
 
 from base64 import b64encode
-from gopay import FORM
+from api import FORM
 
 class OAuth2:
     def __init__(self, gopay):

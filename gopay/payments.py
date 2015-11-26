@@ -1,5 +1,6 @@
 
-from gopay import JSON,FORM
+from api import JSON,FORM
+from gopay import add_defaults
 
 class Payments:
     def __init__(self, gopay, oauth):
@@ -40,9 +41,3 @@ class Payments:
             return self.gopay.call('payments/payment' + url, content_type, 'Bearer ' + token.token, data)
         else:
             return token.response
-
-
-def add_defaults(data, defaults):
-    full = defaults.copy()
-    full.update(data)
-    return full

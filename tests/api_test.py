@@ -1,7 +1,7 @@
 import unittest
 from hamcrest import *
 from unittest_data_provider import data_provider
-from gopay.gopay import GoPay
+from gopay.api import GoPay
 
 class GoPayTest(unittest.TestCase):
 
