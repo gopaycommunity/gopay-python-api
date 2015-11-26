@@ -1,6 +1,9 @@
 
 from http import Request
 
+JSON = 'application/json'
+FORM = 'application/x-www-form-urlencoded'
+
 class GoPay:
     def __init__(self, config, browser):
         self.browser = browser

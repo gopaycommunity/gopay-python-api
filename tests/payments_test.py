@@ -1,7 +1,7 @@
 import unittest
 from hamcrest import *
 from unittest_data_provider import data_provider
-from gopay.payments import Payments
+from gopay.payments import Payments,FORM,JSON
 from gopay.oauth2 import AccessToken
 from test_doubles import GoPayMock
 
@@ -13,13 +13,13 @@ class PaymentsTest(unittest.TestCase):
         self.payments = Payments(self.browser, self.auth)
 
     endpoints = lambda: (
-        (lambda p: p.create_payment({'payment': ''}), '', 'application/json', {'payment': ''}),
-        (lambda p: p.get_status(3), '/3', 'application/x-www-form-urlencoded', None),
-        (lambda p: p.refund_payment(3, 100), '/3/refund', 'application/x-www-form-urlencoded', {'amount': 100}),
-        (lambda p: p.create_recurrence(3, {'payment': ''}), '/3/create-recurrence', 'application/json', {'payment': ''}),
-        (lambda p: p.void_recurrence(3), '/3/void-recurrence', 'application/x-www-form-urlencoded', {}),
-        (lambda p: p.capture_authorization(3), '/3/capture', 'application/x-www-form-urlencoded', {}),
-        (lambda p: p.void_authorization(3), '/3/void-authorization', 'application/x-www-form-urlencoded', {}),
+        (lambda p: p.create_payment({'payment': ''}), '', JSON, {'payment': ''}),
+        (lambda p: p.get_status(3), '/3', FORM, None),
+        (lambda p: p.refund_payment(3, 100), '/3/refund', FORM, {'amount': 100}),
+        (lambda p: p.create_recurrence(3, {'payment': ''}), '/3/create-recurrence', JSON, {'payment': ''}),
+        (lambda p: p.void_recurrence(3), '/3/void-recurrence', FORM, {}),
+        (lambda p: p.capture_authorization(3), '/3/capture', FORM, {}),
+        (lambda p: p.void_authorization(3), '/3/void-authorization', FORM, {}),
     )
 
     @data_provider(endpoints)

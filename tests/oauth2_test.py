@@ -1,6 +1,6 @@
 import unittest
 from hamcrest import *
-from gopay.oauth2 import OAuth2
+from gopay.oauth2 import OAuth2,FORM
 from test_doubles import GoPayMock
 
 class OAuth2Test(unittest.TestCase):
@@ -17,7 +17,7 @@ class OAuth2Test(unittest.TestCase):
         self.authorize()
         self.browser.should_be_called_with(
             'oauth2/token',
-            'application/x-www-form-urlencoded',
+            FORM,
             'Basic dXNlcklkOnBhc3M=',
             {
                 'grant_type': 'client_credentials',

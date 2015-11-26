@@ -1,5 +1,6 @@
 
 from base64 import b64encode
+from gopay import FORM
 
 class OAuth2:
     def __init__(self, gopay):
@@ -9,7 +10,7 @@ class OAuth2:
         token = AccessToken()
         token.response = self.gopay.call(
             'oauth2/token',
-            'application/x-www-form-urlencoded',
+            FORM,
             'Basic ' + b64encode(self.gopay.config['clientId'] + ':' + self.gopay.config['clientSecret']),
             {
                 'grant_type': 'client_credentials',
