@@ -53,6 +53,7 @@ class CachedOAuthTest(unittest.TestCase):
         self.token = AccessToken()
         self.is_token_in_cache = True
         self.reauthorized_token = 'irrelevant access token'
+        self.cache = InMemoryTokenCache()
 
     def test_should_use_unexpired_token(self):
         self.token.token = 'irrelevant token'
@@ -81,12 +82,16 @@ class CachedOAuthTest(unittest.TestCase):
         self.is_token_in_cache = False
         self.token_should_be(self.reauthorized_token)
 
+    def test_should_store_token_in_cache(self):
+        self.is_token_in_cache = False
+        self.token_should_be(self.reauthorized_token)
+        assert_that(self.cache.tokens, is_not({}))
+
     def token_should_be(self, expected_token):
-        cache = InMemoryTokenCache()
         if self.is_token_in_cache:
-            cache.tokens['client'] = self.token
+            self.cache.tokens['client'] = self.token
         oauth = OAuthStub('client', self.reauthorized_token)
-        auth = CachedAuth(oauth, cache)
+        auth = CachedAuth(oauth, self.cache)
         assert_that(auth.authorize(), is_(expected_token))
 
 class OAuthStub:
