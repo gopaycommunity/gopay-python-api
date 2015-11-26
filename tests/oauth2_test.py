@@ -10,8 +10,10 @@ class OAuth2Test(unittest.TestCase):
         self.browser = GoPayMock({
             'clientId': 'userId',
             'clientSecret': 'pass',
-            'scope': 'irrelevant scope'
+            'scope': 'irrelevant scope',
+            'isProductionMode': False
         })
+        self.oauth = OAuth2(self.browser)
 
     def test_should_call_api_with_basic_authorization(self):
         self.browser.given_response()
@@ -39,9 +41,11 @@ class OAuth2Test(unittest.TestCase):
         assert_that(token.token, is_('irrelevant token'))
         assert_that(token.expiration_date, is_not(None))
 
+    def test_should_uniquely_identify_current_client(self):
+        assert_that(self.oauth.get_client(), is_('userId-0-irrelevant scope'))
+
     def authorize(self):
-        oauth = OAuth2(self.browser)
-        return oauth.authorize()
+        return self.oauth.authorize()
 
 
 class CachedOAuthTest(unittest.TestCase):

@@ -23,6 +23,13 @@ class OAuth2:
             token.expiration_date = datetime.now() + timedelta(seconds=token.response.json['expires_in'])
         return token
 
+    def get_client(self):
+        return '-'.join([
+            self.gopay.config['clientId'],
+            '1' if self.gopay.config['isProductionMode'] else '0',
+            self.gopay.config['scope']]
+        )
+
 
 class AccessToken:
     def __init__(self):
