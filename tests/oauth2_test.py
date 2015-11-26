@@ -1,7 +1,8 @@
 import unittest
 from hamcrest import *
-from gopay.oauth2 import OAuth2,FORM
+from gopay.oauth2 import *
 from test_doubles import GoPayMock
+from datetime import datetime,timedelta
 
 class OAuth2Test(unittest.TestCase):
 
@@ -43,4 +44,40 @@ class OAuth2Test(unittest.TestCase):
         return oauth.authorize()
 
 
+class CachedOAuthTest(unittest.TestCase):
+    def setUp(self):
+        self.token = AccessToken()
+        self.reauthorized_token = 'irrelevant access token'
 
+    def test_should_use_unexpired_token(self):
+        self.token.token = 'irrelevant token'
+        self.token.expiration_date = datetime.now() + timedelta(days=1)
+        self.token_should_be(self.token)
+
+    def test_should_reauthorize_when_token_is_empty(self):
+        self.token.token = None
+        self.token_should_be(self.reauthorized_token)
+
+    def test_should_reauthorize_when_expiration_is_empty(self):
+        self.token.token = 'irrelevant token'
+        self.token.expiration_date = None
+        self.token_should_be(self.reauthorized_token)
+
+    def test_should_reauthorize_when_token_is_expired(self):
+        self.token.token = 'irrelevant token'
+        self.token.expiration_date = datetime.now() - timedelta(minutes=1)
+        self.token_should_be(self.reauthorized_token)
+
+    def token_should_be(self, expected_token):
+        cache = InMemoryTokenCache()
+        cache.token = self.token
+        oauth = OAuthStub(self.reauthorized_token)
+        auth = CachedAuth(oauth, cache)
+        assert_that(auth.authorize(), is_(expected_token))
+
+class OAuthStub:
+    def __init__(self, token):
+        self.token = token
+
+    def authorize(self):
+        return self.token

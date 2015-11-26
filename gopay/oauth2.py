@@ -31,4 +31,18 @@ class AccessToken:
         self.expiration_date = None
 
     def is_expired(self):
-        return self.token is None
+        return self.token is None or not isinstance(self.expiration_date, datetime) or self.expiration_date < datetime.now()
+
+
+class CachedAuth:
+    def __init__(self, oauth, cache):
+        self.oauth = oauth
+        self.cache = cache
+
+    def authorize(self):
+        if self.cache.token.is_expired():
+            return self.oauth.authorize()
+        return self.cache.token
+
+class InMemoryTokenCache:
+    pass
