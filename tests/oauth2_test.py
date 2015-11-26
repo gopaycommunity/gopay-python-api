@@ -51,6 +51,7 @@ class OAuth2Test(unittest.TestCase):
 class CachedOAuthTest(unittest.TestCase):
     def setUp(self):
         self.token = AccessToken()
+        self.is_token_in_cache = True
         self.reauthorized_token = 'irrelevant access token'
 
     def test_should_use_unexpired_token(self):
@@ -72,16 +73,29 @@ class CachedOAuthTest(unittest.TestCase):
         self.token.expiration_date = datetime.now() - timedelta(minutes=1)
         self.token_should_be(self.reauthorized_token)
 
+    def test_should_reauthorize_when_no_token_exists(self):
+        self.token = None
+        self.token_should_be(self.reauthorized_token)
+
+    def test_should_reauthorize_when_cache_is_empty(self):
+        self.is_token_in_cache = False
+        self.token_should_be(self.reauthorized_token)
+
     def token_should_be(self, expected_token):
         cache = InMemoryTokenCache()
-        cache.token = self.token
-        oauth = OAuthStub(self.reauthorized_token)
+        if self.is_token_in_cache:
+            cache.tokens['client'] = self.token
+        oauth = OAuthStub('client', self.reauthorized_token)
         auth = CachedAuth(oauth, cache)
         assert_that(auth.authorize(), is_(expected_token))
 
 class OAuthStub:
-    def __init__(self, token):
+    def __init__(self, client, token):
+        self.client = client
         self.token = token
 
     def authorize(self):
         return self.token
+
+    def get_client(self):
+        return self.client

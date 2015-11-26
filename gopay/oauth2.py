@@ -47,9 +47,15 @@ class CachedAuth:
         self.cache = cache
 
     def authorize(self):
-        if self.cache.token.is_expired():
+        client = self.oauth.get_client()
+        token = self.cache.get_token(client)
+        if not isinstance(token, AccessToken) or token.is_expired():
             return self.oauth.authorize()
-        return self.cache.token
+        return token
 
 class InMemoryTokenCache:
-    pass
+    def __init__(self):
+        self.tokens = {}
+
+    def get_token(self, client):
+        return self.tokens.get(client)
