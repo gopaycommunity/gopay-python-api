@@ -3,8 +3,8 @@
 
 ## Requirements
 
-- Python >= 2.5 (ternary operator), ? Python  3 ?
-- libraries `unirest`
+- Python >= 2.6
+- libraries: `unirest` (works in Python 2.X)
 
 ## Installation
 
