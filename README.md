@@ -211,8 +211,8 @@ Available logger | Description |
 ## Contributing
 
 Contributions from others would be very much appreciated! Send
-[pull request](https://github.com/gopaycommunity/payments-sdk-python/pulls)/
-[issue](https://github.com/gopaycommunity/payments-sdk-python/issues). Thanks!
+[pull request](https://github.com/gopaycommunity/gopay-python-sdk/pulls)/
+[issue](https://github.com/gopaycommunity/gopay-python-sdk/issues). Thanks!
 
 ## License
 
