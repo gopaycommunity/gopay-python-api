@@ -1,6 +1,8 @@
 
 # GoPay's Python SDK for Payments REST API
 
+[![Build Status](https://travis-ci.org/gopaycommunity/gopay-python-sdk.svg?branch=master)](https://travis-ci.org/gopaycommunity/gopay-python-sdk)
+
 ## Requirements
 
 - Python >= 2.6
