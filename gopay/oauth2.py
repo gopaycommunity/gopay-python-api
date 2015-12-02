@@ -1,5 +1,5 @@
 from base64 import b64encode
-from api import FORM
+from gopay.api import FORM
 from datetime import datetime, timedelta
 
 

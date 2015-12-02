@@ -1,4 +1,4 @@
-from http import Request
+from gopay.http import Request
 from gopay.enums import Language
 import json
 

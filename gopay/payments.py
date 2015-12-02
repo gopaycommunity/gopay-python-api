@@ -1,4 +1,4 @@
-from api import JSON, FORM, add_defaults
+from gopay.api import JSON, FORM, add_defaults
 
 
 class Payments:

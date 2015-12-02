@@ -1,8 +1,8 @@
-from http import Browser, null_logger
-from api import GoPay, add_defaults
-from oauth2 import OAuth2, InMemoryTokenCache, CachedAuth
-from payments import Payments
-from enums import Language, TokenScope
+from gopay.http import Browser, null_logger
+from gopay.api import GoPay, add_defaults
+from gopay.oauth2 import OAuth2, InMemoryTokenCache, CachedAuth
+from gopay.payments import Payments
+from gopay.enums import Language, TokenScope
 
 
 def payments(config, services=None):
