@@ -13,7 +13,7 @@ class OAuth2:
         token.response = self.gopay.call(
             'oauth2/token',
             FORM,
-            'Basic ' + b64encode(credentials.encode("utf-8")),
+            'Basic ' + b64encode(credentials.encode('utf-8')).decode('utf-8'),
             {
                 'grant_type': 'client_credentials',
                 'scope': self.gopay.config['scope']
