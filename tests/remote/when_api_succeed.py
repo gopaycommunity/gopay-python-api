@@ -2,7 +2,7 @@ import unittest
 import time
 from tests.remote import given_client, should_return
 from hamcrest import contains_string, is_
-from gopay.enums import Currency
+from gopay.enums import Currency, PaymentStatus
 
 
 class WhenApiSucceedTest(unittest.TestCase):
@@ -23,4 +23,4 @@ class WhenApiSucceedTest(unittest.TestCase):
 
         id_payment = payment.json['id']
         status = gopay.get_status(id_payment)
-        should_return(status, 'state', is_('CREATED'))
+        should_return(status, 'state', is_(PaymentStatus.CREATED))
