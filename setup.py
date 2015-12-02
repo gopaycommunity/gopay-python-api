@@ -1,7 +1,7 @@
 from setuptools import setup
-from pypandoc import convert
 
 try:
+    from pypandoc import convert
     long_description = convert('README.md', 'rst')
 except(IOError, ImportError):
     long_description = open('README.md').read()
