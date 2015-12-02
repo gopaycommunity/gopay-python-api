@@ -1,4 +1,7 @@
 *.pyc
+/dist/
+/build/
+*.egg-info/
 # virtualenv
 /bin/
 /lib/

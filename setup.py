@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 from codecs import open
 from os import path
 
@@ -8,7 +8,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='gopay',
-    version='1.0.0.rc0',
+    version='1.0.0rc0',
     description='GoPay\'s Python SDK for Payments REST API',
     long_description=long_description,
     url='https://github.com/gopaycommunity/gopay-python-sdk',
@@ -31,6 +31,6 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
     keywords='gopay payments sdk rest api',
-    packages=find_packages(exclude=['examples', 'tests']),
+    packages=['gopay'],
     install_requires=['requests'],
 )
