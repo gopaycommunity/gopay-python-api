@@ -1,7 +1,10 @@
 from gopay import payments, add_defaults
 from hamcrest import *
-from test.test_support import EnvironmentVarGuard
-
+import sys
+if sys.version_info < (3, 0):
+    from test.test_support import EnvironmentVarGuard
+else:
+    from test.support import EnvironmentVarGuard
 
 def given_client(config=None):
     env = EnvironmentVarGuard()
