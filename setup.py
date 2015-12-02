@@ -1,11 +1,16 @@
 from setuptools import setup
 from pypandoc import convert
 
+try:
+    long_description = convert('README.md', 'rst')
+except(IOError, ImportError):
+    long_description = open('README.md').read()
+
 setup(
     name='gopay',
     version='1.0.0',
     description='GoPay\'s Python SDK for Payments REST API',
-    long_description=convert('README.md', 'rst'),
+    long_description=long_description,
     url='https://github.com/gopaycommunity/gopay-python-sdk',
     author='GoPay',
     author_email='integrace@gopay.cz',
