@@ -3,7 +3,7 @@ from pypandoc import convert
 
 setup(
     name='gopay',
-    version='1.0.0rc2',
+    version='1.0.0',
     description='GoPay\'s Python SDK for Payments REST API',
     long_description=convert('README.md', 'rst'),
     url='https://github.com/gopaycommunity/gopay-python-sdk',
