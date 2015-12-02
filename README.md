@@ -219,4 +219,4 @@ Contributions from others would be very much appreciated! Send
 ## License
 
 Copyright (c) 2015 GoPay.com. MIT Licensed,
-see [LICENSE](/LICENSE) for details.
+see [LICENSE](https://github.com/gopaycommunity/gopay-python-sdk/blob/master/LICENSE) for details.
