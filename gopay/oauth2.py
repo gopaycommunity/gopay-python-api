@@ -8,11 +8,12 @@ class OAuth2:
         self.gopay = gopay
 
     def authorize(self):
+        credentials = self.gopay.config['clientId'] + ':' + self.gopay.config['clientSecret']
         token = AccessToken()
         token.response = self.gopay.call(
             'oauth2/token',
             FORM,
-            'Basic ' + b64encode(self.gopay.config['clientId'] + ':' + self.gopay.config['clientSecret']),
+            'Basic ' + b64encode(credentials.encode("utf-8")),
             {
                 'grant_type': 'client_credentials',
                 'scope': self.gopay.config['scope']
