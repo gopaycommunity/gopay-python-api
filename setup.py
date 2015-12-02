@@ -1,16 +1,11 @@
 from setuptools import setup
-from codecs import open
-from os import path
-
-here = path.abspath(path.dirname(__file__))
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+from pypandoc import convert
 
 setup(
     name='gopay',
-    version='1.0.0rc0',
+    version='1.0.0rc1',
     description='GoPay\'s Python SDK for Payments REST API',
-    long_description=long_description,
+    long_description=convert('README.md', 'rst'),
     url='https://github.com/gopaycommunity/gopay-python-sdk',
     author='GoPay',
     author_email='integrace@gopay.cz',
