@@ -5,8 +5,8 @@
 
 ## Requirements
 
-- Python >= 2.6
-- libraries: `unirest` (works in Python 2.X)
+- Python >= 2.6, Python 3
+- dependencies: [`requests`](https://github.com/kennethreitz/requests)
 
 ## Installation
 
