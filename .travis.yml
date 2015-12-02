@@ -13,10 +13,3 @@ install:
   - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install unittest2; fi
 script:
   - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then unit2 discover -v -p "*_test.py"; else python -m unittest discover -s tests/ -p "*_test.py"; fi
-# unirest (poster) bug - https://github.com/Mashape/unirest-python/issues/19
-matrix:
-  allow_failures:
-    - python: "3.2"
-    - python: "3.3"
-    - python: "3.4"
-    - python: "3.5"
