@@ -11,6 +11,6 @@ payments = gopay.payments({
 
 response = payments.get_status('payment id')
 if response.has_succeed():
-    print "hooray, API returned " + str(response)
+    print("hooray, API returned " + str(response))
 else:
-    print "oops, API returned " + str(response.status_code) + ": " + str(response)
+    print("oops, API returned " + str(response.status_code) + ": " + str(response))

@@ -31,6 +31,6 @@ def should_return_error(response, status_code, expected_error):
 
 
 def debug_logger(request, response):
-    print vars(request)
-    print vars(response)
-    print ""
+    print(vars(request))
+    print(vars(response))
+    print("")

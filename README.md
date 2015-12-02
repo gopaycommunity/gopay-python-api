@@ -85,11 +85,11 @@ SDK throws no exception. Please create an issue if you catch one.
 ```python
 response = payments.create_payment({})
 if response.has_succeed():
-    print "hooray, API returned " + str(response)
+    print("hooray, API returned " + str(response))
     return response.json['gw_url'] # url for initiation of gateway
 else:
     # errors format: https://doc.gopay.com/en/?shell#http-result-codes
-    print "oops, API returned " + str(response.status_code) + ": " + str(response)
+    print("oops, API returned " + str(response.status_code) + ": " + str(response))
 ```
 
 Method | Description |
@@ -201,8 +201,8 @@ payments = gopay.payments(
 )
 
 def my_logger(request, response):
-    print vars(request)
-    print vars(response)
+    print(vars(request))
+    print(vars(response))
 ```
 
 Available logger | Description |
