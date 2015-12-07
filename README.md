@@ -213,10 +213,10 @@ Available logger | Description |
 ## Contributing
 
 Contributions from others would be very much appreciated! Send
-[pull request](https://github.com/gopaycommunity/gopay-python-sdk/pulls)/
-[issue](https://github.com/gopaycommunity/gopay-python-sdk/issues). Thanks!
+[pull request](https://github.com/gopaycommunity/gopay-python-api/pulls)/
+[issue](https://github.com/gopaycommunity/gopay-python-api/issues). Thanks!
 
 ## License
 
 Copyright (c) 2015 GoPay.com. MIT Licensed,
-see [LICENSE](https://github.com/gopaycommunity/gopay-python-sdk/blob/master/LICENSE) for details.
+see [LICENSE](https://github.com/gopaycommunity/gopay-python-api/blob/master/LICENSE) for details.
