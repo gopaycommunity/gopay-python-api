@@ -1,5 +1,6 @@
 from gopay.enums import PaymentInstrument, BankSwiftCode, Currency, Language
 
+
 class Utils:
 
     GO_ID = '8712700986'

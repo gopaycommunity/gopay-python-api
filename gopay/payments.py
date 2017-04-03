@@ -38,7 +38,6 @@ class Payments:
         return self._api('payments/payment/' + str(id_payment) + '/void-authorization', FORM, None)
 
     def get_payment_instruments(self, go_id, currency):
-        # return self._api('eshops/eshop/' + str(self.gopay.config['goid']) + '/payment-instruments/' + str(currency), '', {})
         return self._api('eshops/eshop/' + str(go_id) + '/payment-instruments/' + str(currency), '', None)
 
     def get_account_statement(self, account_statement):
