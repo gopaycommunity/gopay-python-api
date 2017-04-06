@@ -5,6 +5,12 @@ from utils import Utils
 
 class TestCreatePayment(unittest.TestCase):
 
+    """ TestCreatePayment class
+    
+    To execute test for certain method properly it is necessary to add prefix 'test' to its name.
+    
+    """
+
     def setUp(self):
         self.payments = gopay.payments({
             'goid': Utils.GO_ID,

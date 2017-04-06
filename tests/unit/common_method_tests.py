@@ -6,6 +6,12 @@ from gopay.enums import Currency, StatementGeneratingFormat
 
 class TestCommonMethods(unittest.TestCase):
 
+    """ TestCommonMethods class
+    
+    To execute test for certain method properly it is necessary to add prefix 'test' to its name.
+    
+    """
+
     def setUp(self):
         self.payments = gopay.payments({
             'goid': Utils.GO_ID,
