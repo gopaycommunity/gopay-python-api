@@ -187,6 +187,7 @@ class PaymentSubStatus:
     _5026 = '_5026'
     _5027 = '_5027'
     _5028 = '_5028'
+    _5029 = '_5029'
     _5030 = '_5030'
     _5031 = '_5031'
     _5033 = '_5033'
@@ -209,3 +210,7 @@ class PaymentSubStatus:
     _6501 = '_6501'
     _6502 = '_6502'
     _6504 = '_6504'
+
+class SupercashSubType:
+    SUB_TYPE_PREPAID = 'PREPAID'
+    SUB_TYPE_POSTPAID = 'POSTPAID'

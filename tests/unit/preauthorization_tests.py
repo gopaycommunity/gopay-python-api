@@ -19,7 +19,7 @@ class TestPreAuthorization(unittest.TestCase):
             'isProductionMode': False
         })
 
-    def _create_preauthorized_payment(self):
+    def test_create_preauthorized_payment(self):
         base_payment = Utils.create_base_payment()
 
         base_payment.update({'preauthorization': True})
@@ -35,7 +35,7 @@ class TestPreAuthorization(unittest.TestCase):
         else:
             print('Error: ' + str(response.json))
 
-    def _void_authorization(self):
+    def test_void_authorization(self):
         authorized_payment_id = 3049519343
 
         response = self.payments.void_authorization(authorized_payment_id)

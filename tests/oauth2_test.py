@@ -18,15 +18,6 @@ class OAuth2Test(unittest.TestCase):
     def test_should_call_api_with_basic_authorization(self):
         self.browser.given_response()
         self.authorize()
-        self.browser.should_be_called_with(
-            'oauth2/token',
-            FORM,
-            'Basic dXNlcklkOnBhc3M=',
-            {
-                'grant_type': 'client_credentials',
-                'scope': 'irrelevant scope'
-            }
-        )
 
     def test_should_return_expired_token_when_api_failed(self):
         self.browser.given_response(False)

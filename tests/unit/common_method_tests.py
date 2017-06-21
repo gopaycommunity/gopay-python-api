@@ -45,7 +45,7 @@ class TestCommonMethods(unittest.TestCase):
         else:
             print('Error: ' + str(instruments_list.json))
 
-    def _statement_generating(self):
+    def test_statement_generating(self):
         account_statement = {
             'date_from': '2017-01-01',
             'date_to': '2017-02-27',

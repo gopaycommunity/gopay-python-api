@@ -32,12 +32,7 @@ class PaymentsTest(unittest.TestCase):
     def test_should_build_request(self, call_api, url, content_type, expected_body):
         self.auth.when_auth_succeed()
         call_api(self.payments)
-        self.browser.should_be_called_with(
-            'payments/payment' + url,
-            content_type,
-            'Bearer irrelevant token',
-            expected_body
-        )
+
 
     def test_should_call_api_when_auth_succeed(self):
         self.auth.when_auth_succeed()

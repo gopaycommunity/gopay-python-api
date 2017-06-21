@@ -49,6 +49,32 @@ class Payments:
     def find_eet_receipts_by_filter(self, filter):
         return self._api('eet-receipts', JSON, filter)
 
+    def create_supercash_coupon(self, base_coupon):
+        base_coupon.update({'go_id': self.gopay.config['goid']})
+        return self._api('supercash/coupon', JSON, base_coupon)
+
+    def create_supercash_batch(self, base_batch):
+        base_batch.update({'go_id': self.gopay.config['goid']})
+        return self._api('supercash/coupon/batch', JSON, base_batch)
+
+    def get_supercash_coupon_batch_status(self, batch_id):
+        return self._api('batch/' + str(batch_id), FORM, None)
+
+    def get_supercash_coupon_batch(self, batch_id):
+        return self._api('supercash/coupon/find?batch_request_id=' + str(batch_id) + '&go_id='
+                         + str(self.gopay.config['goid']), FORM, None)
+
+    def find_supercash_coupons(self, paymentSessionId):
+        if type(paymentSessionId) is list:
+            ids_string = ','.join(map(str, paymentSessionId))
+        else:
+            ids_string = str(paymentSessionId)
+        return self._api('supercash/coupon/find?payment_session_id_list=' + ids_string + '&go_id='
+                         + str(self.gopay.config['goid']), FORM, None)
+
+    def get_supercash_coupon(self, coupon_id):
+        return self._api('supercash/coupon/' + str(coupon_id), FORM, None)
+
     def url_to_embedjs(self):
         return self.gopay.url('gp-gw/js/embed.js')
 
