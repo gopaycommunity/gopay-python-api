@@ -34,6 +34,9 @@ class Payments:
     def capture_authorization(self, id_payment):
         return self._api('payments/payment/' + str(id_payment) + '/capture', FORM, None)
 
+    def capture_authorization_partial(self, id_payment, capture_payment):
+        return self._api('payments/payment/' + str(id_payment) + '/capture', JSON, capture_payment)
+
     def void_authorization(self, id_payment):
         return self._api('payments/payment/' + str(id_payment) + '/void-authorization', FORM, None)
 
