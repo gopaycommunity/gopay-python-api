@@ -1,5 +1,0 @@
-pkginfo==1.2.1
-pypandoc==1.1.2
-requests-toolbelt==0.5.0
-twine==1.6.4
-wheel==0.24.0
