@@ -29,16 +29,16 @@ class Payments:
         return self._api('payments/payment/' + str(id_payment) + '/create-recurrence', JSON, payment)
 
     def void_recurrence(self, id_payment):
-        return self._api('payments/payment/' + str(id_payment) + '/void-recurrence', FORM, None)
+        return self._api('payments/payment/' + str(id_payment) + '/void-recurrence', FORM, {})
 
     def capture_authorization(self, id_payment):
-        return self._api('payments/payment/' + str(id_payment) + '/capture', FORM, None)
+        return self._api('payments/payment/' + str(id_payment) + '/capture', FORM, {})
 
     def capture_authorization_partial(self, id_payment, capture_payment):
         return self._api('payments/payment/' + str(id_payment) + '/capture', JSON, capture_payment)
 
     def void_authorization(self, id_payment):
-        return self._api('payments/payment/' + str(id_payment) + '/void-authorization', FORM, None)
+        return self._api('payments/payment/' + str(id_payment) + '/void-authorization', FORM, {})
 
     def get_payment_instruments(self, go_id, currency):
         return self._api('eshops/eshop/' + str(go_id) + '/payment-instruments/' + str(currency), '', None)
