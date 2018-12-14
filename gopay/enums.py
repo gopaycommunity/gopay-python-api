@@ -54,6 +54,8 @@ class PaymentInstrument:
     GOPAY = 'GOPAY'
     PAYPAL = 'PAYPAL'
     BITCOIN = 'BITCOIN'
+    GPAY = 'GPAY'
+    ACCOUNT = 'ACCOUNT'
 
 
 class StatementGeneratingFormat:
@@ -161,6 +163,7 @@ class PaymentSubStatus:
     _3001 = '_3001'
     _3002 = '_3002'
     _3003 = '_3003'
+    _5001 = '_5001'
     _5002 = '_5002'
     _5003 = '_5003'
     _5004 = '_5004'
@@ -179,6 +182,7 @@ class PaymentSubStatus:
     _5017 = '_5017'
     _5018 = '_5018'
     _5019 = '_5019'
+    _5020 = '_5020'
     _5021 = '_5021'
     _5022 = '_5022'
     _5023 = '_5023'
@@ -196,6 +200,8 @@ class PaymentSubStatus:
     _5037 = '_5037'
     _5038 = '_5038'
     _5039 = '_5039'
+    _5040 = '_5040'
+    _5041 = '_5041'
     _5042 = '_5042'
     _5043 = '_5043'
     _5044 = '_5044'
