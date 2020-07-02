@@ -1,4 +1,4 @@
-PyHamcrest==1.8.5
-requests==2.8.1
-six==1.10.0
+PyHamcrest==2.0.2
+requests==2.24.0
 unittest-data-provider==1.0.1
+deprecated==1.2.10

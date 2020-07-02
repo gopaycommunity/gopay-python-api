@@ -40,7 +40,7 @@ class TestRecurrentPayment(unittest.TestCase):
         else:
             print('Error: ' + str(response.json))
 
-    def test_void_recurrence(self):
+    def _void_recurrence(self):
         recurrent_payment_id = 3049520773
 
         response = self.payments.void_recurrence(recurrent_payment_id)

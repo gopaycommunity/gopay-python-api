@@ -1,14 +1,15 @@
-import os
 from setuptools import setup
+from os import path
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+this_directory = path.abspath(path.dirname(__file__))
+with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
     name='gopay',
-    version='1.2.2',
-    description='GoPay\'s Python SDK for Payments REST API',
-    long_description=read('README.rst'),
+    version='1.2.4',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     url='https://github.com/gopaycommunity/gopay-python-sdk',
     author='GoPay',
     author_email='integrace@gopay.cz',

@@ -35,7 +35,7 @@ class TestCommonMethods(unittest.TestCase):
         else:
             print('Error: ' + str(response.json))
 
-    def _payment_instrument_root(self):
+    def test_payment_instrument_root(self):
         instruments_list = self.payments.get_payment_instruments(Utils.GO_ID, Currency.CZECH_CROWNS)
 
         if "error_code" not in str(instruments_list.json):

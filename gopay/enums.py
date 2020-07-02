@@ -12,6 +12,9 @@ class Currency:
     HUNGARIAN_FORINT = 'HUF'
     BRITISH_POUND = 'GBP'
     US_DOLLAR = 'USD'
+    ROMANIAN_LEU = 'RON'
+    KUNA = 'HRK'
+    BULGARIAN_LEV = 'BGN'
 
 
 class TokenScope:
@@ -42,6 +45,14 @@ class Language:
     SLOVAK = 'SK'
     GERMAN = 'DE'
     RUSSIAN = 'RU'
+    POLISH = 'PL'
+    HUNGARIAN = 'HU'
+    FRENCH = 'FR'
+    ROMANIAN = 'RO'
+    BULGARIAN = 'BG'
+    CROATIAN = 'HR'
+    ITALIAN = 'IT'
+    SPANISH = 'ES'
 
 
 class PaymentInstrument:
@@ -56,6 +67,7 @@ class PaymentInstrument:
     BITCOIN = 'BITCOIN'
     GPAY = 'GPAY'
     ACCOUNT = 'ACCOUNT'
+    APPLE_PAY = 'APPLE_PAY'
 
 
 class StatementGeneratingFormat:
