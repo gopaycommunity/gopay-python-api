@@ -31,5 +31,5 @@ setup(
     ],
     keywords='gopay payments sdk rest api',
     packages=['gopay'],
-    install_requires=['requests'],
+    install_requires=['requests', 'deprecated>=1.2.0'],
 )
