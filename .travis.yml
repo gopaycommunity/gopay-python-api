@@ -1,15 +1,15 @@
 sudo: false
 language: python
 python:
-  - "2.6"
   - "2.7"
-  - "3.2"
-  - "3.3"
   - "3.4"
   - "3.5"
-  - "pypy"
+  - "3.6"
+  - "3.7"
+  - "3.8"
+  - "pypy2"
+  - "pypy3"
 install:
-  - pip install -r requirements.txt
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install unittest2; fi
+  - pip install -r requirements-test.txt
 script:
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then unit2 discover -v -p "*_test.py"; else python -m unittest discover -s tests/ -p "*_test.py"; fi
+  - python -m unittest discover -s tests/ -p "*_test.py"

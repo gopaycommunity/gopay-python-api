@@ -52,12 +52,12 @@ class Payments:
     def find_eet_receipts_by_filter(self, filter):
         return self._api('eet-receipts', JSON, filter)
 
-    @deprecated("1.2.4", reason="Payment Method Supercash is no longer supported")
+    @deprecated(version="1.2.4", reason="Payment Method Supercash is no longer supported")
     def create_supercash_coupon(self, base_coupon):
         base_coupon.update({'go_id': self.gopay.config['goid']})
         return self._api('supercash/coupon', JSON, base_coupon)
 
-    @deprecated("1.2.4", reason="Payment Method Supercash is no longer supported")
+    @deprecated(version="1.2.4", reason="Payment Method Supercash is no longer supported")
     def create_supercash_batch(self, base_batch):
         base_batch.update({'go_id': self.gopay.config['goid']})
         return self._api('supercash/coupon/batch', JSON, base_batch)

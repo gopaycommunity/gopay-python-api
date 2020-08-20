@@ -3,14 +3,16 @@
 
 [![Build Status](https://travis-ci.org/gopaycommunity/gopay-python-api.svg?branch=master)](https://travis-ci.org/gopaycommunity/gopay-python-api)
 
-## Requirements
+## Requirements
 
-- Python >= 2.6, Python 3
-- dependencies: [`requests`](https://github.com/kennethreitz/requests)
+- Python >= 2.7, Python >= 3.4
+- dependencies:
+    - [`requests`](https://github.com/kennethreitz/requests)
+    - [`deprecated`](https://github.com/tantale/deprecated)
 
-## Installation
+## Installation
 
-The simplest way to install SDK is to use [PIP](https://docs.python.org/2.7/installing/):
+The simplest way to install SDK is to use [PIP](https://docs.python.org/3/installing/):
 
 ```bash
 pip install gopay
