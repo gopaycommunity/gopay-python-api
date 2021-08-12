@@ -17,7 +17,7 @@ class TestOnDemandPayment(unittest.TestCase):
             'goid': Utils.GO_ID,
             'clientId': Utils.CLIENT_ID,
             'clientSecret': Utils.CLIENT_SECRET,
-            'isProductionMode': False
+            'gatewayUrl': Utils.GATEWAY_URL
         })
 
     def _create_on_demand_payment(self):

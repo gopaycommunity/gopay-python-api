@@ -53,7 +53,7 @@ class GoPayTest(unittest.TestCase):
 
     def call(self, config, **kwargs):
         config = add_defaults(config, {
-            'isProductionMode': False,
+            'gatewayUrl': 'https://gw.sandbox.gopay.com/',
             'language': Language.ENGLISH
         })
         gopay = GoPay(config, self.browser)

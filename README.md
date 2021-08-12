@@ -28,7 +28,7 @@ payments = gopay.payments({
     'goid': 'my goid',
     'clientId': 'my id',
     'clientSecret': 'my secret',
-    'isProductionMode': False
+  'gatewayUrl': 'url'
 })
 
 # full configuration
@@ -36,7 +36,7 @@ payments = gopay.payments({
     'goid': 'my goid',
     'clientId': 'my id',
     'clientSecret': 'my secret',
-    'isProductionMode': False,
+    'gatewayUrl': 'url/',
     'scope': gopay.TokenScope.ALL,
     'language': gopay.Language.CZECH,
     'timeout': 30
@@ -165,7 +165,7 @@ But you can implement your cache and store tokens in Memcache, Redis, files, ...
 
 Your cache must implement template methods `get_token` and `set_token`.
 Be aware that there are two [scopes](https://doc.gopay.com/#access-token) (`TokenScope`) and
-SDK can be used for different clients (`clientId`, `isProductionMode`). So `client` passed to
+SDK can be used for different clients (`clientId`, `gatewayUrl`). So `client` passed to
 methods is unique identifier (`string`) that is built for current environment.
 Below you can see example implementation of caching tokens in memory:
 

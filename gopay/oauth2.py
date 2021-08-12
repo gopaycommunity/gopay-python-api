@@ -27,7 +27,7 @@ class OAuth2:
     def get_client(self):
         return '-'.join([
             self.gopay.config['clientId'],
-            '1' if self.gopay.config['isProductionMode'] else '0',
+            'https://gw.sandbox.gopay.com/',
             self.gopay.config['scope']]
         )
 

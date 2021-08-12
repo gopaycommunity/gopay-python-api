@@ -6,7 +6,7 @@ class Utils:
     GO_ID = '8712700986'
     CLIENT_ID = '1689337452'
     CLIENT_SECRET = 'CKr7FyEE'
-
+    GATEWAY_URL = 'https://gw.sandbox.gopay.com/'
     CLIENT_ID_EET = "1365575992"
     CLIENT_SECRET_EET = "NUVsrv4W"
     GO_ID_EET = '8289213768'

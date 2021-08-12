@@ -17,7 +17,7 @@ class TestRecurrentPayment(unittest.TestCase):
             'goid': Utils.GO_ID,
             'clientId': Utils.CLIENT_ID,
             'clientSecret': Utils.CLIENT_SECRET,
-            'isProductionMode': False
+            'gatewayUrl': Utils.GATEWAY_URL
         })
 
     def _create_recurrent_payment(self):

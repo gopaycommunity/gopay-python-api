@@ -1,3 +1,5 @@
+import logging
+
 from gopay.http import Request
 from gopay.enums import Language
 import json
@@ -12,6 +14,8 @@ class GoPay:
         self.config = config
 
     def url(self, path):
+        if 'gatewayUrl' in self.config:
+            return self.config['gatewayUrl'] + path
         host = 'https://gate.gopay.cz/' if self.config['isProductionMode'] else 'https://gw.sandbox.gopay.com/'
         return host + path
 

@@ -13,7 +13,7 @@ class OAuth2Test(unittest.TestCase):
             'clientId': 'userId',
             'clientSecret': 'pass',
             'scope': 'irrelevant scope',
-            'isProductionMode': False
+            'gatewayUrl': 'https://gw.sandbox.gopay.com/'
         })
         self.oauth = OAuth2(self.browser)
 
