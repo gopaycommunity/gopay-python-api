@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='gopay',
-    version='1.2.5',
+    version='1.2.6',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/gopaycommunity/gopay-python-sdk',
@@ -19,9 +19,6 @@ setup(
         'Intended Audience :: Developers',
         "Topic :: Software Development :: Libraries :: Python Modules",
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
