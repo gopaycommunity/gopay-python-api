@@ -5,7 +5,7 @@
 
 ## Requirements
 
-- Python >= 2.7, Python >= 3.4
+- Python >= 3.6
 - dependencies:
     - [`requests`](https://github.com/kennethreitz/requests)
     - [`deprecated`](https://github.com/tantale/deprecated)
