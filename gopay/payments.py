@@ -1,5 +1,6 @@
+from locale import str
+
 from gopay.api import JSON, FORM, add_defaults
-from deprecated import deprecated
 
 class Payments:
     def __init__(self, gopay, oauth):
@@ -41,7 +42,7 @@ class Payments:
         return self._api('payments/payment/' + str(id_payment) + '/void-authorization', FORM, {})
 
     def get_payment_instruments(self, go_id, currency):
-        return self._api('eshops/eshop/' + str(go_id) + '/payment-instruments/' + str(currency), '', None)
+        return self._api('eshops/eshop/' + go_id + '/payment-instruments/' + currency, '', None)
 
     def get_account_statement(self, account_statement):
         return self._api('accounts/account-statement', JSON, account_statement)
@@ -51,16 +52,6 @@ class Payments:
 
     def find_eet_receipts_by_filter(self, filter):
         return self._api('eet-receipts', JSON, filter)
-
-    @deprecated(version="1.2.4", reason="Payment Method Supercash is no longer supported")
-    def create_supercash_coupon(self, base_coupon):
-        base_coupon.update({'go_id': self.gopay.config['goid']})
-        return self._api('supercash/coupon', JSON, base_coupon)
-
-    @deprecated(version="1.2.4", reason="Payment Method Supercash is no longer supported")
-    def create_supercash_batch(self, base_batch):
-        base_batch.update({'go_id': self.gopay.config['goid']})
-        return self._api('supercash/coupon/batch', JSON, base_batch)
 
     def get_supercash_coupon_batch_status(self, batch_id):
         return self._api('batch/' + str(batch_id), FORM, None)

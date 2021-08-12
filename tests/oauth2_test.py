@@ -1,8 +1,10 @@
 import unittest
 from hamcrest import *
 from gopay.oauth2 import *
-from test_doubles import GoPayMock
+
 from datetime import datetime, timedelta
+
+from tests.test_doubles import GoPayMock
 
 
 class OAuth2Test(unittest.TestCase):

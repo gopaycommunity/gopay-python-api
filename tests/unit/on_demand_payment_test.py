@@ -1,6 +1,6 @@
 import unittest
 import gopay
-from utils import Utils
+from tests.unit.utils import Utils
 from gopay.enums import Recurrence
 
 

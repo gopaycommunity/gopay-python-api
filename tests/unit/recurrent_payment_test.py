@@ -1,7 +1,7 @@
 import unittest
 import gopay
-from utils import Utils
 from gopay.enums import Recurrence
+from tests.unit.utils import Utils
 
 
 class TestRecurrentPayment(unittest.TestCase):

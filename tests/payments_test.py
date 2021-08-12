@@ -1,13 +1,16 @@
 import unittest
+
 from hamcrest import *
 from unittest_data_provider import data_provider
-from gopay.payments import Payments, FORM, JSON
+
 from gopay.oauth2 import AccessToken
-from test_doubles import GoPayMock
+from gopay.payments import Payments, FORM, JSON
+from tests.test_doubles import GoPayMock
 
 
 class PaymentsTest(unittest.TestCase):
     def setUp(self):
+
         self.browser = GoPayMock({
             'language': 'default',
             'goid': 'id',

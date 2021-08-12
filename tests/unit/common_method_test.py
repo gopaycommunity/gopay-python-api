@@ -1,7 +1,7 @@
 import unittest
 import gopay
-from utils import Utils
 from gopay.enums import Currency, StatementGeneratingFormat
+from tests.unit.utils import Utils
 
 
 class TestCommonMethods(unittest.TestCase):
