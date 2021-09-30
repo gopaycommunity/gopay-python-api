@@ -1,13 +1,21 @@
 from base64 import b64encode
-from gopay.api import FORM
+from gopay.api import FORM, GoPay
 from datetime import datetime, timedelta
 
+class AccessToken:
+    def __init__(self) -> None:
+        self.token = None
+        self.response = None
+        self.expiration_date = None
 
+    def is_expired(self) -> bool:
+        return self.token is None or not isinstance(self.expiration_date,
+                                                    datetime) or self.expiration_date < datetime.now()
 class OAuth2:
-    def __init__(self, gopay):
+    def __init__(self, gopay: GoPay) -> None:
         self.gopay = gopay
 
-    def authorize(self):
+    def authorize(self) -> AccessToken:
         credentials = self.gopay.config['clientId'] + ':' + self.gopay.config['clientSecret']
         token = AccessToken()
         token.response = self.gopay.call(
@@ -24,31 +32,28 @@ class OAuth2:
             token.expiration_date = datetime.now() + timedelta(seconds=token.response.json['expires_in'])
         return token
 
-    def get_client(self):
+    def get_client(self) -> str:
         return '-'.join([
             self.gopay.config['clientId'],
             'https://gw.sandbox.gopay.com/',
             self.gopay.config['scope']]
         )
-
-
-class AccessToken:
+class InMemoryTokenCache:
     def __init__(self):
-        self.token = None
-        self.response = None
-        self.expiration_date = None
+        self.tokens = {}
 
-    def is_expired(self):
-        return self.token is None or not isinstance(self.expiration_date,
-                                                    datetime) or self.expiration_date < datetime.now()
+    def get_token(self, client: str) -> AccessToken:
+        return self.tokens.get(client)
 
+    def set_token(self, client: str, token: AccessToken) -> None:
+        self.tokens[client] = token
 
 class CachedAuth:
-    def __init__(self, oauth, cache):
+    def __init__(self, oauth: OAuth2, cache: InMemoryTokenCache) -> None:
         self.oauth = oauth
         self.cache = cache
 
-    def authorize(self):
+    def authorize(self) -> AccessToken:
         client = self.oauth.get_client()
         token = self.cache.get_token(client)
         if not isinstance(token, AccessToken) or token.is_expired():
@@ -57,12 +62,3 @@ class CachedAuth:
         return token
 
 
-class InMemoryTokenCache:
-    def __init__(self):
-        self.tokens = {}
-
-    def get_token(self, client):
-        return self.tokens.get(client)
-
-    def set_token(self, client, token):
-        self.tokens[client] = token
