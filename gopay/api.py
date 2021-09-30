@@ -15,20 +15,22 @@ class GoPay:
 
     def url(self, path: str):
         if 'gatewayUrl' in self.config:
-            return self.config['gatewayUrl'] + path
-        host = 'https://gate.gopay.cz/' if self.config['isProductionMode'] else 'https://gw.sandbox.gopay.com/'
+            host = self.config['gatewayUrl']
+            if not self.config["gatewayUrl"].endswith('/api'):
+                host += '/api'
+            return host + path
+        host = 'https://gate.gopay.cz/api' if self.config['isProductionMode'] else 'https://gw.sandbox.gopay.com/api'
         return host + path
 
     def call(self, url: str, content_type: str, authorization: str, data: Dict) -> Response:
         request = Request()
-        request.url = self.url('api/' + url)
+        request.url = self.url(url)
 
         request.headers = {
             'Accept': 'application/json',
             'Accept-Language': 'cs-CZ' if self.config['language'] in [Language.CZECH, Language.SLOVAK] else 'en-US',
             'Authorization': authorization
         }
-        
         if content_type:
             request.headers["Content-Type"] = content_type 
 
