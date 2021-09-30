@@ -1,4 +1,3 @@
-import logging
 from typing import Dict
 
 from gopay.http import Request, Response, Browser
