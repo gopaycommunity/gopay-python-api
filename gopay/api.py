@@ -23,19 +23,14 @@ class GoPay:
         request = Request()
         request.url = self.url('api/' + url)
 
+        request.headers = {
+            'Accept': 'application/json',
+            'Accept-Language': 'cs-CZ' if self.config['language'] in [Language.CZECH, Language.SLOVAK] else 'en-US',
+            'Authorization': authorization
+        }
+        
         if content_type:
-            request.headers = {
-                'Accept': 'application/json',
-                'Accept-Language': 'cs-CZ' if self.config['language'] in [Language.CZECH, Language.SLOVAK] else 'en-US',
-                'Content-Type': content_type,
-                'Authorization': authorization
-            }
-        else:
-            request.headers = {
-                'Accept': 'application/json',
-                'Accept-Language': 'cs-CZ' if self.config['language'] in [Language.CZECH, Language.SLOVAK] else 'en-US',
-                'Authorization': authorization
-            }
+            request.headers["Content-Type"] = content_type 
 
         if data is None:
             request.method = 'get'

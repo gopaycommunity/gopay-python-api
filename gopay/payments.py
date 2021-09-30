@@ -1,3 +1,8 @@
+"""
+GoPay REST API wrapper. Sends request to the GoPay payment system using native Python calls
+and get the response as native Python dictionaries.
+"""
+
 from typing import Dict, List, Union
 
 from gopay.api import JSON, FORM, add_defaults, Response, GoPay
@@ -5,13 +10,13 @@ from gopay.oauth2 import OAuth2
 
 
 paymentSessionId = Union[List[str], str]
-number = Union[int, str]
 class Payments:
     def __init__(self, gopay: GoPay, oauth: OAuth2) -> None:
         self.gopay = gopay
         self.oauth = oauth
 
     def create_payment(self, payment: Dict) -> Response:
+        """Create a standard payment"""
         payment = add_defaults(payment, {
             'target': {
                 'type': 'ACCOUNT',
@@ -22,39 +27,51 @@ class Payments:
         return self._api('payments/payment', JSON, payment)
 
     def get_status(self, id_payment: Union[int, str]) -> Response:
+        """Get status of a payment by ID"""
         return self._api(f'payments/payment/{id_payment}', FORM, None)
 
     def refund_payment(self, id_payment: Union[int, str], amount: int) -> Response:
+        """Refund a payment"""
         return self._api(f'payments/payment/{id_payment}/refund', FORM, {'amount': amount})
 
     def refund_payment_eet(self, id_payment: Union[int, str], payment_data: Dict) -> Response:
+        """Refund a payment with EET data"""
         return self._api(f'payments/payment/{id_payment}/refund', JSON, payment_data)
 
     def create_recurrence(self, id_payment: Union[int, str], payment: Dict) -> Response:
+        """Create an on-demand recurrece fo a recurrent payment"""
         return self._api(f'payments/payment/{id_payment}/create-recurrence', JSON, payment)
 
     def void_recurrence(self, id_payment: Union[int, str]) -> Response:
+        """Void a recurrence"""
         return self._api(f'payments/payment/{id_payment}/void-recurrence', FORM, {})
 
     def capture_authorization(self, id_payment: Union[int, str]) -> Response:
+        """Capture a preauthorized payment"""
         return self._api(f'payments/payment/{id_payment}/capture', FORM, {})
 
     def capture_authorization_partial(self, id_payment: Union[int, str], capture_payment: Dict) -> Response:
+        """Capture a part of a preauthorized payment"""
         return self._api(f'payments/payment/{id_payment}/capture', JSON, capture_payment)
 
     def void_authorization(self, id_payment: Union[int, str]) -> Response:
+        """Release a preauthorized payment"""
         return self._api(f'payments/payment/{id_payment}/void-authorization', FORM, {})
 
     def get_payment_instruments(self, go_id: Union[int, str], currency: str) -> Response:
+        """List available payment instruments"""
         return self._api(f'eshops/eshop/{go_id}/payment-instruments/{currency}', '', None)
 
     def get_account_statement(self, account_statement: Dict) -> Response:
+        """Download an account statement"""
         return self._api(f'accounts/account-statement', JSON, account_statement)
 
     def get_eet_receipt_by_payment_id(self, id_payment: Union[int, str]) -> Response:
+        """Get a list of EET receipts for a single payment"""
         return self._api(f'payments/payment/{id_payment}/eet-receipts', JSON, None)
 
     def find_eet_receipts_by_filter(self, filter: Dict) -> Response:
+        """Get a list of EET receipts in a given time span"""
         return self._api(f'eet-receipts', JSON, filter)
 
     def get_supercash_coupon_batch_status(self, batch_id: Union[int, str]) -> Response:
