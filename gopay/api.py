@@ -16,7 +16,9 @@ class GoPay:
     def url(self, path: str):
         if 'gatewayUrl' in self.config:
             host = self.config['gatewayUrl']
-            if not self.config["gatewayUrl"].endswith('/api'):
+            if host.endswith('/'):
+                host = host[:-1]
+            if not host.endswith('/api'):
                 host += '/api'
             return host + path
         host = 'https://gate.gopay.cz/api' if self.config['isProductionMode'] else 'https://gw.sandbox.gopay.com/api'
