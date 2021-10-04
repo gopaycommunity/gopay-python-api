@@ -1,4 +1,5 @@
 from base64 import b64encode
+from typing import Any
 from gopay.api import FORM, GoPay
 from datetime import datetime, timedelta
 
@@ -49,7 +50,7 @@ class InMemoryTokenCache:
         self.tokens[client] = token
 
 class CachedAuth:
-    def __init__(self, oauth: OAuth2, cache: InMemoryTokenCache) -> None:
+    def __init__(self, oauth: OAuth2, cache: Any) -> None:
         self.oauth = oauth
         self.cache = cache
 
