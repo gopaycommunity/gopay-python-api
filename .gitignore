@@ -13,3 +13,4 @@ pip-selfcheck.json
 /python-sdk.iml
 *.iml
 __pycache__/
+venv/
