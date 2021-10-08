@@ -36,7 +36,7 @@ class OAuth2:
     def get_client(self) -> str:
         return '-'.join([
             self.gopay.config['clientId'],
-            'https://gw.sandbox.gopay.com/',
+            self.gopay.url(""),
             self.gopay.config['scope']]
         )
 class InMemoryTokenCache:
