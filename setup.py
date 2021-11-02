@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='gopay',
-    version='1.2.6',
+    version='1.2.7',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/gopaycommunity/gopay-python-sdk',
@@ -22,6 +22,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation :: PyPy',
     ],
     keywords='gopay payments sdk rest api',
