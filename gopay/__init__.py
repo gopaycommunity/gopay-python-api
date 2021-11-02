@@ -5,7 +5,7 @@ from gopay.payments import Payments
 from gopay.enums import Language, TokenScope
 
 
-def payments(config, services=None):
+def payments(config: dict, services: dict=None) -> Payments:
     config = add_defaults(config, {
         'scope': TokenScope.ALL,
         'language': Language.ENGLISH,

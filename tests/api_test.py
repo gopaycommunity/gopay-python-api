@@ -52,8 +52,11 @@ class GoPayTest(unittest.TestCase):
         assert_that(self.browser.request.headers['Accept-Language'], is_(expected_lang))
 
     def call(self, config, **kwargs):
+        gateway_url = ('https://gate.gopay.cz/' 
+                       if config.get("isProductionMode") 
+                       else 'https://gw.sandbox.gopay.com/')
         config = add_defaults(config, {
-            'gatewayUrl': 'https://gw.sandbox.gopay.com/',
+            'gatewayUrl': gateway_url,
             'language': Language.ENGLISH
         })
         gopay = GoPay(config, self.browser)
