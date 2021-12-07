@@ -81,7 +81,13 @@ class Payments:
         return self._api(f'supercash/coupon/{coupon_id}', FORM, None)
 
     def url_to_embedjs(self) -> str:
-        return self.gopay.url('gp-gw/js/embed.js')
+        if 'gatewayUrl' in self.gopay.config:
+            url_base = self.gopay.config.get('gatewayUrl')
+            if not url_base.endswith('/'):
+                url_base += '/'
+        else:
+            url_base = 'https://gate.gopay.cz/' if self.gopay.config.get('isProductionMode') else 'https://gw.sandbox.gopay.com/' 
+        return url_base + 'gp-gw/js/embed.js'
 
     def _api(self, url: str, content_type: str, data: dict) -> Response:
         token = self.oauth.authorize()
