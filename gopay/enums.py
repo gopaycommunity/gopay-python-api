@@ -68,7 +68,7 @@ class PaymentInstrument:
     GPAY = 'GPAY'
     ACCOUNT = 'ACCOUNT'
     APPLE_PAY = 'APPLE_PAY'
-
+    CLICK_TO_PAY = 'CLICK_TO_PAY'
 
 class StatementGeneratingFormat:
     XLS_A = 'XLS_A'
@@ -220,6 +220,7 @@ class PaymentSubStatus:
     _5045 = '_5045'
     _5046 = '_5046'
     _5047 = '_5047'
+    _5048 = '_5048'
     _6001 = '_6001'
     _6002 = '_6002'
     _6003 = '_6003'
