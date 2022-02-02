@@ -5,7 +5,7 @@
 
 ## Requirements
 
-- Python >= 2.7, Python >= 3.4
+- Python >= 3.6
 - dependencies:
     - [`requests`](https://github.com/kennethreitz/requests)
     - [`deprecated`](https://github.com/tantale/deprecated)
@@ -28,7 +28,7 @@ payments = gopay.payments({
     'goid': 'my goid',
     'clientId': 'my id',
     'clientSecret': 'my secret',
-    'isProductionMode': False
+  'gatewayUrl': 'url'
 })
 
 # full configuration
@@ -36,7 +36,7 @@ payments = gopay.payments({
     'goid': 'my goid',
     'clientId': 'my id',
     'clientSecret': 'my secret',
-    'isProductionMode': False,
+    'gatewayUrl': 'url/',
     'scope': gopay.TokenScope.ALL,
     'language': gopay.Language.CZECH,
     'timeout': 30
@@ -49,43 +49,43 @@ payments = gopay.payments({
 
 Required field | Data type | Documentation |
 -------------- | --------- | ----------- |
-`goid` | string | default GoPay account used in `create_payment` if `target` is not specified
-`clientId` | string | https://doc.gopay.com/en/?shell#oauth |
-`clientSecret` | string | https://doc.gopay.com/en/?shell#oauth |
-`isProductionMode` | boolean | [test or production environment?](https://help.gopay.com/en/s/ey) |
+`goid` | string | default GoPay account used in `createPayment` if `target` is not specified
+`clientId` | string | https://doc.gopay.com/#access-token |
+`clientSecret` | string | https://doc.gopay.com/#access-token |
+`gatewayUrl` | string | [test or production environment?](https://help.gopay.com/en/s/uY) |
 
 #### Optional fields
 
 Optional field | Data type | Default value | Documentation |
 -------------- | --------- | ------------- | ------------- |
-`scope` | string | [`gopay.enums.TokenScope.ALL`](/gopay/enums.py) | https://doc.gopay.com/en/?shell#scope |
-`language` | string | [`gopay.enums.Language.ENGLISH`](/gopay/enums.py) | language used in `create_payment` if `lang` is not specified + used for [localization of errors](https://doc.gopay.com/en/?shell#return-errors)
+`scope` | string | [`GoPay\Definition\TokenScope::ALL`](src/Definition/TokenScope.php) | https://doc.gopay.com/#access-token |
+`language` | string | [`GoPay\Definition\Language::ENGLISH`](src/Definition/Language.php) | language used in `createPayment` if `lang` is not specified + used for [localization of errors](https://doc.gopay.com/#errors)
 `timeout` | int | 30 | Browser timeout in seconds |
 
 
-### Available methods
+### Available methods
 
 API | SDK method |
 --- | ---------- |
-[Create standard payment](https://doc.gopay.com/en/#standard-payment) | `payments.create_payment({})` |
-[Status of the payment](https://doc.gopay.com/en/#status-of-the-payment) | `payments.get_status(id_payment)` |
-[Refund of the payment](https://doc.gopay.com/en/#refund-of-the-payment-(cancelation)) | `payments.refund_payment(id_payment, $amount)` |
-[Create recurring payment](https://doc.gopay.com/en/#recurring-payment) | `payments.create_payment({})` |
-[Recurring payment on demand](https://doc.gopay.com/en/#recurring-payment-on-demand) | `payments.create_recurrence(id_payment, {})` |
-[Cancellation of the recurring payment](https://doc.gopay.com/en/#cancellation-of-the-recurring-payment) | `payments.void_recurrence(id_payment)` |
-[Create pre-authorized payment](https://doc.gopay.com/en/#pre-authorized-payment) | `payments.create_payment({})` |
-[Charge of pre-authorized payment](https://doc.gopay.com/en/#charge-of-pre-authorized-payment) | `payments.capture_authorization(id_payment)` |
-[Cancellation of the pre-authorized payment](https://doc.gopay.com/en/#cancellation-of-the-pre-authorized-payment) | `payments.void_authorization(id_payment)` |
-
+[Create standard payment](https://doc.gopay.com/#payment-creation) | `$gopay->createPayment(array $payment)` |
+[Status of the payment](https://doc.gopay.com/#payment-status) | `$gopay->getStatus($id)` |
+[Refund of the payment](https://doc.gopay.com/#payment-refund) | `$gopay->refundPayment($id, $amount)` |
+[Create recurring payment](https://doc.gopay.com/#recurring-payments) | `$gopay->createPayment(array $payment)` |
+[Recurring payment on demand](https://doc.gopay.com/#recurring-on-demand) | `$gopay->createRecurrence($id, array $payment)` |
+[Cancellation of the recurring payment](https://doc.gopay.com/#recurring-payment-cancellation) | `$gopay->voidRecurrence($id)` |
+[Create pre-authorized payment](https://doc.gopay.com/#preauthorized-payments) | `$gopay->createPayment(array $payment)` |
+[Charge of pre-authorized payment](https://doc.gopay.com/#capturing-a-preauthorized-payment) | `$gopay->captureAuthorization($id)` |
+[Cancellation of the pre-authorized payment](https://doc.gopay.com/#cancelling-a-preauthorized-payment) | `$gopay->voidAuthorization($id)` |
 ### SDK response? Has my call succeed?
 
 SDK returns wrapped API response. Every method returns
-[`gopay.http.response` object](/gopay/http.py). Structure of `json/__str__`
+[`GoPay\Http\Response` object](src/Http/Response.php). Structure of `json/__toString`
 should be same as in [documentation](https://doc.gopay.com/en).
 SDK throws no exception. Please create an issue if you catch one.
 
+
 ```python
-response = payments.create_payment({})
+response = payments.create_payment({...})
 if response.has_succeed():
     print("hooray, API returned " + str(response))
     return response.json['gw_url'] # url for initiation of gateway
@@ -101,12 +101,13 @@ Method | Description |
 `response.status_code` | HTTP status code |
 `response.__str__()` | raw body from HTTP response |
 
-### Are required fields and allowed values validated?
 
-**No.** API [validates fields](https://doc.gopay.com/en/?shell#return-errors) pretty extensively
+### Are required fields and allowed values validated?
+
+**No.** API [validates fields](https://doc.gopay.com/#error) pretty extensively
 so there is no need to duplicate validation in SDK. It would only introduce new type of error.
 Or we would have to perfectly simulate API error messages. That's why SDK just calls API which
-behavior is well documented in [doc.gopay.com](https://doc.gopay.com/en).
+behavior is well documented in [doc.gopay.com](https://doc.gopay.com).
 
 *****
 
@@ -125,7 +126,7 @@ if response.has_succeed():
     # render template
 ```
 
-#### [Inline gateway](https://doc.gopay.com/en/#inline-option)
+#### [Inline gateway](https://doc.gopay.com/#inline)
 
 ```jinja
 <form action="<%= $gatewayUrl %>" method="post" id="gopay-payment-button">
@@ -134,7 +135,7 @@ if response.has_succeed():
 </form>
 ```
 
-#### [Redirect gateway](https://doc.gopay.com/en/#redirect-option)
+#### [Redirect gateway](https://doc.gopay.com/#redirect)
 
 ```jinja
 <form action="<%= $gatewayUrl %>" method="post">
@@ -142,9 +143,9 @@ if response.has_succeed():
 </form>
 ```
 
-#### [Asynchronous initialization using JavaScript](https://github.com/gopaycommunity/gopay-php-api/blob/master/examples/js-initialization.md)
+#### [Asynchronous initialization using JavaScript](/examples/js-initialization.md)
 
-### Enums ([Code lists](https://doc.gopay.com/en/#code-lists))
+### Enums ([Code lists](https://doc.gopay.com/#ciselniky)
 
 Instead of hardcoding bank codes string you can use predefined enums.
 Check using enums in  [create-payment example](/examples/create_payment.py)
@@ -158,13 +159,13 @@ Type | Description |
 
 ### Cache access token
 
-Access token expires after 30 minutes so it's expensive to use new token for every request.
+Access token expires after 30 minutes it's expensive to use new token for every request.
 Unfortunately it's default behavior of [`gopay.oauth2.InMemoryTokenCache`](/gopay/oauth2.py).
 But you can implement your cache and store tokens in Memcache, Redis, files, ... It's up to you.
 
 Your cache must implement template methods `get_token` and `set_token`.
-Be aware that there are two [scopes](https://doc.gopay.com/en/?shell#scope) (`TokenScope`) and
-SDK can be used for different clients (`clientId`, `isProductionMode`). So `client` passed to
+Be aware that there are two [scopes](https://doc.gopay.com/#access-token) (`TokenScope`) and
+SDK can be used for different clients (`clientId`, `gatewayUrl`). So `client` passed to
 methods is unique identifier (`string`) that is built for current environment.
 Below you can see example implementation of caching tokens in memory:
 
@@ -220,5 +221,5 @@ Contributions from others would be very much appreciated! Send
 
 ## License
 
-Copyright (c) 2015 GoPay.com. MIT Licensed,
+Copyright (c) 2021 GoPay.com. MIT Licensed,
 see [LICENSE](https://github.com/gopaycommunity/gopay-python-api/blob/master/LICENSE) for details.

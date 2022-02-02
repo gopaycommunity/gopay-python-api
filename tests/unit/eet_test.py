@@ -1,6 +1,6 @@
 import unittest
 import gopay
-from utils import Utils
+from tests.unit.utils import Utils
 from gopay.enums import PaymentInstrument, BankSwiftCode, Currency, Language, VatRate, ItemType, Recurrence
 
 
@@ -17,7 +17,7 @@ class TestEET(unittest.TestCase):
             'goid': Utils.GO_ID_EET,
             'clientId': Utils.CLIENT_ID_EET,
             'clientSecret': Utils.CLIENT_SECRET_EET,
-            'isProductionMode': False
+            'gatewayUrl': Utils.GATEWAY_URL
         })
 
     def create_base_eet_payment(self):

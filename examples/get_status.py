@@ -4,7 +4,7 @@ payments = gopay.payments({
     'goid': 'my goid',
     'clientId': 'my id',
     'clientSecret': 'my secret',
-    'isProductionMode': False,
+    'gatewayUrl': 'https://gw.sandbox.gopay.com/',
     'scope': gopay.TokenScope.ALL,
     'language': gopay.Language.CZECH
 })

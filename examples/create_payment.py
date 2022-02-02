@@ -5,7 +5,7 @@ payments = gopay.payments({
     'goid': 'my goid',
     'clientId': 'my id',
     'clientSecret': 'my secret',
-    'isProductionMode': False
+    'gatewayUrl': 'https://gw.sandbox.gopay.com/'
 })
 
 # recurrent payment must have field ''

@@ -1,4 +1,4 @@
-*.pyc
+*.py[cod]
 /dist/
 /build/
 *.egg-info/
@@ -12,3 +12,5 @@ pip-selfcheck.json
 /.idea/
 /python-sdk.iml
 *.iml
+__pycache__/
+venv/

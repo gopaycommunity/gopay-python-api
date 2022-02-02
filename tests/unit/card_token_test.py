@@ -1,6 +1,6 @@
 import unittest
 import gopay
-from utils import Utils
+from tests.unit.utils import Utils
 from gopay.enums import PaymentInstrument, Currency, Language
 
 
@@ -17,7 +17,7 @@ class TestCardToken(unittest.TestCase):
             'goid': Utils.GO_ID,
             'clientId': Utils.CLIENT_ID,
             'clientSecret': Utils.CLIENT_SECRET,
-            'isProductionMode': False
+            'gatewayUrl': Utils.GATEWAY_URL
         })
 
     @staticmethod

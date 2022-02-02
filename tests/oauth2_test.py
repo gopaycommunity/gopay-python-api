@@ -1,8 +1,10 @@
 import unittest
 from hamcrest import *
 from gopay.oauth2 import *
-from test_doubles import GoPayMock
+
 from datetime import datetime, timedelta
+
+from tests.test_doubles import GoPayMock
 
 
 class OAuth2Test(unittest.TestCase):
@@ -11,7 +13,7 @@ class OAuth2Test(unittest.TestCase):
             'clientId': 'userId',
             'clientSecret': 'pass',
             'scope': 'irrelevant scope',
-            'isProductionMode': False
+            'gatewayUrl': 'https://gw.sandbox.gopay.com/'
         })
         self.oauth = OAuth2(self.browser)
 
@@ -33,7 +35,7 @@ class OAuth2Test(unittest.TestCase):
         assert_that(token.expiration_date, is_not(None))
 
     def test_should_uniquely_identify_current_client(self):
-        assert_that(self.oauth.get_client(), is_('userId-0-irrelevant scope'))
+        assert_that(self.oauth.get_client(), is_('userId--irrelevant scope'))
 
     def authorize(self):
         return self.oauth.authorize()

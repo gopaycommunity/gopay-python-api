@@ -1,4 +1,4 @@
 PyHamcrest==2.0.2
-requests==2.24.0
+requests==2.26.0
 unittest-data-provider==1.0.1
-deprecated==1.2.10
+deprecated==1.2.12
