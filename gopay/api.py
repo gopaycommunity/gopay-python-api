@@ -4,8 +4,8 @@ from gopay.http import Request, Response, Browser
 from gopay.enums import Language
 import json
 
-JSON = 'application/json'
-FORM = 'application/x-www-form-urlencoded'
+JSON = "application/json"
+FORM = "application/x-www-form-urlencoded"
 
 
 class GoPay:
@@ -29,22 +29,26 @@ class GoPay:
         )
         return host + path
 
-    def call(self, url: str, content_type: str, authorization: str, data: Dict) -> Response:
+    def call(
+        self, url: str, content_type: str, authorization: str, data: Dict
+    ) -> Response:
         request = Request()
         request.url = self.url(url)
 
         request.headers = {
-            'Accept': 'application/json',
-            'Accept-Language': 'cs-CZ' if self.config['language'] in [Language.CZECH, Language.SLOVAK] else 'en-US',
-            'Authorization': authorization
+            "Accept": "application/json",
+            "Accept-Language": "cs-CZ"
+            if self.config["language"] in [Language.CZECH, Language.SLOVAK]
+            else "en-US",
+            "Authorization": authorization,
         }
         if content_type:
             request.headers["Content-Type"] = content_type
 
         if data is None:
-            request.method = 'get'
+            request.method = "get"
         else:
-            request.method = 'post'
+            request.method = "post"
             request.body = json.dumps(data) if content_type == JSON else data
         return self.browser.browse(request)
 

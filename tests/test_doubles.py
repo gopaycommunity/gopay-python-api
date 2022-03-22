@@ -5,7 +5,7 @@ class GoPayMock:
     def __init__(self, config=None):
         self.request = ()
         self.config = config if config is not None else {}
-        self.response = 'irrelevant browser response'
+        self.response = "irrelevant browser response"
 
     def given_response(self, has_succeed=False, json=None):
         self.response = ResponseStub()

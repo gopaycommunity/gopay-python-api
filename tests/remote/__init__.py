@@ -7,15 +7,16 @@ from tests.unit.utils import Utils
 
 def given_client(config=None):
     return payments(
-        add_defaults(config, {
-            'goid': Utils.GO_ID,
-            'clientId': Utils.CLIENT_ID,
-            'clientSecret': Utils.CLIENT_SECRET,
-            'gatewayUrl': Utils.GATEWAY_URL
-        }),
-        {
-            'logger': debug_logger
-        }
+        add_defaults(
+            config,
+            {
+                "goid": Utils.GO_ID,
+                "clientId": Utils.CLIENT_ID,
+                "clientSecret": Utils.CLIENT_SECRET,
+                "gatewayUrl": Utils.GATEWAY_URL,
+            },
+        ),
+        {"logger": debug_logger},
     )
 
 

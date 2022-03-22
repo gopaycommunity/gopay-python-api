@@ -9,12 +9,14 @@ from tests.test_doubles import GoPayMock
 
 class OAuth2Test(unittest.TestCase):
     def setUp(self):
-        self.browser = GoPayMock({
-            'clientId': 'userId',
-            'clientSecret': 'pass',
-            'scope': 'irrelevant scope',
-            'gatewayUrl': 'https://gw.sandbox.gopay.com/'
-        })
+        self.browser = GoPayMock(
+            {
+                "clientId": "userId",
+                "clientSecret": "pass",
+                "scope": "irrelevant scope",
+                "gatewayUrl": "https://gw.sandbox.gopay.com/",
+            }
+        )
         self.oauth = OAuth2(self.browser)
 
     def test_should_call_api_with_basic_authorization(self):
@@ -28,14 +30,16 @@ class OAuth2Test(unittest.TestCase):
         assert_that(token.is_expired(), is_(True))
 
     def test_should_return_extract_token_from_response(self):
-        self.browser.given_response(True, {'access_token': 'irrelevant token', 'expires_in': 1800})
+        self.browser.given_response(
+            True, {"access_token": "irrelevant token", "expires_in": 1800}
+        )
         token = self.authorize()
         assert_that(token.is_expired(), is_(False))
-        assert_that(token.token, is_('irrelevant token'))
+        assert_that(token.token, is_("irrelevant token"))
         assert_that(token.expiration_date, is_not(None))
 
     def test_should_uniquely_identify_current_client(self):
-        assert_that(self.oauth.get_client(), is_('userId--irrelevant scope'))
+        assert_that(self.oauth.get_client(), is_("userId--irrelevant scope"))
 
     def authorize(self):
         return self.oauth.authorize()
@@ -45,11 +49,11 @@ class CachedOAuthTest(unittest.TestCase):
     def setUp(self):
         self.token = AccessToken()
         self.is_token_in_cache = True
-        self.reauthorized_token = 'irrelevant access token'
+        self.reauthorized_token = "irrelevant access token"
         self.cache = InMemoryTokenCache()
 
     def test_should_use_unexpired_token(self):
-        self.token.token = 'irrelevant token'
+        self.token.token = "irrelevant token"
         self.token.expiration_date = datetime.now() + timedelta(days=1)
         self.token_should_be(self.token)
 
@@ -58,12 +62,12 @@ class CachedOAuthTest(unittest.TestCase):
         self.token_should_be(self.reauthorized_token)
 
     def test_should_reauthorize_when_expiration_is_empty(self):
-        self.token.token = 'irrelevant token'
+        self.token.token = "irrelevant token"
         self.token.expiration_date = None
         self.token_should_be(self.reauthorized_token)
 
     def test_should_reauthorize_when_token_is_expired(self):
-        self.token.token = 'irrelevant token'
+        self.token.token = "irrelevant token"
         self.token.expiration_date = datetime.now() - timedelta(minutes=1)
         self.token_should_be(self.reauthorized_token)
 
@@ -82,8 +86,8 @@ class CachedOAuthTest(unittest.TestCase):
 
     def token_should_be(self, expected_token):
         if self.is_token_in_cache:
-            self.cache.tokens['client'] = self.token
-        oauth = OAuthStub('client', self.reauthorized_token)
+            self.cache.tokens["client"] = self.token
+        oauth = OAuthStub("client", self.reauthorized_token)
         auth = CachedAuth(oauth, self.cache)
         assert_that(auth.authorize(), is_(expected_token))
 

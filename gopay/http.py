@@ -1,12 +1,14 @@
 from typing import Any
 import requests
 
+
 class Request:
     def __init__(self):
-        self.method = 'get'
-        self.url = ''
+        self.method = "get"
+        self.url = ""
         self.headers = {}
         self.body = {}
+
 
 class Response:
     def __init__(self, raw_body: bytes, json: dict, status_code: int):
@@ -20,6 +22,7 @@ class Response:
     def __str__(self) -> str:
         return self.raw_body
 
+
 class Browser:
     def __init__(self, logger: Any, timeout: int) -> None:
         self.logger = logger
@@ -27,7 +30,13 @@ class Browser:
 
     def browse(self, request: Request):
         try:
-            r = requests.request(request.method, request.url, headers=request.headers, data=request.body, timeout=self.timeout)
+            r = requests.request(
+                request.method,
+                request.url,
+                headers=request.headers,
+                data=request.body,
+                timeout=self.timeout,
+            )
             response = Response(r.content, r.json(), r.status_code)
         except ValueError as ve:
             response = Response(r.content, None, r.status_code)

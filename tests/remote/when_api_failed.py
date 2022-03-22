@@ -6,7 +6,6 @@ from gopay import Language
 
 
 class WhenApiFailedTest(unittest.TestCase):
-
     def test_status_of_non_existent_payment(self):
         gopay = given_client()
         non_existent_id = -10
