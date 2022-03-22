@@ -18,8 +18,8 @@ class GoPay:
             host = self.config["gatewayUrl"]
             if host.endswith("/"):
                 host = host[:-1]
-            if not host.endswith("api"):
-                host += "api"
+            if not host.endswith("/api"):
+                host += "/api"
             host += "/"
             return host + path
         host = (
