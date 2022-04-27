@@ -53,7 +53,7 @@ class Language:
     CROATIAN = "HR"
     ITALIAN = "IT"
     SPANISH = "ES"
-
+    UKRAINIAN = "UK"
 
 class PaymentInstrument:
     PAYMENT_CARD = "PAYMENT_CARD"
