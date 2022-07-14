@@ -55,6 +55,7 @@ class Language:
     SPANISH = "ES"
     UKRAINIAN = "UK"
 
+
 class PaymentInstrument:
     PAYMENT_CARD = "PAYMENT_CARD"
     BANK_ACCOUNT = "BANK_ACCOUNT"
@@ -114,7 +115,6 @@ class BankSwiftCode:
     MBANK = "BREXCZPP"
     FIO_BANKA = "FIOBCZPP"
     CSOB = "CEKOCZPP"
-    ERA = "CEKOCZPP-ERA"
     VSEOBECNA_VEROVA_BANKA_BANKA = "SUBASKBX"
     TATRA_BANKA = "TATRSKBX"
     UNICREDIT_BANK_SK = "UNCRSKBX"
