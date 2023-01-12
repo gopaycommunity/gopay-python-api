@@ -13,7 +13,6 @@ class Currency:
     BRITISH_POUND = "GBP"
     US_DOLLAR = "USD"
     ROMANIAN_LEU = "RON"
-    KUNA = "HRK"
     BULGARIAN_LEV = "BGN"
 
 
@@ -54,6 +53,11 @@ class Language:
     ITALIAN = "IT"
     SPANISH = "ES"
     UKRAINIAN = "UK"
+    ESTONIAN = "EE"
+    LITHUANIAN = "LT"
+    LATVIAN = "LV"
+    SLOVENIAN = "SI"
+    PORTUGUESE = "PT"
 
 
 class PaymentInstrument:
