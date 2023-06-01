@@ -14,3 +14,4 @@ pip-selfcheck.json
 *.iml
 __pycache__/
 venv/
+.venv/
