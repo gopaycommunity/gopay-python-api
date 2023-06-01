@@ -1,4 +1,6 @@
+from __future__ import annotations
 from typing import Dict, List, Union
+
 
 from gopay.api import JSON, FORM, add_defaults, Response, GoPay
 from gopay.oauth2 import OAuth2
@@ -55,6 +57,9 @@ class Payments:
 
     def void_authorization(self, id_payment: Union[int, str]) -> Response:
         return self._api(f"payments/payment/{id_payment}/void-authorization", FORM, {})
+    
+    def get_card_details(self, card_id: int | str) -> Response:
+        return self._api(f"payments/cards/{card_id}", FORM, None)
 
     def get_payment_instruments(
         self, go_id: Union[int, str], currency: str
