@@ -5,10 +5,10 @@
 
 ## Requirements
 
-- Python >= 3.6
+- Python >= 3.7
 - dependencies:
-    - [`requests`](https://github.com/kennethreitz/requests)
-    - [`deprecated`](https://github.com/tantale/deprecated)
+  - [`requests`](https://github.com/kennethreitz/requests)
+  - [`deprecated`](https://github.com/tantale/deprecated)
 
 ## Installation
 
@@ -50,18 +50,17 @@ payments = gopay.payments({
 Required field | Data type | Documentation |
 -------------- | --------- | ----------- |
 `goid` | string | default GoPay account used in `createPayment` if `target` is not specified
-`clientId` | string | https://doc.gopay.com/#access-token |
-`clientSecret` | string | https://doc.gopay.com/#access-token |
+`clientId` | string | <https://doc.gopay.com/#access-token> |
+`clientSecret` | string | <https://doc.gopay.com/#access-token> |
 `gatewayUrl` | string | [test or production environment?](https://help.gopay.com/en/s/uY) |
 
 #### Optional fields
 
 Optional field | Data type | Default value | Documentation |
 -------------- | --------- | ------------- | ------------- |
-`scope` | string | [`GoPay\Definition\TokenScope::ALL`](src/Definition/TokenScope.php) | https://doc.gopay.com/#access-token |
+`scope` | string | [`GoPay\Definition\TokenScope::ALL`](src/Definition/TokenScope.php) | <https://doc.gopay.com/#access-token> |
 `language` | string | [`GoPay\Definition\Language::ENGLISH`](src/Definition/Language.php) | language used in `createPayment` if `lang` is not specified + used for [localization of errors](https://doc.gopay.com/#errors)
 `timeout` | int | 30 | Browser timeout in seconds |
-
 
 ### Available methods
 
@@ -76,13 +75,13 @@ API | SDK method |
 [Create pre-authorized payment](https://doc.gopay.com/#preauthorized-payments) | `$gopay->createPayment(array $payment)` |
 [Charge of pre-authorized payment](https://doc.gopay.com/#capturing-a-preauthorized-payment) | `$gopay->captureAuthorization($id)` |
 [Cancellation of the pre-authorized payment](https://doc.gopay.com/#cancelling-a-preauthorized-payment) | `$gopay->voidAuthorization($id)` |
+
 ### SDK response? Has my call succeed?
 
 SDK returns wrapped API response. Every method returns
 [`GoPay\Http\Response` object](src/Http/Response.php). Structure of `json/__toString`
 should be same as in [documentation](https://doc.gopay.com/en).
 SDK throws no exception. Please create an issue if you catch one.
-
 
 ```python
 response = payments.create_payment({...})
@@ -100,7 +99,6 @@ Method | Description |
 `response.json` | decoded response, returned objects are converted into associative arrays |
 `response.status_code` | HTTP status code |
 `response.__str__()` | raw body from HTTP response |
-
 
 ### Are required fields and allowed values validated?
 
@@ -168,7 +166,6 @@ Be aware that there are two [scopes](https://doc.gopay.com/#access-token) (`Toke
 SDK can be used for different clients (`clientId`, `gatewayUrl`). So `client` passed to
 methods is unique identifier (`string`) that is built for current environment.
 Below you can see example implementation of caching tokens in memory:
-
 
 ```python
 # register cache in optional service configuration
