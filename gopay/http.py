@@ -12,14 +12,14 @@ class Request:
 
 class Response:
     def __init__(self, raw_body: bytes, json: dict, status_code: int):
-        self.raw_body = raw_body.decode("utf-8")
+        self.raw_body = raw_body
         self.json = json
         self.status_code = status_code
 
     def has_succeed(self) -> bool:
         return self.status_code == 200
 
-    def __str__(self) -> str:
+    def __str__(self) -> bytes:
         return self.raw_body
 
 

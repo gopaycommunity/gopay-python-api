@@ -72,7 +72,7 @@ class GoPayTest(unittest.TestCase):
         )
         gopay = GoPay(config, self.browser)
         gopay.call(
-            "URL",
+            "/URL",
             kwargs.get("content_type"),
             "irrelevant authorization",
             kwargs.get("data"),

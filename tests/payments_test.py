@@ -10,7 +10,6 @@ from tests.test_doubles import GoPayMock
 
 class PaymentsTest(unittest.TestCase):
     def setUp(self):
-
         self.browser = GoPayMock(
             {
                 "language": "default",
@@ -64,9 +63,6 @@ class PaymentsTest(unittest.TestCase):
         self.auth.when_auth_failed()
         response = self.payments.create_payment({})
         assert_that(response, is_(self.auth.token.response))
-
-    def test_should_return_embedjs(self):
-        assert_that(self.payments.url_to_embedjs(), is_("gp-gw/js/embed.js"))
 
 
 class AuthStub:

@@ -1,33 +1,35 @@
 from typing import Dict
-
+from dataclasses import dataclass, field
 from gopay.http import Request, Response, Browser
 from gopay.enums import Language
 import json
+from urllib.parse import urlsplit, urlunsplit
 
 JSON = "application/json"
 FORM = "application/x-www-form-urlencoded"
 
 
+@dataclass
 class GoPay:
-    def __init__(self, config: dict, browser: Browser) -> None:
-        self.browser = browser
-        self.config = config
+    config: dict
+    browser: Browser
+    _base_url: str = field(default="", init=False)
+
+    def __post_init__(self):
+        if "gatewayUrl" in self.config:
+            urlparts = urlsplit(self.config["gatewayUrl"])
+            self._base_url = urlunsplit(
+                (urlparts.scheme, urlparts.netloc, "/api", "", "")
+            )
+        else:
+            self._base_url = (
+                "https://gate.gopay.cz/api"
+                if self.config["isProductionMode"]
+                else "https://gw.sandbox.gopay.com/api"
+            )
 
     def url(self, path: str):
-        if "gatewayUrl" in self.config:
-            host = self.config["gatewayUrl"]
-            if host.endswith("/"):
-                host = host[:-1]
-            if not host.endswith("/api"):
-                host += "/api"
-            host += "/"
-            return host + path
-        host = (
-            "https://gate.gopay.cz/api/"
-            if self.config["isProductionMode"]
-            else "https://gw.sandbox.gopay.com/api/"
-        )
-        return host + path
+        return self._base_url + path
 
     def call(
         self, url: str, content_type: str, authorization: str, data: Dict
