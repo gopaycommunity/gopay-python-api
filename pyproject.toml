@@ -1,0 +1,24 @@
+[tool.poetry]
+authors = ["GoPay <integrace@gopay.cz>"]
+description = "GoPay's Python SDK for Payments REST API"
+license = "MIT"
+name = "gopay"
+packages = [{include = "gopay"}]
+readme = "README.md"
+version = "2.0.0"
+
+[tool.poetry.dependencies]
+deprecated = "^1.2.14"
+python = "^3.8.1"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+deprecated = "^1.2.14"
+pyhamcrest = "^2.0.4"
+unittest-data-provider = "^1.0.1"
+flake8 = "^6.0.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
