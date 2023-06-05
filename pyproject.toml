@@ -28,6 +28,7 @@ deprecated = "^1.2.14"
 flake8 = "^6.0.0"
 pyhamcrest = "^2.0.4"
 unittest-data-provider = "^1.0.1"
+pytest = "^7.3.1"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
