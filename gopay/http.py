@@ -12,7 +12,7 @@ class Request:
 
 class Response:
     def __init__(self, raw_body: bytes, json: dict, status_code: int):
-        self.raw_body = str(raw_body)
+        self.raw_body = raw_body.decode("utf-8")
         self.json = json
         self.status_code = status_code
 
