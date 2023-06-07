@@ -28,6 +28,7 @@ class OAuth2:
         )
         token = AccessToken()
         token.response = self.gopay.call(
+            "post",
             "/oauth2/token",
             FORM,
             "Basic " + b64encode(credentials.encode("utf-8")).decode("utf-8"),

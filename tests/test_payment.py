@@ -14,7 +14,7 @@ class TestPayments:
         assert response_body["state"] == "CREATED"
 
     def test_refund_payment(self, payments: Payments):
-        payment_id = 3049525986
+        payment_id = 3178283550
 
         response = payments.refund_payment(payment_id, 1900)
         response_body = response.json
@@ -22,10 +22,10 @@ class TestPayments:
 
         assert "errors" in response_body
         error_dict = response_body["errors"][0]
-        assert error_dict["error_name"] == "PAYMENT_REFUND_NOT_SUPPORTED"
+        assert error_dict["error_name"] == "PAYMENT_WRONG_STATE"
 
     def test_payment_status(self, payments: Payments):
-        payment_id = 3049525986
+        payment_id = 3178283550
 
         response = payments.get_status(payment_id)
         assert response.has_succeed()

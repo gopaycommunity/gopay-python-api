@@ -1,27 +1,28 @@
 from typing import Any
 import requests
 import logging
+from dataclasses import dataclass, field
 
 
+@dataclass
 class Request:
-    def __init__(self):
-        self.method = "get"
-        self.url = ""
-        self.headers = {}
-        self.body = {}
+    method: str = "get"
+    url: str = ""
+    headers: dict[str, str] = field(default_factory=dict)
+    body: dict = field(default_factory=dict)
 
 
+@dataclass
 class Response:
-    def __init__(self, raw_body: bytes, json: dict, status_code: int):
-        self.raw_body = raw_body
-        self.json = json
-        self.status_code = status_code
+    raw_body: bytes
+    json: dict
+    status_code: int
 
     def has_succeed(self) -> bool:
-        return self.status_code == 200
+        return self.status_code < 400
 
-    def __str__(self) -> bytes:
-        return self.raw_body
+    def __str__(self) -> str:
+        return self.raw_body.decode("utf-8")
 
 
 class Browser:
@@ -48,5 +49,6 @@ class Browser:
         return response
 
 
-def null_logger(*args):
-    pass
+def default_logger(request, response):
+    logging.info(f"Request: {request}")
+    logging.info(f"Response: {response}")

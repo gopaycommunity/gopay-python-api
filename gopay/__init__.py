@@ -1,4 +1,4 @@
-from gopay.http import Browser, null_logger
+from gopay.http import Browser, default_logger
 from gopay.api import GoPay, add_defaults
 from gopay.oauth2 import OAuth2, InMemoryTokenCache, CachedAuth
 from gopay.payments import Payments
@@ -22,7 +22,7 @@ def payments(config: dict, services: dict = None) -> Payments:
     config = config_model.dict()
 
     services = add_defaults(
-        services, {"logger": null_logger, "cache": InMemoryTokenCache()}
+        services, {"logger": default_logger, "cache": InMemoryTokenCache()}
     )
     browser = Browser(services["logger"], config["timeout"])
     gopay = GoPay(config, browser)

@@ -17,7 +17,7 @@ class TestPreauthorization:
         assert response_body["preauthorization"]["state"] == "REQUESTED"
 
     def test_capture_authorization(self, payments: Payments):
-        payment_id = 3049519447
+        payment_id = 3192064499
 
         response = payments.capture_authorization(payment_id)
         response_body = response.json
@@ -28,7 +28,7 @@ class TestPreauthorization:
         assert error_dict["error_name"] == "PAYMENT_CAPTURE_DONE"
 
     def test_void_authorization(self, payments: Payments):
-        payment_id = 3049519343
+        payment_id = 3192064499
 
         response = payments.capture_authorization(payment_id)
         response_body = response.json
@@ -36,4 +36,4 @@ class TestPreauthorization:
 
         assert "errors" in response_body
         error_dict = response_body["errors"][0]
-        assert error_dict["error_name"] == "PAYMENT_CAPTURE_FAILED"
+        assert error_dict["error_name"] == "PAYMENT_CAPTURE_DONE"

@@ -4,6 +4,7 @@ from gopay.http import Request, Response, Browser
 from gopay.enums import Language
 import json
 from urllib.parse import urlsplit, urlunsplit
+from gopay import models
 
 JSON = "application/json"
 FORM = "application/x-www-form-urlencoded"
@@ -23,7 +24,7 @@ class GoPay:
         return self._base_url + path
 
     def call(
-        self, url: str, content_type: str, authorization: str, data: Dict
+        self, method: str, url: str, content_type: str, authorization: str, data: Dict
     ) -> Response:
         request = Request()
         request.url = self.url(url)
@@ -38,12 +39,20 @@ class GoPay:
         if content_type:
             request.headers["Content-Type"] = content_type
 
-        if data is None:
-            request.method = "get"
-        else:
-            request.method = "post"
+        request.method = method
+        if data is not None:
             request.body = json.dumps(data) if content_type == JSON else data
         return self.browser.browse(request)
+
+
+@dataclass
+class GopayClient:
+    config: models.GopayConfig
+    _base_url: str = field(default="", init=False)
+
+    def __post_init__(self):
+        urlparts = urlsplit(self.config.gateway_url)
+        self._base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
 
 
 def add_defaults(data: dict, defaults: dict) -> dict:
