@@ -1,6 +1,6 @@
 from gopay.api import GoPay
+from gopay.enums import ContentType, Language, TokenScope
 from gopay.http import ApiClient, Response
-from gopay.enums import TokenScope, ContentType, Language
 
 
 class TestApi:

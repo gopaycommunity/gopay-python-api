@@ -1,5 +1,6 @@
-from gopay import Payments
 import logging
+
+from gopay import Payments
 
 
 class TestCards:

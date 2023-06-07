@@ -1,7 +1,8 @@
 from __future__ import annotations
-from gopay import enums
 
 from pydantic import BaseModel, Extra
+
+from gopay import enums
 
 
 class GopayModel(BaseModel):

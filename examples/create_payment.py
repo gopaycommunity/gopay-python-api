@@ -1,5 +1,5 @@
 import gopay
-from gopay.enums import Recurrence, PaymentInstrument, BankSwiftCode, Currency, Language
+from gopay.enums import BankSwiftCode, Currency, Language, PaymentInstrument, Recurrence
 
 payments = gopay.payments(
     {

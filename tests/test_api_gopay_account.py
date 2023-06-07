@@ -1,8 +1,9 @@
-from gopay import Payments
-from gopay.enums import Currency, StatementGeneratingFormat
-import logging
 import csv
 import io
+import logging
+
+from gopay import Payments
+from gopay.enums import Currency, StatementGeneratingFormat
 
 
 class TestGopayAccount:

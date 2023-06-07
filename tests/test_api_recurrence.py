@@ -1,6 +1,7 @@
+import logging
+
 from gopay import Payments
 from gopay.enums import Recurrence
-import logging
 
 
 class TestRecurrence:

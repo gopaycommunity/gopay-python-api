@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from gopay.enums import ContentType, Currency
-from gopay.api import Response, GoPay
 from dataclasses import dataclass
+
+from gopay.api import GoPay, Response
+from gopay.enums import ContentType, Currency
 
 
 @dataclass

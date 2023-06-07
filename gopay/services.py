@@ -1,11 +1,12 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import Callable, Any, TYPE_CHECKING
+
 import logging
+from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING, Any, Callable
 
 if TYPE_CHECKING:
-    from gopay.http import Request, Response, AccessToken
+    from gopay.http import AccessToken, Request, Response
 
 LoggerType = Callable[["Request", "Response"], Any]
 

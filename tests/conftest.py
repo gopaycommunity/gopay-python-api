@@ -1,9 +1,10 @@
-from gopay.enums import PaymentInstrument, BankSwiftCode, Currency, Language
-import gopay
-from gopay.http import Request, Response
 import os
 
 import pytest
+
+import gopay
+from gopay.enums import BankSwiftCode, Currency, Language, PaymentInstrument
+from gopay.http import Request, Response
 
 
 @pytest.fixture(scope="session")

@@ -1,7 +1,8 @@
 from __future__ import annotations
+
 from gopay.api import GoPay
-from gopay.payments import Payments
 from gopay.models import GopayConfig
+from gopay.payments import Payments
 
 
 def payments(config: dict, services: dict | None = None) -> Payments:

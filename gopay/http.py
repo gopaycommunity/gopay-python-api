@@ -1,11 +1,14 @@
 from __future__ import annotations
-import requests
+
 from dataclasses import dataclass, field
-from gopay.enums import TokenScope, ContentType
+from datetime import datetime
+
+import requests
 from deprecated import deprecated
 from requests import JSONDecodeError
-from datetime import datetime
-from gopay.services import AbstractCache, LoggerType, DefaultCache, default_logger
+
+from gopay.enums import ContentType, TokenScope
+from gopay.services import AbstractCache, DefaultCache, LoggerType, default_logger
 
 
 @dataclass
