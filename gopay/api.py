@@ -16,17 +16,8 @@ class GoPay:
     _base_url: str = field(default="", init=False)
 
     def __post_init__(self):
-        if "gatewayUrl" in self.config:
-            urlparts = urlsplit(self.config["gatewayUrl"])
-            self._base_url = urlunsplit(
-                (urlparts.scheme, urlparts.netloc, "/api", "", "")
-            )
-        else:
-            self._base_url = (
-                "https://gate.gopay.cz/api"
-                if self.config["isProductionMode"]
-                else "https://gw.sandbox.gopay.com/api"
-            )
+        urlparts = urlsplit(self.config["gateway_url"])
+        self._base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
 
     def url(self, path: str):
         return self._base_url + path

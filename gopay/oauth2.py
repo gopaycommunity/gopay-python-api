@@ -24,7 +24,7 @@ class OAuth2:
 
     def authorize(self) -> AccessToken:
         credentials = (
-            self.gopay.config["clientId"] + ":" + self.gopay.config["clientSecret"]
+            self.gopay.config["client_id"] + ":" + self.gopay.config["client_secret"]
         )
         token = AccessToken()
         token.response = self.gopay.call(
@@ -43,7 +43,7 @@ class OAuth2:
     def get_client(self) -> str:
         return "-".join(
             [
-                self.gopay.config["clientId"],
+                self.gopay.config["client_id"],
                 self.gopay.url(""),
                 self.gopay.config["scope"],
             ]

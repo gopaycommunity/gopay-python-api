@@ -3,12 +3,24 @@ from gopay.api import GoPay, add_defaults
 from gopay.oauth2 import OAuth2, InMemoryTokenCache, CachedAuth
 from gopay.payments import Payments
 from gopay.enums import Language, TokenScope
+from gopay.models import GopayConfig
 
 
 def payments(config: dict, services: dict = None) -> Payments:
-    config = add_defaults(
-        config, {"scope": TokenScope.ALL, "language": Language.ENGLISH, "timeout": 30}
-    )
+    for key in tuple(config.keys()):
+        if key == "clientId":
+            config["client_id"] = config[key]
+            del config[key]
+        elif key == "clientSecret":
+            config["client_secret"] = config[key]
+            del config[key]
+        elif key == "gatewayUrl":
+            config["gateway_url"] = config[key]
+            del config[key]
+
+    config_model = GopayConfig.parse_obj(config)
+    config = config_model.dict()
+
     services = add_defaults(
         services, {"logger": null_logger, "cache": InMemoryTokenCache()}
     )

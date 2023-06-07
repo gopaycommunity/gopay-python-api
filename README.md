@@ -26,17 +26,17 @@ import gopay
 # minimal configuration
 payments = gopay.payments({
     'goid': 'my goid',
-    'clientId': 'my id',
-    'clientSecret': 'my secret',
-  'gatewayUrl': 'url'
+    'client_id': 'my id',
+    'client_secret': 'my secret',
+  'gateway_url': 'url'
 })
 
 # full configuration
 payments = gopay.payments({
     'goid': 'my goid',
-    'clientId': 'my id',
-    'clientSecret': 'my secret',
-    'gatewayUrl': 'url/',
+    'client_id': 'my id',
+    'client_secret': 'my secret',
+    'gateway_url': 'url/',
     'scope': gopay.TokenScope.ALL,
     'language': gopay.Language.CZECH,
     'timeout': 30
@@ -50,9 +50,9 @@ payments = gopay.payments({
 Required field | Data type | Documentation |
 -------------- | --------- | ----------- |
 `goid` | string | default GoPay account used in `createPayment` if `target` is not specified
-`clientId` | string | <https://doc.gopay.com/#access-token> |
-`clientSecret` | string | <https://doc.gopay.com/#access-token> |
-`gatewayUrl` | string | [test or production environment?](https://help.gopay.com/en/s/uY) |
+`client_id` | string | <https://doc.gopay.com/#access-token> |
+`client_secret` | string | <https://doc.gopay.com/#access-token> |
+`gateway_url` | string | [test or production environment?](https://help.gopay.com/en/s/uY) |
 
 #### Optional fields
 
@@ -118,7 +118,7 @@ behavior is well documented in [doc.gopay.com](https://doc.gopay.com).
 response = payments.create_payment({})
 if response.has_succeed():
     templateParameters = {
-        'gatewayUrl': response.json['gw_url'],
+        'gateway_url': response.json['gw_url'],
         'embedJs': gopay.url_to_embedjs()
     }
     # render template
