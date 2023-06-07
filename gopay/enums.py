@@ -1,14 +1,19 @@
 from enum import Enum
 
 
-class Recurrence(str, Enum):
+class StrEnum(str, Enum):
+    def __str__(self) -> str:
+        return self.value
+
+
+class Recurrence(StrEnum):
     DAILY = "DAY"
     WEEKLY = "WEEK"
     MONTHLY = "MONTH"
     ON_DEMAND = "ON_DEMAND"
 
 
-class Currency(str, Enum):
+class Currency(StrEnum):
     CZECH_CROWNS = "CZK"
     EUROS = "EUR"
     POLISH_ZLOTY = "PLN"
@@ -19,18 +24,18 @@ class Currency(str, Enum):
     BULGARIAN_LEV = "BGN"
 
 
-class TokenScope(str, Enum):
+class TokenScope(StrEnum):
     CREATE_PAYMENT = "payment-create"
     ALL = "payment-all"
 
 
-class Result(str, Enum):
+class Result(StrEnum):
     ACCEPTED = "ACCEPTED"
     FINISHED = "FINISHED"
     FAILED = "FAILED"
 
 
-class PaymentStatus(str, Enum):
+class PaymentStatus(StrEnum):
     CREATED = "CREATED"
     PAYMENT_METHOD_CHOSEN = "PAYMENT_METHOD_CHOSEN"
     PAID = "PAID"
@@ -41,7 +46,7 @@ class PaymentStatus(str, Enum):
     PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED"
 
 
-class Language(str, Enum):
+class Language(StrEnum):
     CZECH = "CS"
     ENGLISH = "EN"
     SLOVAK = "SK"
@@ -63,7 +68,7 @@ class Language(str, Enum):
     PORTUGUESE = "PT"
 
 
-class PaymentInstrument(str, Enum):
+class PaymentInstrument(StrEnum):
     PAYMENT_CARD = "PAYMENT_CARD"
     BANK_ACCOUNT = "BANK_ACCOUNT"
     PREMIUM_SMS = "PRSMS"
@@ -79,7 +84,7 @@ class PaymentInstrument(str, Enum):
     CLICK_TO_PAY = "CLICK_TO_PAY"
 
 
-class StatementGeneratingFormat(str, Enum):
+class StatementGeneratingFormat(StrEnum):
     XLS_A = "XLS_A"
     XLS_B = "XLS_B"
     XLS_C = "XLS_C"
@@ -91,25 +96,25 @@ class StatementGeneratingFormat(str, Enum):
     ABO_A = "ABO_A"
 
 
-class ItemType(str, Enum):
+class ItemType(StrEnum):
     ITEM = "ITEM"
     DISCOUNT = "DISCOUNT"
     DELIVERY = "DELIVERY"
     POSTAGE = "POSTAGE"
 
 
-class EETReceiptState(str, Enum):
+class EETReceiptState(StrEnum):
     CREATED = "CREATED"
     DELIVERY_FAILED = "DELIVERY_FAILED"
     DELIVERED = "DELIVERED"
 
 
-class EETMode(str, Enum):
+class EETMode(StrEnum):
     AUTO = "AUTO"
     EET = "EET"
 
 
-class BankSwiftCode(str, Enum):
+class BankSwiftCode(StrEnum):
     # CZ
     CESKA_SPORITELNA = "GIBACZPX"
     KOMERCNI_BANKA = "KOMBCZPP"
@@ -184,20 +189,20 @@ class BankSwiftCode(str, Enum):
     SPECIAL = "OTHERS"
 
 
-class RecurrenceState(str, Enum):
+class RecurrenceState(StrEnum):
     REQUESTED = "REQUESTED"
     STARTED = "STARTED"
     STOPPED = "STOPPED"
 
 
-class PreAuthState(str, Enum):
+class PreAuthState(StrEnum):
     REQUESTED = "REQUESTED"
     AUTHORIZED = "AUTHORIZED"
     CAPTURED = "CAPTURED"
     CANCELED = "CANCELED"
 
 
-class PaymentSubStatus(str, Enum):
+class PaymentSubStatus(StrEnum):
     _101 = "_101"
     _102 = "_102"
     _3001 = "_3001"
@@ -261,6 +266,6 @@ class PaymentSubStatus(str, Enum):
     _6504 = "_6504"
 
 
-class SupercashSubType(str, Enum):
+class SupercashSubType(StrEnum):
     SUB_TYPE_PREPAID = "PREPAID"
     SUB_TYPE_POSTPAID = "POSTPAID"

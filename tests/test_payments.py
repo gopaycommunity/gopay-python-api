@@ -5,6 +5,7 @@ import logging
 class TestPayments:
     def test_create_payment(self, payments: Payments, base_payment: dict):
         response = payments.create_payment(base_payment)
+        assert response.has_succeed()
         response_body = response.json
         logging.info(f"API Response: {response_body}")
 
@@ -27,6 +28,7 @@ class TestPayments:
         payment_id = 3049525986
 
         response = payments.get_status(payment_id)
+        assert response.has_succeed()
         response_body = response.json
         logging.info(f"API Response: {response_body}")
 

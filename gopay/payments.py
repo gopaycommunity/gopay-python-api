@@ -65,7 +65,7 @@ class Payments:
         self, go_id: Union[int, str], currency: str
     ) -> Response:
         return self._api(
-            f"/eshops/eshop/{go_id}/payment-instruments/{currency}", "", None
+            f"/eshops/eshop/{go_id}/payment-instruments/{currency}", FORM, None
         )
 
     def get_account_statement(self, account_statement: Dict) -> Response:

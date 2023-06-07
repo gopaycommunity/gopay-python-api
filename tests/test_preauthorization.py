@@ -7,6 +7,7 @@ class TestPreauthorization:
         base_payment.update({"preauthorization": True})
 
         response = payments.create_payment(base_payment)
+        assert response.has_succeed()
         response_body = response.json
         logging.info(f"API Response: {response_body}")
 

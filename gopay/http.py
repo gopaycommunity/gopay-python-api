@@ -1,5 +1,6 @@
 from typing import Any
 import requests
+import logging
 
 
 class Request:
@@ -29,6 +30,7 @@ class Browser:
         self.timeout = timeout
 
     def browse(self, request: Request):
+        logging.debug(vars(request))
         try:
             r = requests.request(
                 request.method,
