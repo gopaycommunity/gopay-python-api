@@ -17,3 +17,4 @@ venv/
 .venv/
 
 .coverage
+.pytest_cache/
