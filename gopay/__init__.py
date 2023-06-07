@@ -19,8 +19,5 @@ def payments(config: dict, services: dict | None = None) -> Payments:
     config_model = GopayConfig.parse_obj(config)
     config = config_model.dict()
 
-    if services is None:
-        services = {"logger": default_logger, "cache": DefaultCache()}
-
-    gopay = GoPay(config, services)
+    gopay = GoPay(config)
     return Payments(gopay)

@@ -21,8 +21,8 @@ class AbstractCache(ABC):
 
 
 def default_logger(request: Request, response: Response):
-    logging.info(f"GoPay HTTP Request: {request}")
-    logging.info(f"GoPay HTTP Response: {response}")
+    logging.debug(f"GoPay HTTP Request: {request}")
+    logging.debug(f"GoPay HTTP Response: {response}")
 
 
 @dataclass

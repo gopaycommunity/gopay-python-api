@@ -1,13 +1,10 @@
-from typing import Any, Callable
 import requests
-import logging
 from dataclasses import dataclass, field
 from gopay.enums import TokenScope, ContentType
 from deprecated import deprecated
 from requests import JSONDecodeError
 from datetime import datetime
-from gopay.errors import GoPayError
-from gopay.services import AbstractCache, LoggerType
+from gopay.services import AbstractCache, LoggerType, DefaultCache, default_logger
 
 
 @dataclass
@@ -69,8 +66,8 @@ class ApiClient:
     client_secret: str
     gateway_url: str
     scope: TokenScope
-    logger: LoggerType
-    cache: AbstractCache
+    logger: LoggerType = default_logger
+    cache: AbstractCache = field(default_factory=DefaultCache)
 
     def __post_init__(self):
         _ = self.token

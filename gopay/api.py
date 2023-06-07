@@ -1,10 +1,7 @@
-from typing import Dict
 from dataclasses import dataclass, field
 from gopay.http import Request, Response, ApiClient
 from gopay.enums import Language, ContentType
-import json
 from urllib.parse import urlsplit, urlunsplit
-from gopay import models
 from gopay.services import default_logger, DefaultCache
 
 

@@ -17,4 +17,3 @@ class GopayConfig(GopayModel):
     gateway_url: str
     scope: enums.TokenScope = enums.TokenScope.ALL
     language: enums.Language = enums.Language.CZECH
-    timeout: int = 30

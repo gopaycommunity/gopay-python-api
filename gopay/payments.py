@@ -52,13 +52,13 @@ class Payments:
         return self.gopay.call("post", f"/payments/payment/{payment_id}/capture")
 
     def capture_authorization_partial(
-        self, payment_id: int | str, capture_payment: dict
+        self, payment_id: int | str, payment: dict
     ) -> Response:
         return self.gopay.call(
             "POST",
             f"/payments/payment/{payment_id}/capture",
             ContentType.JSON,
-            capture_payment,
+            payment,
         )
 
     def void_authorization(self, payment_id: int | str) -> Response:
@@ -80,9 +80,9 @@ class Payments:
     def get_payment_instruments_all(self, goid: int | str) -> Response:
         return self.gopay.call("GET", f"/eshops/eshop/{goid}/payment-instruments")
 
-    def get_account_statement(self, account_statement: dict) -> Response:
+    def get_account_statement(self, statement_request: dict) -> Response:
         return self.gopay.call(
-            "POST", "/accounts/account-statement", ContentType.JSON, account_statement
+            "POST", "/accounts/account-statement", ContentType.JSON, statement_request
         )
 
     def get_eet_receipt_by_payment_id(self, payment_id: int | str) -> Response:
@@ -91,5 +91,6 @@ class Payments:
     def find_eet_receipts_by_filter(self, filter: dict) -> Response:
         return self.gopay.call("POST", "/eet-receipts", ContentType.JSON, filter)
 
+    @property
     def get_embedjs_url(self) -> str:
         return self.gopay.base_url[-4] + "/gp-gw/js/embed.js"
