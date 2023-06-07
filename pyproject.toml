@@ -28,10 +28,14 @@ deprecated = "^1.2.14"
 flake8 = "^6.0.0"
 pyhamcrest = "^2.0.4"
 pytest = "^7.3.1"
+pytest-coverage = "^0.0"
 pytest-dotenv = "^0.5.2"
 unittest-data-provider = "^1.0.1"
 
 [tool.pytest.ini_options]
+addopts = [
+  "--cov=gopay",
+]
 env_files = [
   "tests/.sandbox.env",
 ]

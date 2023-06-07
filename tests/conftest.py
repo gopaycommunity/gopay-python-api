@@ -1,4 +1,5 @@
 from gopay.enums import PaymentInstrument, BankSwiftCode, Currency, Language
+import gopay
 
 import os
 
@@ -59,6 +60,21 @@ def client_secret_eet() -> str:
     if client_secret_eet is not None:
         return client_secret_eet
     raise TypeError("Could not find CLIENT_SECRET_EET env variable")
+
+
+@pytest.fixture(scope="class")
+def payments(
+    goid: str, client_id: str, client_secret: str, gateway_url: str
+) -> gopay.Payments:
+    payments = gopay.payments(
+        {
+            "goid": goid,
+            "clientId": client_id,
+            "clientSecret": client_secret,
+            "gatewayUrl": gateway_url,
+        }
+    )
+    return payments
 
 
 @pytest.fixture
