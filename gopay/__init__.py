@@ -1,7 +1,6 @@
 from gopay.api import GoPay
 from gopay.payments import Payments
 from gopay.models import GopayConfig
-from gopay.services import default_logger, DefaultCache
 
 
 def payments(config: dict, services: dict | None = None) -> Payments:
@@ -19,5 +18,5 @@ def payments(config: dict, services: dict | None = None) -> Payments:
     config_model = GopayConfig.parse_obj(config)
     config = config_model.dict()
 
-    gopay = GoPay(config)
+    gopay = GoPay(config, services or {})
     return Payments(gopay)

@@ -10,6 +10,7 @@ class GoPay:
     config: dict
     services: dict = field(default_factory=dict)
     base_url: str = field(default="", init=False)
+    api_client: ApiClient = field(init=False)
 
     def __post_init__(self):
         urlparts = urlsplit(self.config["gateway_url"])

@@ -1,6 +1,6 @@
 from gopay.enums import PaymentInstrument, BankSwiftCode, Currency, Language
 import gopay
-
+from gopay.http import Request, Response
 import os
 
 import pytest
@@ -38,30 +38,6 @@ def gateway_url() -> str:
     raise TypeError("Could not find API_URL env variable")
 
 
-@pytest.fixture(scope="session")
-def goid_eet() -> str:
-    goid_eet = os.getenv("GOID_EET")
-    if goid_eet is not None:
-        return goid_eet
-    raise TypeError("Could not find GOID_EET env variable")
-
-
-@pytest.fixture(scope="session")
-def client_id_eet() -> str:
-    client_id_eet = os.getenv("CLIENT_ID_EET")
-    if client_id_eet is not None:
-        return client_id_eet
-    raise TypeError("Could not find CLIENT_ID_EET env variable")
-
-
-@pytest.fixture(scope="session")
-def client_secret_eet() -> str:
-    client_secret_eet = os.getenv("CLIENT_SECRET_EET")
-    if client_secret_eet is not None:
-        return client_secret_eet
-    raise TypeError("Could not find CLIENT_SECRET_EET env variable")
-
-
 @pytest.fixture(scope="class")
 def payments(
     goid: str, client_id: str, client_secret: str, gateway_url: str
@@ -69,9 +45,9 @@ def payments(
     payments = gopay.payments(
         {
             "goid": goid,
-            "clientId": client_id,
-            "clientSecret": client_secret,
-            "gatewayUrl": gateway_url,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "gateway_url": gateway_url,
         }
     )
     return payments
@@ -110,3 +86,15 @@ def base_payment() -> dict:
         },
     }
     return base_payment
+
+
+@pytest.fixture
+def mock_request() -> Request:
+    request = Request(method="test", path="/test")
+    return request
+
+
+@pytest.fixture
+def mock_response() -> Response:
+    response = Response(raw_body=b"test", json={}, status_code=0)
+    return response

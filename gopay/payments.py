@@ -67,7 +67,7 @@ class Payments:
         )
 
     def get_card_details(self, card_id: int | str) -> Response:
-        return self.gopay.call("POST", f"/payments/cards/{card_id}")
+        return self.gopay.call("GET", f"/payments/cards/{card_id}")
 
     def delete_card(self, card_id: int | str) -> Response:
         return self.gopay.call("DELETE", f"/payments/cards/{card_id}")

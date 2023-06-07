@@ -1,3 +1,4 @@
+from __future__ import annotations
 import requests
 from dataclasses import dataclass, field
 from gopay.enums import TokenScope, ContentType
