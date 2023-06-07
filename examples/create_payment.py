@@ -4,9 +4,9 @@ from gopay.enums import BankSwiftCode, Currency, Language, PaymentInstrument, Re
 payments = gopay.payments(
     {
         "goid": "my goid",
-        "clientId": "my id",
-        "clientSecret": "my secret",
-        "gatewayUrl": "https://gw.sandbox.gopay.com/",
+        "client_id": "my id",
+        "client_secret": "my secret",
+        "gateway_url": "https://gw.sandbox.gopay.com/",
     }
 )
 
@@ -20,7 +20,7 @@ recurrentPayment = {
 }
 
 # pre-authorized payment must have field 'preauthorization'
-preauthorizedPayment = {"preauthorization": True}
+preauthorized_payment = {"preauthorization": True}
 
 response = payments.create_payment(
     {

@@ -48,7 +48,7 @@ class TestApiClient:
             "POST",
             "/payments/payment",
             ContentType.JSON,
-            {"User-Agent": "PyTest"},
+            {"User-Agent": "PyTest", "Accept": "application/json"},
             base_payment,
             False,
         )

@@ -13,6 +13,10 @@ from gopay.services import AbstractCache, DefaultCache, LoggerType, default_logg
 
 @dataclass
 class Request:
+    """
+    Class representing the HTTP Request
+    """
+
     method: str
     path: str
     content_type: ContentType | None = None
@@ -23,12 +27,19 @@ class Request:
 
 @dataclass
 class Response:
+    """
+    Class representing the HTTP Response
+    """
+
     raw_body: bytes
     json: dict
     status_code: int
 
     @property
     def success(self) -> bool:
+        """
+        Indicates if the response was successful
+        """
         return self.status_code < 400
 
     @deprecated
@@ -44,12 +55,19 @@ class Response:
 
 @dataclass
 class AccessToken:
+    """
+    Class representing the OAUTH Access Token
+    """
+
     token: str
     last_updated: datetime
     scope: TokenScope
 
     @property
     def is_expired(self):
+        """
+        Returns `True` if it's been more than 30 minutes since the token was created
+        """
         if self.last_updated:
             delta = datetime.now() - self.last_updated
             return delta.total_seconds() > 1800
@@ -74,13 +92,20 @@ class ApiClient:
     cache: AbstractCache = field(default_factory=DefaultCache)
 
     def __post_init__(self):
+        # Force to generate the token
         _ = self.token
 
     @property
     def token(self) -> AccessToken | None:
+        """
+        Returns the access token, regenerates it if it was expired and checks the cache
+        """
+        # First check if valid token is cached
         token = self.cache.get_token(self.client)
         if token is not None and not token.is_expired:
             return token
+
+        # Otherwise call the API to get the token
         else:
             response = self._get_token()
             if response.success:
@@ -93,6 +118,9 @@ class ApiClient:
 
     @property
     def client(self) -> str:
+        """
+        Builds the key to identify the token for this client
+        """
         return "-".join((self.client_id, self.gateway_url, self.scope))
 
     def send_request(self, request: Request) -> Response:
@@ -100,12 +128,8 @@ class ApiClient:
         Send a specified Request to the GoPay REST API and process the response
         """
 
-        # Prepare headers based on content type and authorization
+        # Add Bearer authentication to headers if needed
         headers = request.headers or {}
-        headers.update({"Accept": "application/json", "User-Agent": "GoPay Python SDK"})
-        if request.content_type is not None:
-            headers["Content-Type"] = request.content_type
-
         if not request.basic_auth:
             headers["Authorization"] = f"Bearer {self.token}"
 
