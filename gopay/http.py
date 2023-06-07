@@ -22,7 +22,10 @@ class Response:
         return self.status_code < 400
 
     def __str__(self) -> str:
-        return self.raw_body.decode("utf-8")
+        try:
+            return self.raw_body.decode("utf-8")
+        except UnicodeDecodeError:
+            return self.raw_body.decode("windows-1250")
 
 
 class Browser:
