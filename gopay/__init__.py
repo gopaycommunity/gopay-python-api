@@ -1,3 +1,4 @@
+from __future__ import annotations
 from gopay.api import GoPay
 from gopay.payments import Payments
 from gopay.models import GopayConfig
