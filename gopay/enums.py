@@ -266,6 +266,6 @@ class PaymentSubStatus(StrEnum):
     _6504 = "_6504"
 
 
-class SupercashSubType(StrEnum):
-    SUB_TYPE_PREPAID = "PREPAID"
-    SUB_TYPE_POSTPAID = "POSTPAID"
+class ContentType(StrEnum):
+    FORM = "application/x-www-form-urlencoded"
+    JSON = "application/json"

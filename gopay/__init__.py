@@ -1,12 +1,10 @@
-from gopay.http import Browser, default_logger
-from gopay.api import GoPay, add_defaults
-from gopay.oauth2 import OAuth2, InMemoryTokenCache, CachedAuth
+from gopay.api import GoPay
 from gopay.payments import Payments
-from gopay.enums import Language, TokenScope
 from gopay.models import GopayConfig
+from gopay.services import default_logger, DefaultCache
 
 
-def payments(config: dict, services: dict = None) -> Payments:
+def payments(config: dict, services: dict | None = None) -> Payments:
     for key in tuple(config.keys()):
         if key == "clientId":
             config["client_id"] = config[key]
@@ -21,10 +19,8 @@ def payments(config: dict, services: dict = None) -> Payments:
     config_model = GopayConfig.parse_obj(config)
     config = config_model.dict()
 
-    services = add_defaults(
-        services, {"logger": default_logger, "cache": InMemoryTokenCache()}
-    )
-    browser = Browser(services["logger"], config["timeout"])
-    gopay = GoPay(config, browser)
-    auth = CachedAuth(OAuth2(gopay), services["cache"])
-    return Payments(gopay, auth)
+    if services is None:
+        services = {"logger": default_logger, "cache": DefaultCache()}
+
+    gopay = GoPay(config, services)
+    return Payments(gopay)

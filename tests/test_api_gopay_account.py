@@ -8,7 +8,7 @@ import io
 class TestGopayAccount:
     def test_payment_instruments(self, payments: Payments, goid: str):
         response = payments.get_payment_instruments(goid, Currency.CZECH_CROWNS)
-        assert response.has_succeed()
+        assert response.success
         response_body = response.json
         logging.info(response_body)
 
@@ -25,7 +25,7 @@ class TestGopayAccount:
         }
 
         response = payments.get_account_statement(statement_request)
-        assert response.has_succeed()
+        assert response.success
 
         statement = response.raw_body.decode("windows-1250")
         logging.info(statement)

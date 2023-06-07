@@ -482,24 +482,6 @@ files = [
 ]
 
 [[package]]
-name = "pyhamcrest"
-version = "2.0.4"
-description = "Hamcrest framework for matcher objects"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "pyhamcrest-2.0.4-py3-none-any.whl", hash = "sha256:60a41d4783b9d56c9ec8586635d2301db5072b3ea8a51c32dd03c408ae2b0f79"},
-    {file = "pyhamcrest-2.0.4.tar.gz", hash = "sha256:b5d9ce6b977696286cf232ce2adf8969b4d0b045975b0936ac9005e84e67e9c1"},
-]
-
-[package.extras]
-dev = ["black", "flake8", "pyhamcrest[docs,tests]", "pytest-mypy", "towncrier", "tox", "tox-asdf", "twine"]
-docs = ["alabaster (>=0.7,<1.0)", "sphinx (>=4.0,<5.0)"]
-tests = ["coverage[toml]", "dataclasses", "mypy (!=0.940)", "pytest (>=5.0)", "pytest-mypy-plugins", "pytest-sugar", "pytest-xdist", "types-dataclasses", "types-mock"]
-tests-numpy = ["numpy", "pyhamcrest[tests]"]
-
-[[package]]
 name = "pytest"
 version = "7.3.1"
 description = "pytest: simple powerful testing with Python"
@@ -649,17 +631,6 @@ files = [
 ]
 
 [[package]]
-name = "unittest-data-provider"
-version = "1.0.1"
-description = "PHPUnit-like @dataprovider decorator for unittest"
-category = "dev"
-optional = false
-python-versions = "*"
-files = [
-    {file = "unittest-data-provider-1.0.1.tar.gz", hash = "sha256:86bc7fb6608c2570aeedadea346fe3034afc940807dd7519e95e5dbc899ac2be"},
-]
-
-[[package]]
 name = "urllib3"
 version = "2.0.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -765,4 +736,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "859e4f51f1881141bc3eb3fe2adedbf06e023aa24402bc3fbb4afe9ce80b6a52"
+content-hash = "ad938cf15d12539cb089ea3f404a36406cdb85158ac7a36780081a128ed404a1"

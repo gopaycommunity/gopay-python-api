@@ -9,7 +9,7 @@ class TestRemote:
     ):
         response = payments.create_payment(base_payment)
 
-        assert response.has_succeed()
+        assert response.success
         response_body = response.json
 
         assert "gw_url" in response_body
@@ -20,7 +20,7 @@ class TestRemote:
 
         status_response = payments.get_status(payment_id)
 
-        assert status_response.has_succeed()
+        assert status_response.success
         status_body = status_response.json
 
         assert "state" in status_body
@@ -30,5 +30,5 @@ class TestRemote:
         wrong_payment_id = -10
         response = payments.get_status(wrong_payment_id)
 
-        assert not response.has_succeed()
+        assert not response.success
         assert response.status_code == 404

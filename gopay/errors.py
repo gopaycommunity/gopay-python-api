@@ -1,0 +1,2 @@
+class GoPayError(Exception):
+    pass

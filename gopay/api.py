@@ -1,62 +1,46 @@
 from typing import Dict
 from dataclasses import dataclass, field
-from gopay.http import Request, Response, Browser
-from gopay.enums import Language
+from gopay.http import Request, Response, ApiClient
+from gopay.enums import Language, ContentType
 import json
 from urllib.parse import urlsplit, urlunsplit
 from gopay import models
-
-JSON = "application/json"
-FORM = "application/x-www-form-urlencoded"
+from gopay.services import default_logger, DefaultCache
 
 
 @dataclass
 class GoPay:
     config: dict
-    browser: Browser
-    _base_url: str = field(default="", init=False)
+    services: dict = field(default_factory=dict)
+    base_url: str = field(default="", init=False)
 
     def __post_init__(self):
         urlparts = urlsplit(self.config["gateway_url"])
-        self._base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
-
-    def url(self, path: str):
-        return self._base_url + path
+        self.base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
+        self.api_client = ApiClient(
+            client_id=self.config["client_id"],
+            client_secret=self.config["client_secret"],
+            gateway_url=self.base_url,
+            scope=self.config["scope"],
+            logger=self.services.get("logger") or default_logger,
+            cache=self.services.get("cache") or DefaultCache(),
+        )
 
     def call(
-        self, method: str, url: str, content_type: str, authorization: str, data: Dict
+        self,
+        method: str,
+        path: str,
+        content_type: ContentType | None = None,
+        body: dict | None = None,
     ) -> Response:
-        request = Request()
-        request.url = self.url(url)
+        request = Request(
+            method=method, path=path, content_type=content_type, body=body
+        )
 
         request.headers = {
-            "Accept": "application/json",
             "Accept-Language": "cs-CZ"
             if self.config["language"] in [Language.CZECH, Language.SLOVAK]
-            else "en-US",
-            "Authorization": authorization,
+            else "en-US"
         }
-        if content_type:
-            request.headers["Content-Type"] = content_type
 
-        request.method = method
-        if data is not None:
-            request.body = json.dumps(data) if content_type == JSON else data
-        return self.browser.browse(request)
-
-
-@dataclass
-class GopayClient:
-    config: models.GopayConfig
-    _base_url: str = field(default="", init=False)
-
-    def __post_init__(self):
-        urlparts = urlsplit(self.config.gateway_url)
-        self._base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
-
-
-def add_defaults(data: dict, defaults: dict) -> dict:
-    full = defaults.copy()
-    if data is not None:
-        full.update(data)
-    return full
+        return self.api_client.send_request(request)

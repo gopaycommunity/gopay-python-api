@@ -1,108 +1,95 @@
 from __future__ import annotations
-from typing import Dict, List, Union
+
+from gopay.enums import ContentType, Currency
+from gopay.api import Response, GoPay
+from dataclasses import dataclass
 
 
-from gopay.api import JSON, FORM, add_defaults, Response, GoPay
-from gopay.oauth2 import OAuth2
-
-
-paymentSessionId = Union[List[str], str]
-
-
+@dataclass
 class Payments:
-    def __init__(self, gopay: GoPay, oauth: OAuth2) -> None:
-        self.gopay = gopay
-        self.oauth = oauth
+    gopay: GoPay
 
-    def create_payment(self, payment: Dict) -> Response:
-        payment = add_defaults(
+    def create_payment(self, payment: dict) -> Response:
+        if "target" not in payment:
+            payment.update(
+                {"target": {"type": "ACCOUNT", "goid": self.gopay.config["goid"]}}
+            )
+        return self.gopay.call("POST", "/payments/payment", ContentType.JSON, payment)
+
+    def get_status(self, payment_id: str | int) -> Response:
+        return self.gopay.call("GET", f"/payments/payment/{payment_id}")
+
+    def refund_payment(self, payment_id: int | str, amount: int) -> Response:
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/refund",
+            ContentType.FORM,
+            {"amount": amount},
+        )
+
+    def refund_payment_eet(self, payment_id: int | str, payment_data: dict) -> Response:
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/refund",
+            ContentType.JSON,
+            payment_data,
+        )
+
+    def create_recurrence(self, payment_id: int | str, payment: dict) -> Response:
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/create-recurrence",
+            ContentType.JSON,
             payment,
-            {
-                "target": {"type": "ACCOUNT", "goid": self.gopay.config["goid"]},
-                "lang": self.gopay.config["language"],
-            },
-        )
-        return self._api("post", "/payments/payment", JSON, payment)
-
-    def get_status(self, id_payment: Union[int, str]) -> Response:
-        return self._api("get", f"/payments/payment/{id_payment}", FORM, None)
-
-    def refund_payment(self, id_payment: Union[int, str], amount: int) -> Response:
-        return self._api(
-            "post", f"/payments/payment/{id_payment}/refund", FORM, {"amount": amount}
         )
 
-    def refund_payment_eet(
-        self, id_payment: Union[int, str], payment_data: Dict
-    ) -> Response:
-        return self._api(
-            "post", f"/payments/payment/{id_payment}/refund", JSON, payment_data
+    def void_recurrence(self, payment_id: int | str) -> Response:
+        return self.gopay.call(
+            "POST", f"/payments/payment/{payment_id}/void-recurrence"
         )
 
-    def create_recurrence(self, id_payment: Union[int, str], payment: Dict) -> Response:
-        return self._api(
-            "post", f"/payments/payment/{id_payment}/create-recurrence", JSON, payment
-        )
-
-    def void_recurrence(self, id_payment: Union[int, str]) -> Response:
-        return self._api(
-            "post", f"/payments/payment/{id_payment}/void-recurrence", FORM, {}
-        )
-
-    def capture_authorization(self, id_payment: Union[int, str]) -> Response:
-        return self._api("post", f"/payments/payment/{id_payment}/capture", FORM, {})
+    def capture_authorization(self, payment_id: int | str) -> Response:
+        return self.gopay.call("post", f"/payments/payment/{payment_id}/capture")
 
     def capture_authorization_partial(
-        self, id_payment: Union[int, str], capture_payment: Dict
+        self, payment_id: int | str, capture_payment: dict
     ) -> Response:
-        return self._api(
-            "post", f"/payments/payment/{id_payment}/capture", JSON, capture_payment
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/capture",
+            ContentType.JSON,
+            capture_payment,
         )
 
-    def void_authorization(self, id_payment: Union[int, str]) -> Response:
-        return self._api(
-            "post", f"/payments/payment/{id_payment}/void-authorization", FORM, {}
+    def void_authorization(self, payment_id: int | str) -> Response:
+        return self.gopay.call(
+            "POST", f"/payments/payment/{payment_id}/void-authorization"
         )
 
     def get_card_details(self, card_id: int | str) -> Response:
-        return self._api("post", f"/payments/cards/{card_id}", FORM, None)
+        return self.gopay.call("POST", f"/payments/cards/{card_id}")
 
-    def get_payment_instruments(
-        self, go_id: Union[int, str], currency: str
-    ) -> Response:
-        return self._api(
-            "get", f"/eshops/eshop/{go_id}/payment-instruments/{currency}", FORM, None
+    def delete_card(self, card_id: int | str) -> Response:
+        return self.gopay.call("DELETE", f"/payments/cards/{card_id}")
+
+    def get_payment_instruments(self, goid: int | str, currency: Currency) -> Response:
+        return self.gopay.call(
+            "GET", f"/eshops/eshop/{goid}/payment-instruments/{currency}"
         )
 
-    def get_account_statement(self, account_statement: Dict) -> Response:
-        return self._api("post", "/accounts/account-statement", JSON, account_statement)
+    def get_payment_instruments_all(self, goid: int | str) -> Response:
+        return self.gopay.call("GET", f"/eshops/eshop/{goid}/payment-instruments")
 
-    def get_eet_receipt_by_payment_id(self, id_payment: Union[int, str]) -> Response:
-        return self._api(
-            "get", f"/payments/payment/{id_payment}/eet-receipts", JSON, None
+    def get_account_statement(self, account_statement: dict) -> Response:
+        return self.gopay.call(
+            "POST", "/accounts/account-statement", ContentType.JSON, account_statement
         )
 
-    def find_eet_receipts_by_filter(self, filter: Dict) -> Response:
-        return self._api("post", "/eet-receipts", JSON, filter)
+    def get_eet_receipt_by_payment_id(self, payment_id: int | str) -> Response:
+        return self.gopay.call("GET", f"/payments/payment/{payment_id}/eet-receipts")
 
-    def url_to_embedjs(self) -> str:
-        if "gatewayUrl" in self.gopay.config:
-            url_base = self.gopay.config.get("gatewayUrl")
-            if not url_base.endswith("/"):
-                url_base += "/"
-        else:
-            url_base = (
-                "https://gate.gopay.cz/"
-                if self.gopay.config.get("isProductionMode")
-                else "https://gw.sandbox.gopay.com/"
-            )
-        return url_base + "gp-gw/js/embed.js"
+    def find_eet_receipts_by_filter(self, filter: dict) -> Response:
+        return self.gopay.call("POST", "/eet-receipts", ContentType.JSON, filter)
 
-    def _api(self, method: str, url: str, content_type: str, data: dict) -> Response:
-        token = self.oauth.authorize()
-        if token.token:
-            return self.gopay.call(
-                method, url, content_type, "Bearer " + token.token, data
-            )
-        else:
-            return token.response
+    def get_embedjs_url(self) -> str:
+        return self.gopay.base_url[-4] + "/gp-gw/js/embed.js"
