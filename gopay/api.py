@@ -1,3 +1,4 @@
+from __future__ import annotations
 from dataclasses import dataclass, field
 from gopay.http import Request, Response, ApiClient
 from gopay.enums import Language, ContentType
