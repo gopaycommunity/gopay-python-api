@@ -1,11 +1,19 @@
-class Recurrence:
+from enum import Enum
+
+
+class StrEnum(str, Enum):
+    def __str__(self) -> str:
+        return self.value
+
+
+class Recurrence(StrEnum):
     DAILY = "DAY"
     WEEKLY = "WEEK"
     MONTHLY = "MONTH"
     ON_DEMAND = "ON_DEMAND"
 
 
-class Currency:
+class Currency(StrEnum):
     CZECH_CROWNS = "CZK"
     EUROS = "EUR"
     POLISH_ZLOTY = "PLN"
@@ -16,18 +24,18 @@ class Currency:
     BULGARIAN_LEV = "BGN"
 
 
-class TokenScope:
+class TokenScope(StrEnum):
     CREATE_PAYMENT = "payment-create"
     ALL = "payment-all"
 
 
-class Result:
+class Result(StrEnum):
     ACCEPTED = "ACCEPTED"
     FINISHED = "FINISHED"
     FAILED = "FAILED"
 
 
-class PaymentStatus:
+class PaymentStatus(StrEnum):
     CREATED = "CREATED"
     PAYMENT_METHOD_CHOSEN = "PAYMENT_METHOD_CHOSEN"
     PAID = "PAID"
@@ -38,7 +46,7 @@ class PaymentStatus:
     PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED"
 
 
-class Language:
+class Language(StrEnum):
     CZECH = "CS"
     ENGLISH = "EN"
     SLOVAK = "SK"
@@ -60,7 +68,7 @@ class Language:
     PORTUGUESE = "PT"
 
 
-class PaymentInstrument:
+class PaymentInstrument(StrEnum):
     PAYMENT_CARD = "PAYMENT_CARD"
     BANK_ACCOUNT = "BANK_ACCOUNT"
     PREMIUM_SMS = "PRSMS"
@@ -76,7 +84,7 @@ class PaymentInstrument:
     CLICK_TO_PAY = "CLICK_TO_PAY"
 
 
-class StatementGeneratingFormat:
+class StatementGeneratingFormat(StrEnum):
     XLS_A = "XLS_A"
     XLS_B = "XLS_B"
     XLS_C = "XLS_C"
@@ -88,26 +96,25 @@ class StatementGeneratingFormat:
     ABO_A = "ABO_A"
 
 
-class ItemType:
+class ItemType(StrEnum):
     ITEM = "ITEM"
     DISCOUNT = "DISCOUNT"
     DELIVERY = "DELIVERY"
     POSTAGE = "POSTAGE"
 
 
-
-class EETReceiptState:
+class EETReceiptState(StrEnum):
     CREATED = "CREATED"
     DELIVERY_FAILED = "DELIVERY_FAILED"
     DELIVERED = "DELIVERED"
 
 
-class EETMode:
+class EETMode(StrEnum):
     AUTO = "AUTO"
     EET = "EET"
 
 
-class BankSwiftCode:
+class BankSwiftCode(StrEnum):
     # CZ
     CESKA_SPORITELNA = "GIBACZPX"
     KOMERCNI_BANKA = "KOMBCZPP"
@@ -182,20 +189,20 @@ class BankSwiftCode:
     SPECIAL = "OTHERS"
 
 
-class RecurrenceState:
+class RecurrenceState(StrEnum):
     REQUESTED = "REQUESTED"
     STARTED = "STARTED"
     STOPPED = "STOPPED"
 
 
-class PreAuthState:
+class PreAuthState(StrEnum):
     REQUESTED = "REQUESTED"
     AUTHORIZED = "AUTHORIZED"
     CAPTURED = "CAPTURED"
     CANCELED = "CANCELED"
 
 
-class PaymentSubStatus:
+class PaymentSubStatus(StrEnum):
     _101 = "_101"
     _102 = "_102"
     _3001 = "_3001"
@@ -259,6 +266,6 @@ class PaymentSubStatus:
     _6504 = "_6504"
 
 
-class SupercashSubType:
-    SUB_TYPE_PREPAID = "PREPAID"
-    SUB_TYPE_POSTPAID = "POSTPAID"
+class ContentType(StrEnum):
+    FORM = "application/x-www-form-urlencoded"
+    JSON = "application/json"

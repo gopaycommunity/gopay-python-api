@@ -1,18 +1,31 @@
-from gopay.http import Browser, null_logger
-from gopay.api import GoPay, add_defaults
-from gopay.oauth2 import OAuth2, InMemoryTokenCache, CachedAuth
+from __future__ import annotations
+
+from gopay.api import GoPay
+from gopay.models import GopayConfig
 from gopay.payments import Payments
-from gopay.enums import Language, TokenScope
 
 
-def payments(config: dict, services: dict = None) -> Payments:
-    config = add_defaults(
-        config, {"scope": TokenScope.ALL, "language": Language.ENGLISH, "timeout": 30}
-    )
-    services = add_defaults(
-        services, {"logger": null_logger, "cache": InMemoryTokenCache()}
-    )
-    browser = Browser(services["logger"], config["timeout"])
-    gopay = GoPay(config, browser)
-    auth = CachedAuth(OAuth2(gopay), services["cache"])
-    return Payments(gopay, auth)
+def payments(config: dict, services: dict | None = None) -> Payments:
+    """
+    Recommended way of initating the GoPay SDK. This methods handles configuration
+    validation and if needed, conversion from camelCase to snake_case
+    """
+    # If any of the config keys are camelCase, convert them to snake_case
+    for key in tuple(config.keys()):
+        if key == "clientId":
+            config["client_id"] = config[key]
+            del config[key]
+        elif key == "clientSecret":
+            config["client_secret"] = config[key]
+            del config[key]
+        elif key == "gatewayUrl":
+            config["gateway_url"] = config[key]
+            del config[key]
+
+    # Use Pydantic to validate the config object
+    config_model = GopayConfig.parse_obj(config)
+    config = config_model.dict()
+
+    # Create and return the Payments and GoPay objects
+    gopay = GoPay(config, services or {})
+    return Payments(gopay)

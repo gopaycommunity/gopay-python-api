@@ -1,4 +1,0 @@
-PyHamcrest>=1.9.0
-requests>=2.21.0
-unittest-data-provider>=1.0.1
-deprecated>=1.2.0

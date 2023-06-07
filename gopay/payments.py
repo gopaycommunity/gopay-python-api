@@ -1,122 +1,145 @@
 from __future__ import annotations
-from typing import Dict, List, Union
+
+from dataclasses import dataclass
+
+from gopay.api import GoPay, Response
+from gopay.enums import ContentType, Currency
 
 
-from gopay.api import JSON, FORM, add_defaults, Response, GoPay
-from gopay.oauth2 import OAuth2
-
-
-paymentSessionId = Union[List[str], str]
-
-
+@dataclass
 class Payments:
-    def __init__(self, gopay: GoPay, oauth: OAuth2) -> None:
-        self.gopay = gopay
-        self.oauth = oauth
+    """
+    Handles the API calls. Maps inidividual API Calls to Python methods and adds some
+    defaults
+    """
 
-    def create_payment(self, payment: Dict) -> Response:
-        payment = add_defaults(
+    gopay: GoPay
+
+    def create_payment(self, payment: dict) -> Response:
+        """
+        https://doc.gopay.com#payment-creation
+        """
+
+        # Add defaults for goid and lang if not present
+        if "target" not in payment:
+            payment.update(
+                {"target": {"type": "ACCOUNT", "goid": self.gopay.config["goid"]}}
+            )
+        if "lang" not in payment:
+            payment.update({"lang": self.gopay.config["language"]})
+        return self.gopay.call("POST", "/payments/payment", ContentType.JSON, payment)
+
+    def get_status(self, payment_id: str | int) -> Response:
+        """
+        https://doc.gopay.com#payment-inquiry
+        """
+        return self.gopay.call("GET", f"/payments/payment/{payment_id}")
+
+    def refund_payment(self, payment_id: int | str, amount: int) -> Response:
+        """
+        https://doc.gopay.com#payment-refund
+        """
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/refund",
+            ContentType.FORM,
+            {"amount": amount},
+        )
+
+    def create_recurrence(self, payment_id: int | str, payment: dict) -> Response:
+        """
+        https://doc.gopay.com#creating-a-recurrence
+        """
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/create-recurrence",
+            ContentType.JSON,
             payment,
-            {
-                "target": {"type": "ACCOUNT", "goid": self.gopay.config["goid"]},
-                "lang": self.gopay.config["language"],
-            },
-        )
-        return self._api("payments/payment", JSON, payment)
-
-    def get_status(self, id_payment: Union[int, str]) -> Response:
-        return self._api(f"payments/payment/{id_payment}", FORM, None)
-
-    def refund_payment(self, id_payment: Union[int, str], amount: int) -> Response:
-        return self._api(
-            f"payments/payment/{id_payment}/refund", FORM, {"amount": amount}
         )
 
-    def refund_payment_eet(
-        self, id_payment: Union[int, str], payment_data: Dict
-    ) -> Response:
-        return self._api(f"payments/payment/{id_payment}/refund", JSON, payment_data)
-
-    def create_recurrence(self, id_payment: Union[int, str], payment: Dict) -> Response:
-        return self._api(
-            f"payments/payment/{id_payment}/create-recurrence", JSON, payment
+    def void_recurrence(self, payment_id: int | str) -> Response:
+        """
+        https://doc.gopay.com#void-a-recurring-payment
+        """
+        return self.gopay.call(
+            "POST", f"/payments/payment/{payment_id}/void-recurrence"
         )
 
-    def void_recurrence(self, id_payment: Union[int, str]) -> Response:
-        return self._api(f"payments/payment/{id_payment}/void-recurrence", FORM, {})
-
-    def capture_authorization(self, id_payment: Union[int, str]) -> Response:
-        return self._api(f"payments/payment/{id_payment}/capture", FORM, {})
+    def capture_authorization(self, payment_id: int | str) -> Response:
+        """
+        https://doc.gopay.com#capturing-a-preauthorized-payment
+        """
+        return self.gopay.call("post", f"/payments/payment/{payment_id}/capture")
 
     def capture_authorization_partial(
-        self, id_payment: Union[int, str], capture_payment: Dict
+        self, payment_id: int | str, payment: dict
     ) -> Response:
-        return self._api(
-            f"payments/payment/{id_payment}/capture", JSON, capture_payment
+        """
+        https://doc.gopay.com#partially-capturing-a-preauthorized-payment
+        """
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/capture",
+            ContentType.JSON,
+            payment,
         )
 
-    def void_authorization(self, id_payment: Union[int, str]) -> Response:
-        return self._api(f"payments/payment/{id_payment}/void-authorization", FORM, {})
-    
+    def void_authorization(self, payment_id: int | str) -> Response:
+        """
+        https://doc.gopay.com#voiding-a-preauthorized-payment
+        """
+        return self.gopay.call(
+            "POST", f"/payments/payment/{payment_id}/void-authorization"
+        )
+
     def get_card_details(self, card_id: int | str) -> Response:
-        return self._api(f"payments/cards/{card_id}", FORM, None)
+        """
+        https://doc.gopay.com#payment-card-inquiry
+        """
+        return self.gopay.call("GET", f"/payments/cards/{card_id}")
 
-    def get_payment_instruments(
-        self, go_id: Union[int, str], currency: str
-    ) -> Response:
-        return self._api(
-            f"eshops/eshop/{go_id}/payment-instruments/{currency}", "", None
+    def delete_card(self, card_id: int | str) -> Response:
+        """
+        https://doc.gopay.com#payment-card-deletion
+        """
+        return self.gopay.call("DELETE", f"/payments/cards/{card_id}")
+
+    def get_payment_instruments(self, goid: int | str, currency: Currency) -> Response:
+        """
+        https://doc.gopay.com#available-payment-methods-for-a-currency
+        """
+        return self.gopay.call(
+            "GET", f"/eshops/eshop/{goid}/payment-instruments/{currency}"
         )
 
-    def get_account_statement(self, account_statement: Dict) -> Response:
-        return self._api("accounts/account-statement", JSON, account_statement)
+    def get_payment_instruments_all(self, goid: int | str) -> Response:
+        """
+        https://doc.gopay.com#all-available-payment-methods
+        """
+        return self.gopay.call("GET", f"/eshops/eshop/{goid}/payment-instruments")
 
-    def get_eet_receipt_by_payment_id(self, id_payment: Union[int, str]) -> Response:
-        return self._api(f"payments/payment/{id_payment}/eet-receipts", JSON, None)
-
-    def find_eet_receipts_by_filter(self, filter: Dict) -> Response:
-        return self._api("eet-receipts", JSON, filter)
-
-    def get_supercash_coupon_batch_status(self, batch_id: Union[int, str]) -> Response:
-        return self._api(f"batch/{batch_id}", FORM, None)
-
-    def get_supercash_coupon_batch(self, batch_id: Union[int, str]) -> Response:
-        return self._api(
-            f'/supercash/coupon/find?batch_request_id={batch_id}&go_id={self.gopay.config["goid"]}',
-            FORM,
-            None,
+    def get_account_statement(self, statement_request: dict) -> Response:
+        """
+        https://doc.gopay.com#account-statement
+        """
+        return self.gopay.call(
+            "POST", "/accounts/account-statement", ContentType.JSON, statement_request
         )
 
-    def find_supercash_coupons(self, paymentSessionId: paymentSessionId) -> Response:
-        if type(paymentSessionId) is list:
-            ids_string = ",".join(map(str, paymentSessionId))
-        else:
-            ids_string = str(paymentSessionId)
-        return self._api(
-            f'supercash/coupon/find?payment_session_id_list={ids_string}&go_id={self.gopay.config["goid"]}',
-            FORM,
-            None,
+    def refund_payment_eet(self, payment_id: int | str, payment_data: dict) -> Response:
+        return self.gopay.call(
+            "POST",
+            f"/payments/payment/{payment_id}/refund",
+            ContentType.JSON,
+            payment_data,
         )
 
-    def get_supercash_coupon(self, coupon_id: Union[int, str]) -> Response:
-        return self._api(f"supercash/coupon/{coupon_id}", FORM, None)
+    def get_eet_receipt_by_payment_id(self, payment_id: int | str) -> Response:
+        return self.gopay.call("GET", f"/payments/payment/{payment_id}/eet-receipts")
 
-    def url_to_embedjs(self) -> str:
-        if "gatewayUrl" in self.gopay.config:
-            url_base = self.gopay.config.get("gatewayUrl")
-            if not url_base.endswith("/"):
-                url_base += "/"
-        else:
-            url_base = (
-                "https://gate.gopay.cz/"
-                if self.gopay.config.get("isProductionMode")
-                else "https://gw.sandbox.gopay.com/"
-            )
-        return url_base + "gp-gw/js/embed.js"
+    def find_eet_receipts_by_filter(self, filter: dict) -> Response:
+        return self.gopay.call("POST", "/eet-receipts", ContentType.JSON, filter)
 
-    def _api(self, url: str, content_type: str, data: dict) -> Response:
-        token = self.oauth.authorize()
-        if token.token:
-            return self.gopay.call(url, content_type, "Bearer " + token.token, data)
-        else:
-            return token.response
+    @property
+    def get_embedjs_url(self) -> str:
+        return self.gopay.base_url[-4] + "/gp-gw/js/embed.js"
