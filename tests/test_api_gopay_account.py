@@ -28,7 +28,7 @@ class TestGopayAccount:
         response = payments.get_account_statement(statement_request)
         assert response.success
 
-        statement = response.raw_body.decode("windows-1250")
+        statement = response.raw_body.decode("utf-8")
         logging.info(statement)
 
         assert "errors" not in statement

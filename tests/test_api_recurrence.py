@@ -5,7 +5,7 @@ from gopay.enums import Recurrence
 
 
 class TestRecurrence:
-    def test_create_autp_recurrent_payment(
+    def test_create_auto_recurrent_payment(
         self, payments: Payments, base_payment: dict
     ):
         base_payment.update(
