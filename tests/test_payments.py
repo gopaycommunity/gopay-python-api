@@ -81,3 +81,6 @@ class TestPayments:
         assert payments.gopay.api_client.token is not None
         assert isinstance(payments.gopay.api_client.cache, MockCache)
         assert payments.gopay.api_client.logger == mock_logger
+
+    def test_embed_url(self, payments: Payments, gateway_url: str):
+        assert payments.get_embedjs_url == gateway_url[:-4] + "/gp-gw/js/embed.js"
