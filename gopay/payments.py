@@ -142,4 +142,4 @@ class Payments:
 
     @property
     def get_embedjs_url(self) -> str:
-        return self.gopay.base_url[-4] + "/gp-gw/js/embed.js"
+        return self.gopay.base_url[:-4] + "/gp-gw/js/embed.js"
