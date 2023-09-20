@@ -61,10 +61,10 @@ class Language(StrEnum):
     ITALIAN = "IT"
     SPANISH = "ES"
     UKRAINIAN = "UK"
-    ESTONIAN = "EE"
+    ESTONIAN = "ET"
     LITHUANIAN = "LT"
     LATVIAN = "LV"
-    SLOVENIAN = "SI"
+    SLOVENIAN = "SL"
     PORTUGUESE = "PT"
 
 
