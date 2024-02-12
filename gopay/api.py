@@ -59,6 +59,6 @@ class GoPay:
             else "en-US",
         }
         if content_type is not None:
-            request.headers["Content-Type"] = content_type
+            request.headers["Content-Type"] = content_type.value
 
         return self.api_client.send_request(request)
