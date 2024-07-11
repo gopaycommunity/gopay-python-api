@@ -82,6 +82,8 @@ class PaymentInstrument(StrEnum):
     ACCOUNT = "ACCOUNT"
     APPLE_PAY = "APPLE_PAY"
     CLICK_TO_PAY = "CLICK_TO_PAY"
+    TWISTO = "TWISTO"
+    SKIPPAY = "SKIPPAY"
 
 
 class StatementGeneratingFormat(StrEnum):
