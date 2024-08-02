@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel, ConfigDict
 
 from gopay import enums
 
 
 class GopayModel(BaseModel):
-    class Config:
-        use_enum_values = True
-        extra = Extra.forbid
+    model_config = ConfigDict(use_enum_values=True, extra="forbid")
 
 
 class GopayConfig(GopayModel):

@@ -23,8 +23,8 @@ def payments(config: dict, services: dict | None = None) -> Payments:
             del config[key]
 
     # Use Pydantic to validate the config object
-    config_model = GopayConfig.parse_obj(config)
-    config = config_model.dict()
+    config_model = GopayConfig.model_validate(config)
+    config = config_model.model_dump()
 
     # Create and return the Payments and GoPay objects
     gopay = GoPay(config, services or {})
