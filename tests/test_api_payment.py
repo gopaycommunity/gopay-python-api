@@ -23,7 +23,7 @@ class TestPayments:
 
         assert "errors" in response_body
         error_dict = response_body["errors"][0]
-        assert error_dict["error_name"] == "PAYMENT_WRONG_STATE"
+        assert error_dict["error_name"] == "PAYMENT_REFUND_NOT_SUPPORTED"
 
     def test_payment_status(self, payments: Payments):
         payment_id = 3178283550
