@@ -141,6 +141,7 @@ class ApiClient:
             auth=(self.client_id, self.client_secret) if request.basic_auth else None,
             data=request.body if request.content_type == ContentType.FORM else None,
             json=request.body if request.content_type == ContentType.JSON else None,
+            timeout=300
         )
 
         # Build Response instance, try to decode body as JSON
