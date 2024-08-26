@@ -23,7 +23,7 @@ python = "^3.8.1"
 requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
+black = ">=23.3,<25.0"
 deprecated = "^1.2.14"
 flake8 = "^6.0.0"
 isort = "^5.12.0"
