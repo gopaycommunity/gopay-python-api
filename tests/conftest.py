@@ -3,7 +3,7 @@ import os
 import pytest
 
 import gopay
-from gopay.enums import BankSwiftCode, Currency, Language, PaymentInstrument
+from gopay.enums import BankSwiftCode, Currency, Language, PaymentInstrument, BnplType
 from gopay.http import Request, Response
 
 
@@ -69,8 +69,8 @@ def base_payment() -> dict:
                 BankSwiftCode.CESKA_SPORITELNA,
                 BankSwiftCode.RAIFFEISENBANK,
             ],
-        #    "allowed_bnpl_types": ["THIRDS", "LATER"],
-        #    "default_bnpl_type": "THIRDS",
+        #    "allowed_bnpl_types": [BnplType.DEFERRED_PAYMENT, BnplType.PAY_IN_THREE],
+        #    "default_bnpl_type": BnplType.DEFERRED_PAYMENT,
             "default_swift": BankSwiftCode.CESKA_SPORITELNA,
             "default_payment_instrument": PaymentInstrument.BANK_ACCOUNT,
             "contact": {

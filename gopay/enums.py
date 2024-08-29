@@ -271,3 +271,7 @@ class PaymentSubStatus(StrEnum):
 class ContentType(StrEnum):
     FORM = "application/x-www-form-urlencoded"
     JSON = "application/json"
+
+class BnplType(StrEnum):
+    DEFERRED_PAYMENT = "DEFERRED_PAYMENT"
+    PAY_IN_THREE = "PAY_IN_THREE"
