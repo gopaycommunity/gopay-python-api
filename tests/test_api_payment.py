@@ -36,3 +36,11 @@ class TestPayments:
         assert "errors" not in response_body
         assert response_body["id"] == payment_id
         assert response_body["state"] == "REFUNDED"
+
+    def test_history_refunds(self, payments: Payments):
+        response = payments.get_history_of_refunds(3178283550)
+        assert response.success
+        response_body = response.json
+        logging.info(response_body)
+
+        assert "errors" not in response_body

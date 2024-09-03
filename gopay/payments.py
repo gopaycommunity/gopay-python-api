@@ -134,6 +134,12 @@ class Payments:
             payment_data,
         )
 
+    def get_history_of_refunds(self, payment_id: int | str) -> Response:
+        """
+        https://doc.gopay.com/#history-of-refunds
+        """
+        return self.gopay.call("GET", f"/payments/payment/{payment_id}/refunds")
+
     def get_eet_receipt_by_payment_id(self, payment_id: int | str) -> Response:
         return self.gopay.call("GET", f"/payments/payment/{payment_id}/eet-receipts")
 
