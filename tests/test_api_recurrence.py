@@ -51,7 +51,7 @@ class TestRecurrence:
         assert response_body["recurrence"]["recurrence_state"] == "REQUESTED"
 
     def test_void_recurrence(self, payments: Payments):
-        payment_id = 3049520773
+        payment_id = 3252157272
 
         response = payments.void_recurrence(payment_id)
         response_body = response.json
@@ -62,7 +62,7 @@ class TestRecurrence:
         assert error_dict["error_name"] == "PAYMENT_RECURRENCE_STOPPED"
 
     def test_create_next_ondemand_payment(self, payments: Payments):
-        payment_id = 3049520708
+        payment_id = 3252157272
         next_payment = {
             "amount": "4000",
             "currency": "CZK",

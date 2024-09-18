@@ -5,7 +5,6 @@ from urllib.parse import urlsplit, urlunsplit
 
 from gopay.enums import ContentType, Language
 from gopay.http import ApiClient, Request, Response
-from gopay.services import DefaultCache, default_logger
 
 
 @dataclass
@@ -24,15 +23,29 @@ class GoPay:
         # Make sure URL will be in the form of example.com/api
         urlparts = urlsplit(self.config["gateway_url"])
         self.base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
+        
+        # Prepare
+        api_client_config = {
+            "client_id": self.config["client_id"],
+            "client_secret": self.config["client_secret"],
+            "gateway_url": self.base_url,
+            "scope": self.config["scope"],
+        }
+
+        # Add optional parameters if found
+        if (timeout := self.config.get("timeout")) is not None:
+            api_client_config.update({"timeout": timeout})
+
+        if (logger := self.services.get("logger")) is not None:
+            api_client_config.update({"logger": logger})
+
+        if (cache := self.services.get("cache")) is not None:
+            api_client_config.update({"cache": cache})
+
 
         # Create the API client
         self.api_client = ApiClient(
-            client_id=self.config["client_id"],
-            client_secret=self.config["client_secret"],
-            gateway_url=self.base_url,
-            scope=self.config["scope"],
-            logger=self.services.get("logger") or default_logger,
-            cache=self.services.get("cache") or DefaultCache(),
+            **api_client_config
         )
 
     def call(

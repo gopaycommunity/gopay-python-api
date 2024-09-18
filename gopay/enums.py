@@ -82,6 +82,8 @@ class PaymentInstrument(StrEnum):
     ACCOUNT = "ACCOUNT"
     APPLE_PAY = "APPLE_PAY"
     CLICK_TO_PAY = "CLICK_TO_PAY"
+    TWISTO = "TWISTO"
+    SKIPPAY = "SKIPPAY"
 
 
 class StatementGeneratingFormat(StrEnum):
@@ -269,3 +271,7 @@ class PaymentSubStatus(StrEnum):
 class ContentType(StrEnum):
     FORM = "application/x-www-form-urlencoded"
     JSON = "application/json"
+
+class BnplType(StrEnum):
+    DEFERRED_PAYMENT = "DEFERRED_PAYMENT"
+    PAY_IN_THREE = "PAY_IN_THREE"
