@@ -19,7 +19,7 @@ version = "2.2.1"
 [tool.poetry.dependencies]
 deprecated = "^1.2.14"
 pydantic = "^2.8.2"
-python = "^3.8.1"
+python = "^3.9"
 requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
