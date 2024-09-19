@@ -19,3 +19,4 @@ class GopayConfig(GopayModel):
     timeout: Optional[int] = None
     scope: enums.TokenScope = enums.TokenScope.ALL
     language: enums.Language = enums.Language.CZECH
+    custom_user_agent: Optional[str] = None

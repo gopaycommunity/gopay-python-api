@@ -21,6 +21,9 @@ def payments(config: dict, services: dict | None = None) -> Payments:
         elif key == "gatewayUrl":
             config["gateway_url"] = config[key]
             del config[key]
+        elif key == "customUserAgent":
+            config["custom_user_agent"] = config[key]
+            del config[key]
 
     # Use Pydantic to validate the config object
     config_model = GopayConfig.parse_obj(config)
