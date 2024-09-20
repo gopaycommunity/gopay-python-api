@@ -1,5 +1,6 @@
-import tomli
 from pathlib import Path
+
+import tomli
 
 def get_project_version():
     pyproject_path = Path(__file__).resolve().parent.parent / 'pyproject.toml'
