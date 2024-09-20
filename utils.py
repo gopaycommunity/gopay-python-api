@@ -1,7 +1,9 @@
 import tomli
+import os
 
 def get_project_version():
-    with open('../pyproject.toml', 'rb') as file:
+    pyproject_path = os.path.join(os.path.dirname(__file__), 'pyproject.toml')
+    with open(pyproject_path, 'rb') as file:
         pyproject_data = tomli.load(file)
     return pyproject_data['tool']['poetry']['version']
 
