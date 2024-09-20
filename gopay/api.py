@@ -5,7 +5,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 from gopay.enums import ContentType, Language
 from gopay.http import ApiClient, Request, Response
-from utils import DEFAULT_USER_AGENT
+from gopay.utils import DEFAULT_USER_AGENT
 
 
 @dataclass

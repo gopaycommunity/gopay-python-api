@@ -1,8 +1,8 @@
 import tomli
-import os
+from pathlib import Path
 
 def get_project_version():
-    pyproject_path = os.path.join(os.path.dirname(__file__), 'pyproject.toml')
+    pyproject_path = Path(__file__).resolve().parent.parent / 'pyproject.toml'
     with open(pyproject_path, 'rb') as file:
         pyproject_data = tomli.load(file)
     return pyproject_data['tool']['poetry']['version']
