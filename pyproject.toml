@@ -14,13 +14,14 @@ name = "gopay"
 packages = [{include = "gopay"}]
 readme = "README.md"
 repository = "https://github.com/gopaycommunity/gopay-python-api"
-version = "2.2.1"
+version = "2.2.2"
 
 [tool.poetry.dependencies]
 deprecated = "^1.2.14"
 pydantic = "^2.8.2"
 python = "^3.9"
 requests = "^2.31.0"
+tomli = "^2.0.1"
 
 [tool.poetry.group.dev.dependencies]
 black = ">=23.3,<25.0"

@@ -5,6 +5,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 from gopay.enums import ContentType, Language
 from gopay.http import ApiClient, Request, Response
+from gopay.utils import DEFAULT_USER_AGENT
 
 
 @dataclass
@@ -63,10 +64,16 @@ class GoPay:
             method=method, path=path, content_type=content_type, body=body
         )
 
+        user_agent = self.config.get("custom_user_agent")
+        if user_agent is None:
+            user_agent = DEFAULT_USER_AGENT
+        else:
+            user_agent = self.config["custom_user_agent"]
+
         # Add some default headers
         request.headers = {
             "Accept": "application/json",
-            "User-Agent": "GoPay Python SDK",
+            "User-Agent": user_agent,
             "Accept-Language": "cs-CZ"
             if self.config["language"] in [Language.CZECH, Language.SLOVAK]
             else "en-US",
