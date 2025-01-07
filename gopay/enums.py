@@ -189,6 +189,7 @@ class BankSwiftCode(StrEnum):
     POLSKI_BANK_PRZEDSIEBIORCZOSCI_SPOLKA_AKCYJNA = "PBPBPLPW"
     # Others
     SPECIAL = "OTHERS"
+    QR_PAYMENT = "QRPAYMENT"
 
 
 class RecurrenceState(StrEnum):
