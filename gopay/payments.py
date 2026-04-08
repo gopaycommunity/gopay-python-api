@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from gopay.api import GoPay, Response
-from gopay.enums import ContentType, Currency
+from gopay.enums import ContentType, Currency, QrCodeFormat
 
 
 @dataclass
@@ -34,6 +34,21 @@ class Payments:
         https://doc.gopay.com#payment-inquiry
         """
         return self.gopay.call("GET", f"/payments/payment/{payment_id}")
+
+    def get_qr_payment(
+        self,
+        payment_id: int | str,
+        format: QrCodeFormat | None = None,
+    ) -> Response:
+        """
+        Retrieves QR payment information for a given payment.
+        GET /api/payments/payment/{id}/qr-payment
+        Optional query parameter: format (png | svg), defaults to png.
+        """
+        path = f"/payments/payment/{payment_id}/qr-payment"
+        if format is not None:
+            path = f"{path}?format={format}"
+        return self.gopay.call("GET", path)
 
     def refund_payment(self, payment_id: int | str, amount: int) -> Response:
         """
