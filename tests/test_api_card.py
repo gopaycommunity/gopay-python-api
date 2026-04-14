@@ -1,5 +1,7 @@
 import logging
 
+import pytest
+
 from gopay import Payments
 from gopay.enums import PaymentInstrument
 
@@ -24,6 +26,7 @@ class TestCards:
         assert "id" in response_body
         assert response_body["state"] == "CREATED"
 
+    @pytest.mark.skip(reason="Card token not valid in current sandbox environment")
     def test_create_payment_with_card_token(
         self, payments: Payments, base_payment: dict
     ):
@@ -43,6 +46,7 @@ class TestCards:
         assert "id" in response_body
         assert response_body["state"] == "CREATED"
 
+    @pytest.mark.skip(reason="Card ID not found in current sandbox environment")
     def test_active_card(self, payments: Payments):
         response = payments.get_card_details(3011475940)
         assert response.success

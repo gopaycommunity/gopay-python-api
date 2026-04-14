@@ -5,6 +5,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 from gopay.enums import ContentType, Language
 from gopay.http import ApiClient, Request, Response
+from gopay.models import DEFAULT_TIMEOUT
 from gopay.utils import DEFAULT_USER_AGENT
 
 
@@ -34,8 +35,7 @@ class GoPay:
         }
 
         # Add optional parameters if found
-        if (timeout := self.config.get("timeout")) is not None:
-            api_client_config.update({"timeout": timeout})
+        api_client_config["timeout"] = self.config.get("timeout", DEFAULT_TIMEOUT)
 
         if (logger := self.services.get("logger")) is not None:
             api_client_config.update({"logger": logger})
@@ -55,13 +55,14 @@ class GoPay:
         path: str,
         content_type: ContentType | None = None,
         body: dict | None = None,
+        params: dict | None = None,
     ) -> Response:
         """
         Sets some default headers and passes requests to the API Client
         """
         # Build the request
         request = Request(
-            method=method, path=path, content_type=content_type, body=body
+            method=method, path=path, content_type=content_type, body=body, params=params
         )
 
         user_agent = self.config.get("custom_user_agent")

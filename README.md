@@ -37,9 +37,10 @@ payments = gopay.payments({
     "goid": "{{YOUR-GOID}}",
     "client_id": "{{YOUR-CLIENT-ID}}",
     "client_secret": "{{YOUR-CLIENT-SECRET}}",
-    "gateway_url": 'https://gw.sandbox.gopay.com/api'
+    "gateway_url": 'https://gw.sandbox.gopay.com/api',
     "scope": TokenScope.ALL,
-    "language": Language.CZECH
+    "language": Language.CZECH,
+    "timeout": 30  # HTTP request timeout in seconds (default: 3600)
 })
 
 # Sandbox URL: https://gw.sandbox.gopay.com/api
@@ -62,7 +63,8 @@ Required field | Data type | Documentation |
 Optional field | Data type | Default value | Documentation |
 -------------- | --------- | ------------- | ------------- |
 `scope` | string | [`gopay.enums.TokenScope.ALL`](gopay/enums.py) | <https://doc.gopay.com/#access-token> |
-`language` | string | [`gopay.enums.Language.ENGLISH`](gopay/enums.py) | default language to use + [localization of errors](https://doc.gopay.com/#error)
+`language` | string | [`gopay.enums.Language.CZECH`](gopay/enums.py) | default language to use + [localization of errors](https://doc.gopay.com/#error) |
+`timeout` | int | `3600` | HTTP request timeout in seconds — must be a positive integer |
 
 ### Available methods
 
