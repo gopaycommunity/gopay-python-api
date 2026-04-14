@@ -8,6 +8,7 @@ from deprecated import deprecated
 from requests import JSONDecodeError
 
 from gopay.enums import ContentType, TokenScope
+from gopay.models import DEFAULT_TIMEOUT
 from gopay.services import AbstractCache, DefaultCache, LoggerType, default_logger
 
 
@@ -22,6 +23,7 @@ class Request:
     content_type: ContentType | None = None
     headers: dict[str, str] | None = None
     body: dict | None = None
+    params: dict | None = None
     basic_auth: bool = False
 
 
@@ -88,7 +90,7 @@ class ApiClient:
     client_secret: str
     gateway_url: str
     scope: TokenScope
-    timeout: int = 180
+    timeout: int = DEFAULT_TIMEOUT
     logger: LoggerType = default_logger
     cache: AbstractCache = field(default_factory=DefaultCache)
 
@@ -110,11 +112,14 @@ class ApiClient:
         else:
             response = self._get_token()
             if response.success:
-                token = AccessToken(
-                    response.json["access_token"], datetime.now(), self.scope
-                )
-                self.cache.set_token(self.client, token)
-                return token
+                try:
+                    token = AccessToken(
+                        response.json["access_token"], datetime.now(), self.scope
+                    )
+                    self.cache.set_token(self.client, token)
+                    return token
+                except KeyError:
+                    pass
         return None
 
     @property
@@ -134,23 +139,30 @@ class ApiClient:
         if not request.basic_auth:
             headers["Authorization"] = f"Bearer {self.token}"
 
-        # Send the request with the specified parameters
-        r = requests.request(
-            method=request.method,
-            url=f"{self.gateway_url}{request.path}",
-            headers=headers,
-            auth=(self.client_id, self.client_secret) if request.basic_auth else None,
-            data=request.body if request.content_type == ContentType.FORM else None,
-            json=request.body if request.content_type == ContentType.JSON else None,
-            timeout=self.timeout
-        )
-
-        # Build Response instance, try to decode body as JSON
-        response = Response(raw_body=r.content, json={}, status_code=r.status_code)
         try:
-            response.json = r.json()
-        except JSONDecodeError:
-            pass
+            # Send the request with the specified parameters
+            r = requests.request(
+                method=request.method,
+                url=f"{self.gateway_url}{request.path}",
+                headers=headers,
+                auth=(self.client_id, self.client_secret) if request.basic_auth else None,
+                data=request.body if request.content_type == ContentType.FORM else None,
+                json=request.body if request.content_type == ContentType.JSON else None,
+                params=request.params,
+                timeout=self.timeout
+            )
+
+            # Build Response instance, try to decode body as JSON
+            response = Response(raw_body=r.content, json={}, status_code=r.status_code)
+            try:
+                response.json = r.json()
+            except JSONDecodeError:
+                pass
+
+        except requests.exceptions.RequestException:
+            # Network errors (SSL, timeout, connection refused, …) — return a
+            # failed response so callers can handle it gracefully without raising
+            response = Response(raw_body=b"", json={}, status_code=0)
 
         self.logger(request, response)
         return response

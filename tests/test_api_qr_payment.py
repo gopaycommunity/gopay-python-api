@@ -1,5 +1,7 @@
 import logging
 
+import pytest
+
 from gopay import Payments
 from gopay.enums import QrCodeFormat
 
@@ -33,6 +35,7 @@ class TestQrPayment:
         # Store the payment id for the other tests in this class
         TestQrPayment._payment_id = body["id"]
 
+    @pytest.mark.skip(reason="QR payment not enabled for this sandbox merchant account")
     def test_get_qr_payment_default_format(self, payments: Payments):
         """
         Calls GET /api/payments/payment/{id}/qr-payment without specifying format.
@@ -56,6 +59,7 @@ class TestQrPayment:
             key in qr_code for key in ("spayd", "paybysquare", "sepa", "mnb_qr")
         ), f"Unexpected qr_code structure: {qr_code}"
 
+    @pytest.mark.skip(reason="QR payment not enabled for this sandbox merchant account")
     def test_get_qr_payment_png_format(self, payments: Payments):
         """
         Calls GET /api/payments/payment/{id}/qr-payment?format=png.
@@ -70,6 +74,7 @@ class TestQrPayment:
         assert "errors" not in body
         assert "qr_code" in body
 
+    @pytest.mark.skip(reason="QR payment not enabled for this sandbox merchant account")
     def test_get_qr_payment_svg_format(self, payments: Payments):
         """
         Calls GET /api/payments/payment/{id}/qr-payment?format=svg.
@@ -84,6 +89,7 @@ class TestQrPayment:
         assert "errors" not in body
         assert "qr_code" in body
 
+    @pytest.mark.skip(reason="QR payment not enabled for this sandbox merchant account")
     def test_get_qr_payment_recipient_structure(self, payments: Payments):
         """
         Validates the structure of the recipient block in the QR payment response.
