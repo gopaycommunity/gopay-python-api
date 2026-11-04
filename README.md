@@ -5,10 +5,11 @@
 
 ## Requirements
 
-- Python >= 3.8.1
+- Python >= 3.9
 - dependencies:
-  - [`requests`](https://github.com/kennethreitz/requests)
+  - [`requests`](https://github.com/psf/requests)
   - [`deprecated`](https://github.com/tantale/deprecated)
+  - [`pydantic`](https://github.com/pydantic/pydantic) (v2)
 
 ## Installation
 
