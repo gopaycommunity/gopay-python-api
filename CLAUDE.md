@@ -13,6 +13,7 @@ poetry run pytest tests/test_api_payment.py::TestPayments::test_create_payment  
 poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics    # CI's blocking lint
 poetry run flake8 . --max-complexity=10 --max-line-length=127                    # CI's non-blocking lint
 poetry run black . && poetry run isort .                                          # formatting (isort uses black profile)
+poetry run pyright                                                                # type check (config in pyproject.toml; gopay/ is strict)
 ```
 
 ### Tests hit the real GoPay sandbox

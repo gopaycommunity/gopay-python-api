@@ -2,9 +2,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from gopay.api import GoPay
-from gopay.models import GopayConfig
-from gopay.payments import Payments
+# Redundant aliases mark these names as explicit re-exports for type checkers
+from gopay.api import GoPay as GoPay
+from gopay.models import GopayConfig as GopayConfig
+from gopay.payments import Payments as Payments
 
 
 def payments(

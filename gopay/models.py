@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Optional
+from typing import ClassVar, Optional
 
 from gopay import enums
 
@@ -9,7 +9,7 @@ DEFAULT_TIMEOUT = 3600
 
 
 class GopayModel(BaseModel):
-    model_config = ConfigDict(use_enum_values=True, extra="forbid")
+    model_config: ClassVar[ConfigDict] = ConfigDict(use_enum_values=True, extra="forbid")
 
 
 class GopayConfig(GopayModel):
