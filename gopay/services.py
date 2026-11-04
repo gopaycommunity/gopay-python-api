@@ -32,7 +32,7 @@ class AbstractCache(ABC):
         ...
 
 
-def default_logger(request: Request, response: Response):
+def default_logger(request: Request, response: Response) -> None:
     """
     Logs the HTTP Request and Response when communicating with GoPay using logging.debug
     """
@@ -47,7 +47,12 @@ class DefaultCache(AbstractCache):
     as long as the object instance is alive
     """
 
-    tokens: dict[str, AccessToken] = field(default_factory=dict, init=False)
+    # See the note on `GoPay.services` about the bare `dict` factory
+    # fmt: off
+    tokens: dict[str, AccessToken] = field(  # pyright: ignore[reportUnknownVariableType]
+        default_factory=dict, init=False
+    )
+    # fmt: on
 
     def get_token(self, key: str) -> AccessToken | None:
         """

@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+from typing import Any
+
 from gopay.api import GoPay
 from gopay.models import GopayConfig
 from gopay.payments import Payments
 
 
-def payments(config: dict, services: dict | None = None) -> Payments:
+def payments(
+    config: dict[str, Any], services: dict[str, Any] | None = None
+) -> Payments:
     """
     Recommended way of initating the GoPay SDK. This methods handles configuration
     validation and if needed, conversion from camelCase to snake_case

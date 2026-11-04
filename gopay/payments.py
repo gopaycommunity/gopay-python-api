@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 from gopay.api import GoPay, Response
 from gopay.enums import ContentType, Currency, QrCodeFormat
+from gopay.http import JSONDict
 
 
 @dataclass
@@ -15,7 +16,7 @@ class Payments:
 
     gopay: GoPay
 
-    def create_payment(self, payment: dict) -> Response:
+    def create_payment(self, payment: JSONDict) -> Response:
         """
         https://doc.gopay.com#payment-creation
         """
@@ -59,7 +60,7 @@ class Payments:
             {"amount": amount},
         )
 
-    def create_recurrence(self, payment_id: int | str, payment: dict) -> Response:
+    def create_recurrence(self, payment_id: int | str, payment: JSONDict) -> Response:
         """
         https://doc.gopay.com#creating-a-recurrence
         """
@@ -85,7 +86,7 @@ class Payments:
         return self.gopay.call("post", f"/payments/payment/{payment_id}/capture")
 
     def capture_authorization_partial(
-        self, payment_id: int | str, payment: dict
+        self, payment_id: int | str, payment: JSONDict
     ) -> Response:
         """
         https://doc.gopay.com#partially-capturing-a-preauthorized-payment
@@ -131,7 +132,7 @@ class Payments:
         """
         return self.gopay.call("GET", f"/eshops/eshop/{goid}/payment-instruments")
 
-    def get_account_statement(self, statement_request: dict) -> Response:
+    def get_account_statement(self, statement_request: JSONDict) -> Response:
         """
         https://doc.gopay.com#account-statement
         """
@@ -139,7 +140,9 @@ class Payments:
             "POST", "/accounts/account-statement", ContentType.JSON, statement_request
         )
 
-    def refund_payment_eet(self, payment_id: int | str, payment_data: dict) -> Response:
+    def refund_payment_eet(
+        self, payment_id: int | str, payment_data: JSONDict
+    ) -> Response:
         return self.gopay.call(
             "POST",
             f"/payments/payment/{payment_id}/refund",
@@ -156,7 +159,7 @@ class Payments:
     def get_eet_receipt_by_payment_id(self, payment_id: int | str) -> Response:
         return self.gopay.call("GET", f"/payments/payment/{payment_id}/eet-receipts")
 
-    def find_eet_receipts_by_filter(self, filter: dict) -> Response:
+    def find_eet_receipts_by_filter(self, filter: JSONDict) -> Response:
         return self.gopay.call("POST", "/eet-receipts", ContentType.JSON, filter)
 
     @property

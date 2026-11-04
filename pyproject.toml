@@ -51,6 +51,7 @@ profile = "black"
 include = ["gopay", "tests", "examples"]
 pythonVersion = "3.9"
 typeCheckingMode = "standard"
+strict = ["gopay"]
 
 [build-system]
 build-backend = "poetry.core.masonry.api"

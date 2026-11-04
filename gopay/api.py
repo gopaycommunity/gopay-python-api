@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from typing import Any
 from urllib.parse import urlsplit, urlunsplit
 
 from gopay.enums import ContentType, Language
-from gopay.http import ApiClient, Request, Response
+from gopay.http import ApiClient, JSONDict, Request, Response
 from gopay.models import DEFAULT_TIMEOUT
 from gopay.utils import DEFAULT_USER_AGENT
 
@@ -16,18 +17,28 @@ class GoPay:
     to the API Client
     """
 
-    config: dict
-    services: dict = field(default_factory=dict)
+    # Validated configuration as produced by `GopayConfig.model_dump()`
+    config: dict[str, Any]
+    # Optional services: "logger" (LoggerType) and "cache" (AbstractCache)
+    # The declared type applies; Pyright only infers `dict[Unknown, Unknown]` for the
+    # bare `dict` factory. Kept as `dict` to leave the runtime default_factory unchanged.
+    # (fmt: off keeps the ignore comment on the line Pyright reports.)
+    # fmt: off
+    services: dict[str, Any] = field(  # pyright: ignore[reportUnknownVariableType]
+        default_factory=dict
+    )
+    # fmt: on
     base_url: str = field(default="", init=False)
     api_client: ApiClient = field(init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         # Make sure URL will be in the form of example.com/api
-        urlparts = urlsplit(self.config["gateway_url"])
+        gateway_url: str = self.config["gateway_url"]
+        urlparts = urlsplit(gateway_url)
         self.base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
         
         # Prepare
-        api_client_config = {
+        api_client_config: dict[str, Any] = {
             "client_id": self.config["client_id"],
             "client_secret": self.config["client_secret"],
             "gateway_url": self.base_url,
@@ -54,8 +65,8 @@ class GoPay:
         method: str,
         path: str,
         content_type: ContentType | None = None,
-        body: dict | None = None,
-        params: dict | None = None,
+        body: JSONDict | None = None,
+        params: JSONDict | None = None,
     ) -> Response:
         """
         Sets some default headers and passes requests to the API Client

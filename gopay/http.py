@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
+from typing import TYPE_CHECKING, Any
 
 import requests
 from deprecated import deprecated
@@ -10,6 +11,14 @@ from requests import JSONDecodeError
 from gopay.enums import ContentType, TokenScope
 from gopay.models import DEFAULT_TIMEOUT
 from gopay.services import AbstractCache, DefaultCache, LoggerType, default_logger
+
+if TYPE_CHECKING:
+    from typing_extensions import TypeAlias
+
+# A decoded JSON object (request body, query parameters or response body). Values are
+# typed as `Any` because their shape depends on the endpoint and the SDK passes them
+# through without inspecting them.
+JSONDict: TypeAlias = dict[str, Any]
 
 
 @dataclass
@@ -22,8 +31,8 @@ class Request:
     path: str
     content_type: ContentType | None = None
     headers: dict[str, str] | None = None
-    body: dict | None = None
-    params: dict | None = None
+    body: JSONDict | None = None
+    params: JSONDict | None = None
     basic_auth: bool = False
 
 
@@ -34,7 +43,9 @@ class Response:
     """
 
     raw_body: bytes
-    json: dict
+    # Typed as an object because the GoPay API always responds with a JSON object
+    # (or an empty dict is used when the body is not valid JSON)
+    json: JSONDict
     status_code: int
 
     @property
@@ -63,10 +74,12 @@ class AccessToken:
 
     token: str
     last_updated: datetime
-    scope: TokenScope
+    # `gopay.payments()` passes the scope as a plain string (the config model uses
+    # `use_enum_values=True`), so both forms are accepted
+    scope: TokenScope | str
 
     @property
-    def is_expired(self):
+    def is_expired(self) -> bool:
         """
         Returns `True` if it's been more than 30 minutes since the token was created
         """
@@ -89,12 +102,13 @@ class ApiClient:
     client_id: str
     client_secret: str
     gateway_url: str
-    scope: TokenScope
+    # See `AccessToken.scope`
+    scope: TokenScope | str
     timeout: int = DEFAULT_TIMEOUT
     logger: LoggerType = default_logger
     cache: AbstractCache = field(default_factory=DefaultCache)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         # Force to generate the token
         _ = self.token
 
