@@ -8,7 +8,12 @@ from gopay.services import DefaultCache
 class TestHttp:
     def test_request(self):
         request = Request(
-            "POST", "/test", ContentType.JSON, {}, {"value": "test"}, False
+            "POST",
+            "/test",
+            ContentType.JSON,
+            headers={},
+            body={"value": "test"},
+            basic_auth=False,
         )
 
         assert isinstance(request, Request)
@@ -48,9 +53,9 @@ class TestApiClient:
             "POST",
             "/payments/payment",
             ContentType.JSON,
-            {"User-Agent": "PyTest", "Accept": "application/json"},
-            base_payment,
-            False,
+            headers={"User-Agent": "PyTest", "Accept": "application/json"},
+            body=base_payment,
+            basic_auth=False,
         )
         response = api_client.send_request(request)
 

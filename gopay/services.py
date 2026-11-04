@@ -17,9 +17,10 @@ class AbstractCache(ABC):
     """
 
     @abstractmethod
-    def get_token(self, key: str) -> AccessToken:
+    def get_token(self, key: str) -> AccessToken | None:
         """
-        Fetch a token with the specified key from the cache
+        Fetch a token with the specified key from the cache, or `None` if there is
+        no token stored under that key
         """
         ...
 
