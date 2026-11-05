@@ -1,0 +1,5 @@
+# Revisions skipped by `git blame` (git config blame.ignoreRevsFile .git-blame-ignore-revs).
+# GitHub uses this file automatically.
+
+# GPY030-24: format code with Ruff
+bed615f3e2b59c14d7ded7ceb14b17bd7ef59808
