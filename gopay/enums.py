@@ -281,6 +281,7 @@ class QrCodeFormat(StrEnum):
     PNG = "png"
     SVG = "svg"
 
+
 class BnplType(StrEnum):
     DEFERRED_PAYMENT = "DEFERRED_PAYMENT"
     PAY_IN_THREE = "PAY_IN_THREE"

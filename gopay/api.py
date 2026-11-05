@@ -36,7 +36,7 @@ class GoPay:
         gateway_url: str = self.config["gateway_url"]
         urlparts = urlsplit(gateway_url)
         self.base_url = urlunsplit((urlparts.scheme, urlparts.netloc, "/api", "", ""))
-        
+
         # Prepare
         api_client_config: dict[str, Any] = {
             "client_id": self.config["client_id"],
@@ -54,11 +54,8 @@ class GoPay:
         if (cache := self.services.get("cache")) is not None:
             api_client_config.update({"cache": cache})
 
-
         # Create the API client
-        self.api_client = ApiClient(
-            **api_client_config
-        )
+        self.api_client = ApiClient(**api_client_config)
 
     def call(
         self,
@@ -73,7 +70,11 @@ class GoPay:
         """
         # Build the request
         request = Request(
-            method=method, path=path, content_type=content_type, body=body, params=params
+            method=method,
+            path=path,
+            content_type=content_type,
+            body=body,
+            params=params,
         )
 
         user_agent = self.config.get("custom_user_agent")

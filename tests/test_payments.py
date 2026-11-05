@@ -8,6 +8,7 @@ from gopay.models import DEFAULT_TIMEOUT
 from gopay.payments import Payments
 from gopay.services import AbstractCache
 
+
 def mock_logger(request: Request, response: Response) -> None:
     pass
 
@@ -46,7 +47,7 @@ class TestPayments:
                 "gateway_url": gateway_url,
                 "scope": TokenScope.ALL,
                 "language": Language.CZECH,
-                "timeout": 300
+                "timeout": 300,
             }
         )
         assert isinstance(payments, Payments)
@@ -163,4 +164,3 @@ class TestPayments:
                     "timeout": -10,
                 }
             )
-

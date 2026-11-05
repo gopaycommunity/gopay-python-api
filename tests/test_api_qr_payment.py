@@ -118,6 +118,6 @@ class TestQrPayment:
                 international = bank_account["international"]
                 assert "iban" in international
                 # bic is not always present (depends on currency/payment type)
-                assert any(
-                    key in international for key in ("bic", "reference")
-                ), f"Unexpected international bank_account structure: {international}"
+                assert any(key in international for key in ("bic", "reference")), (
+                    f"Unexpected international bank_account structure: {international}"
+                )

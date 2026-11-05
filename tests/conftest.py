@@ -61,16 +61,16 @@ def base_payment() -> dict:
             "allowed_payment_instruments": [
                 PaymentInstrument.BANK_ACCOUNT,
                 PaymentInstrument.PAYMENT_CARD,
-        #        PaymentInstrument.TWISTO,
-        #        PaymentInstrument.SKIPPAY
+                #        PaymentInstrument.TWISTO,
+                #        PaymentInstrument.SKIPPAY
             ],
-        #    "default_payment_instrument": PaymentInstrument.TWISTO,
+            #    "default_payment_instrument": PaymentInstrument.TWISTO,
             "allowed_swifts": [
                 BankSwiftCode.CESKA_SPORITELNA,
                 BankSwiftCode.RAIFFEISENBANK,
             ],
-        #    "allowed_bnpl_types": [BnplType.DEFERRED_PAYMENT, BnplType.PAY_IN_THREE],
-        #    "default_bnpl_type": BnplType.DEFERRED_PAYMENT,
+            #    "allowed_bnpl_types": [BnplType.DEFERRED_PAYMENT, BnplType.PAY_IN_THREE],
+            #    "default_bnpl_type": BnplType.DEFERRED_PAYMENT,
             "default_swift": BankSwiftCode.CESKA_SPORITELNA,
             "default_payment_instrument": PaymentInstrument.BANK_ACCOUNT,
             "contact": {

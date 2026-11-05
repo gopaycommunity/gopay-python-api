@@ -47,7 +47,9 @@ class Payments:
         Optional query parameter: format (png | svg), defaults to png.
         """
         params = {"format": format} if format is not None else None
-        return self.gopay.call("GET", f"/payments/payment/{payment_id}/qr-payment", params=params)
+        return self.gopay.call(
+            "GET", f"/payments/payment/{payment_id}/qr-payment", params=params
+        )
 
     def refund_payment(self, payment_id: int | str, amount: int) -> Response:
         """

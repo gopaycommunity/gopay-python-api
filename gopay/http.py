@@ -159,11 +159,13 @@ class ApiClient:
                 method=request.method,
                 url=f"{self.gateway_url}{request.path}",
                 headers=headers,
-                auth=(self.client_id, self.client_secret) if request.basic_auth else None,
+                auth=(self.client_id, self.client_secret)
+                if request.basic_auth
+                else None,
                 data=request.body if request.content_type == ContentType.FORM else None,
                 json=request.body if request.content_type == ContentType.JSON else None,
                 params=request.params,
-                timeout=self.timeout
+                timeout=self.timeout,
             )
 
             # Build Response instance, try to decode body as JSON

@@ -9,7 +9,9 @@ DEFAULT_TIMEOUT = 3600
 
 
 class GopayModel(BaseModel):
-    model_config: ClassVar[ConfigDict] = ConfigDict(use_enum_values=True, extra="forbid")
+    model_config: ClassVar[ConfigDict] = ConfigDict(
+        use_enum_values=True, extra="forbid"
+    )
 
 
 class GopayConfig(GopayModel):
