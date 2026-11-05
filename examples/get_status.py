@@ -1,5 +1,5 @@
 import gopay
-from gopay.enums import TokenScope, Language
+from gopay.enums import Language, TokenScope
 
 payments = gopay.payments(
     {

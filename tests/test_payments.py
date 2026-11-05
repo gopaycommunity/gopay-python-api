@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pytest
+
 import gopay
 from gopay.enums import Language, TokenScope
 from gopay.http import AccessToken, Request, Response
@@ -91,7 +92,7 @@ class TestPayments:
     def test_default_timeout(
         self, client_id: str, client_secret: str, goid: str, gateway_url: str
     ):
-        """When no timeout is specified, the default value from DEFAULT_TIMEOUT is used."""
+        """When no timeout is specified, the default from DEFAULT_TIMEOUT is used."""
         payments = gopay.payments(
             {
                 "client_id": client_id,

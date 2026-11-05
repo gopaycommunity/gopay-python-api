@@ -21,7 +21,8 @@ class GoPay:
     config: dict[str, Any]
     # Optional services: "logger" (LoggerType) and "cache" (AbstractCache)
     # The declared type applies; Pyright only infers `dict[Unknown, Unknown]` for the
-    # bare `dict` factory. Kept as `dict` to leave the runtime default_factory unchanged.
+    # bare `dict` factory. Kept as `dict` to leave the runtime default_factory
+    # unchanged.
     # (fmt: off keeps the ignore comment on the line Pyright reports.)
     # fmt: off
     services: dict[str, Any] = field(  # pyright: ignore[reportUnknownVariableType]

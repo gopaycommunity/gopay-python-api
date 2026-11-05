@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, Field
 from typing import ClassVar, Optional
+
+from pydantic import BaseModel, ConfigDict, Field
 
 from gopay import enums
 
@@ -22,7 +23,10 @@ class GopayConfig(GopayModel):
     timeout: int = Field(
         default=DEFAULT_TIMEOUT,
         gt=0,
-        description="Request timeout in seconds. Must be a positive integer. Defaults to 30 seconds.",
+        description=(
+            "Request timeout in seconds. Must be a positive integer. "
+            "Defaults to 30 seconds."
+        ),
     )
     scope: enums.TokenScope = enums.TokenScope.ALL
     language: enums.Language = enums.Language.CZECH
