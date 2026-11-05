@@ -10,9 +10,10 @@ GoPay's Python SDK (`gopay` on PyPI) — a thin wrapper over the GoPay Payments 
 poetry install                       # install deps incl. dev group
 poetry run pytest tests/             # run all tests (adds --cov=gopay automatically)
 poetry run pytest tests/test_api_payment.py::TestPayments::test_create_payment   # single test
-poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics    # CI's blocking lint
-poetry run flake8 . --max-complexity=10 --max-line-length=127                    # CI's non-blocking lint
-poetry run black . && poetry run isort .                                          # formatting (isort uses black profile)
+poetry run ruff check .                                                           # lint (E, F, I, UP; config in pyproject.toml)
+poetry run ruff check . --fix                                                     # apply safe lint fixes (incl. import sorting)
+poetry run ruff format --check .                                                  # check formatting (CI)
+poetry run ruff format .                                                          # format code
 poetry run pyright                                                                # type check (config in pyproject.toml; gopay/ is strict)
 ```
 
@@ -41,3 +42,5 @@ Pluggable services (`gopay/services.py`): `AbstractCache` (`get_token`/`set_toke
 - `DEFAULT_TIMEOUT` (3600 s) is defined in `gopay/models.py` and reused by `api.py`/`http.py`.
 - `Response.has_succeed()` is deprecated in favor of the `success` property; `Payments.get_embedjs_url` is a property, not a method.
 - When adding an API method, also update the "Available methods" table in `README.md`.
+- Ruff's `target-version = "py39"` must track `python` in `[tool.poetry.dependencies]` (there's no `[project]` table to infer it from). `keep-runtime-typing = true` is deliberate: Pydantic evaluates annotations at runtime, so `Optional[X]` must not become `X | None` while 3.9 is supported.
+- `# fmt: off` / `# fmt: on` blocks in `gopay/api.py` and `gopay/services.py` keep `# pyright: ignore` comments on the line Pyright reports; don't remove them.
