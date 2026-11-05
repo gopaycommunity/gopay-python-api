@@ -1,0 +1,37 @@
+# Install once with `poetry run pre-commit install`.
+# Ruff and Pyright run from the Poetry environment, so their versions come
+# from poetry.lock (same as CI) instead of being pinned here a second time.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-toml
+      - id: check-yaml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  - repo: local
+    hooks:
+      # `files` mirrors [tool.ruff] include; --force-exclude makes Ruff honour
+      # its own include/exclude even for filenames passed by pre-commit.
+      - id: ruff-check
+        name: ruff check
+        entry: poetry run ruff check --fix --force-exclude
+        language: system
+        types: [python]
+        files: ^(gopay|tests|examples)/
+      - id: ruff-format
+        name: ruff format
+        entry: poetry run ruff format --force-exclude
+        language: system
+        types: [python]
+        files: ^(gopay|tests|examples)/
+      # Whole project per [tool.pyright], so cross-module type errors are caught.
+      - id: pyright
+        name: pyright
+        entry: poetry run pyright
+        language: system
+        types: [python]
+        pass_filenames: false

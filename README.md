@@ -231,6 +231,15 @@ Contributions from others would be very much appreciated! Send
 [pull request](https://github.com/gopaycommunity/gopay-python-api/pulls)/
 [issue](https://github.com/gopaycommunity/gopay-python-api/issues). Thanks!
 
+For local development, install the dependencies and the git pre-commit hook,
+which runs the same Ruff and Pyright checks as CI:
+
+```bash
+poetry install
+poetry run pre-commit install
+poetry run pre-commit run --all-files   # optional: run all hooks over the repo
+```
+
 ## License
 
 Copyright (c) 2023 GoPay.com. MIT Licensed,

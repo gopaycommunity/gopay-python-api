@@ -15,7 +15,11 @@ poetry run ruff check . --fix                                                   
 poetry run ruff format --check .                                                  # check formatting (CI)
 poetry run ruff format .                                                          # format code
 poetry run pyright                                                                # type check (config in pyproject.toml; gopay/ is strict)
+poetry run pre-commit install                                                     # once: install git hook (ruff check/format, pyright, basic file checks)
+poetry run pre-commit run --all-files                                             # run all hooks over the repo
 ```
+
+Pre-commit hooks for Ruff and Pyright are `repo: local` and run via `poetry run`, so tool versions come from `poetry.lock` — don't switch them to the upstream mirror repos (that would pin versions twice). Tests are intentionally not a hook (they hit the network).
 
 ### Tests hit the real GoPay sandbox
 
