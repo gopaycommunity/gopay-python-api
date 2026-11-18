@@ -46,6 +46,7 @@ Pluggable services (`gopay/services.py`): `AbstractCache` (`get_token`/`set_toke
 - `DEFAULT_TIMEOUT` (3600 s) is defined in `gopay/models.py` and reused by `api.py`/`http.py`.
 - `Response.has_succeed()` is deprecated in favor of the `success` property; `Payments.get_embedjs_url` is a property, not a method.
 - When adding an API method, also update the "Available methods" table in `README.md`.
+- Record user-facing and tooling changes in `CHANGELOG.md` under `## Unreleased` (short past-tense bullets, same style as the PHP SDK's changelog).
 - Ruff infers its target version from `requires-python`, so don't set `target-version` in `[tool.ruff]`; Pyright's `pythonVersion` is set explicitly and must track the lower bound. `keep-runtime-typing = true` is deliberate: Pydantic evaluates annotations at runtime, so `Optional[X]` must not become `X | None` while 3.9 is supported.
 - `pyproject.toml` keeps the `License :: OSI Approved :: MIT License` classifier next to `license = "MIT"` on purpose (for tools that read only classifiers); Poetry warns it's deprecated — that warning is expected.
 - `# fmt: off` / `# fmt: on` blocks in `gopay/api.py` and `gopay/services.py` keep `# pyright: ignore` comments on the line Pyright reports; don't remove them.
