@@ -2,7 +2,7 @@
 
 ## Project
 
-GoPay's Python SDK (`gopay` on PyPI) — a thin wrapper over the GoPay Payments REST API (https://doc.gopay.com). Managed with Poetry; supports Python 3.9–3.15 (`python = "^3.9"` in `pyproject.toml`, CI matrix 3.9–3.15; keep the matrix and the `Programming Language :: Python :: 3.x` classifiers in sync).
+GoPay's Python SDK (`gopay` on PyPI) — a thin wrapper over the GoPay Payments REST API (https://doc.gopay.com). Managed with Poetry (>= 2.0; metadata lives in the standard `[project]` table, Poetry-specific settings in `[tool.poetry]`); supports Python 3.9–3.15 (`requires-python = ">=3.9,<4.0"` in `pyproject.toml`, CI matrix 3.9–3.15; keep the matrix and the `Programming Language :: Python :: 3.x` classifiers in sync).
 
 ## Commands
 
@@ -42,9 +42,10 @@ Pluggable services (`gopay/services.py`): `AbstractCache` (`get_token`/`set_toke
 
 ## Conventions / gotchas
 
-- Version lives in two places: `pyproject.toml` and `gopay/utils.py` (`VERSION`, used in the default User-Agent). Bump both together.
+- Version lives in two places: `pyproject.toml` (`[project].version`) and `gopay/utils.py` (`VERSION`, used in the default User-Agent). Bump both together.
 - `DEFAULT_TIMEOUT` (3600 s) is defined in `gopay/models.py` and reused by `api.py`/`http.py`.
 - `Response.has_succeed()` is deprecated in favor of the `success` property; `Payments.get_embedjs_url` is a property, not a method.
 - When adding an API method, also update the "Available methods" table in `README.md`.
-- Ruff's `target-version = "py39"` must track `python` in `[tool.poetry.dependencies]` (there's no `[project]` table to infer it from). `keep-runtime-typing = true` is deliberate: Pydantic evaluates annotations at runtime, so `Optional[X]` must not become `X | None` while 3.9 is supported.
+- Ruff infers its target version from `requires-python`, so don't set `target-version` in `[tool.ruff]`; Pyright's `pythonVersion` is set explicitly and must track the lower bound. `keep-runtime-typing = true` is deliberate: Pydantic evaluates annotations at runtime, so `Optional[X]` must not become `X | None` while 3.9 is supported.
+- `pyproject.toml` keeps the `License :: OSI Approved :: MIT License` classifier next to `license = "MIT"` on purpose (for tools that read only classifiers); Poetry warns it's deprecated — that warning is expected.
 - `# fmt: off` / `# fmt: on` blocks in `gopay/api.py` and `gopay/services.py` keep `# pyright: ignore` comments on the line Pyright reports; don't remove them.
