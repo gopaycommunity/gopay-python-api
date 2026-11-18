@@ -2,7 +2,7 @@
 
 ## Project
 
-GoPay's Python SDK (`gopay` on PyPI) — a thin wrapper over the GoPay Payments REST API (https://doc.gopay.com). Managed with Poetry; supports Python 3.9–3.12 (`python = "^3.9"` in `pyproject.toml`, CI matrix 3.9–3.12).
+GoPay's Python SDK (`gopay` on PyPI) — a thin wrapper over the GoPay Payments REST API (https://doc.gopay.com). Managed with Poetry; supports Python 3.9–3.15 (`python = "^3.9"` in `pyproject.toml`, CI matrix 3.9–3.15; keep the matrix and the `Programming Language :: Python :: 3.x` classifiers in sync).
 
 ## Commands
 
