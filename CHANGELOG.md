@@ -10,6 +10,7 @@
 - Applied Ruff formatting to SDK sources, tests and examples (formatting only), the commit is listed in `.git-blame-ignore-revs`
 - Added pre-commit hooks (Ruff, Pyright and basic file checks)
 - CI tests also on Python 3.13, 3.14 and 3.15, `actions/checkout` and `actions/setup-python` bumped to v7
+- CI tests also on Windows with Python 3.9
 - Added Dependabot for GitHub Actions and pip dependencies
 - `pyproject.toml` migrated to the standard `[project]` table (PEP 621), Poetry 2.0 or newer is required for development; package contents and metadata unchanged except `License-Expression: MIT` instead of `License: MIT`
 - Added Python version classifiers 3.9–3.15
