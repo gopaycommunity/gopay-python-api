@@ -16,8 +16,8 @@ class TestGopayAccount:
 
     def test_statement_generating(self, payments: Payments, goid: str):
         statement_request = {
-            "date_from": "2023-01-02",
-            "date_to": "2023-02-27",
+            "date_from": "2026-01-02",
+            "date_to": "2026-02-27",
             "goid": goid,
             "currency": Currency.CZECH_CROWNS,
             "format": StatementGeneratingFormat.CSV_A,
