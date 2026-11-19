@@ -2,7 +2,7 @@
 
 ## Project
 
-GoPay's Python SDK (`gopay` on PyPI) — a thin wrapper over the GoPay Payments REST API (https://doc.gopay.com). Managed with Poetry (>= 2.0; metadata lives in the standard `[project]` table, Poetry-specific settings in `[tool.poetry]`); supports Python 3.9–3.15 (`requires-python = ">=3.9,<4.0"` in `pyproject.toml`, CI matrix 3.9–3.15 on Ubuntu plus 3.9 on Windows; keep the matrix and the `Programming Language :: Python :: 3.x` classifiers in sync).
+GoPay's Python SDK (`gopay` on PyPI) — a thin wrapper over the GoPay Payments REST API (https://doc.gopay.com). Managed with Poetry (>= 2.0; metadata lives in the standard `[project]` table, Poetry-specific settings in `[tool.poetry]`); supports Python 3.9–3.15 (`requires-python = ">=3.9,<4.0"` in `pyproject.toml`, CI matrix 3.10–3.15 on `ubuntu-latest`, 3.9 on `ubuntu-24.04` (setup-python has no 3.9 build for 26.04) and on Windows; keep the matrix and the `Programming Language :: Python :: 3.x` classifiers in sync).
 
 ## Commands
 

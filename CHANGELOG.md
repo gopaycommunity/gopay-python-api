@@ -11,6 +11,7 @@
 - Added pre-commit hooks (Ruff, Pyright and basic file checks)
 - CI tests also on Python 3.13, 3.14 and 3.15, `actions/checkout` and `actions/setup-python` bumped to v7
 - CI tests also on Windows with Python 3.9
+- CI runs Python 3.9 on Ubuntu 24.04, `ubuntu-latest` (26.04) has no Python 3.9 build
 - Added Dependabot for GitHub Actions and pip dependencies
 - CI workflow restricted to read-only repository permissions (`permissions: contents: read`)
 - `pyproject.toml` migrated to the standard `[project]` table (PEP 621), Poetry 2.0 or newer is required for development; package contents and metadata unchanged except `License-Expression: MIT` instead of `License: MIT`

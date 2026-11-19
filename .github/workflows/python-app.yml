@@ -17,7 +17,13 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
+        exclude:
+          # setup-python has no 3.9 build for Ubuntu 26.04 (ubuntu-latest); 3.9 is EOL
+          - os: ubuntu-latest
+            python-version: "3.9"
         include:
+          - os: ubuntu-24.04
+            python-version: "3.9"
           # Smoke test on Windows with the minimum supported Python
           # (setup-python provides 3.9.13, the last 3.9 release with Windows binaries)
           - os: windows-latest
