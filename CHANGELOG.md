@@ -17,6 +17,7 @@
 - `pyproject.toml` migrated to the standard `[project]` table (PEP 621), Poetry 2.0 or newer is required for development; package contents and metadata unchanged except `License-Expression: MIT` instead of `License: MIT`
 - Added Python version classifiers 3.9–3.15
 - Added CLAUDE.md
+- Refreshed `poetry.lock` (dev environment only, dependency ranges unchanged): Python 3.10+ now locks pydantic 2.14 whose `pydantic-core` ships wheels for Python 3.14 and 3.15, Python 3.9 keeps the last compatible versions (pydantic 2.13)
 - Updated sandbox test data (account statement date range, on-demand recurrence payment ID)
 - README: minimum Python version fixed to 3.9, Pydantic mentioned as a required dependency, added local development instructions
 
