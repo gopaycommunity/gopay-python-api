@@ -42,6 +42,8 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
+          # Poetry 2.3+ requires Python >= 3.10; 2.2.1 is the last release supporting 3.9
+          version: ${{ matrix.python-version == '3.9' && '2.2.1' || 'latest' }}
           virtualenvs-in-project: true
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
